@@ -1,4 +1,4 @@
-const { app, BrowserWindow }  = require('electron');
+const { app, BrowserWindow, ipcMain }  = require('electron');
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -18,6 +18,12 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') { // Mac - returns darwin
     app.quit();
   }
+});
+
+ipcMain.handle('test-it', (event, ... args) => {
+  console.log(event);
+  console.log(args);
+  console.log("test-it");
 });
 
 app.on('activate', () => {
