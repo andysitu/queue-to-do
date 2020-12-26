@@ -11,4 +11,7 @@ console.log(myNotification);
 
 const {ipcRenderer} = require('electron');
 
-ipcRenderer.invoke('test-it', {1: 4});
+ipcRenderer.send('test-it', {1: 4});
+ipcRenderer.on('test-it', (event, data) => {
+  console.log(data);
+})

@@ -12,4 +12,7 @@ console.log(myNotification);
 var _require = require('electron'),
     ipcRenderer = _require.ipcRenderer;
 
-ipcRenderer.invoke('test-it', { 1: 4 });
+ipcRenderer.send('test-it', { 1: 4 });
+ipcRenderer.on('test-it', function (event, data) {
+  console.log(data);
+});
