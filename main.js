@@ -7,13 +7,12 @@ const  dbService = require('./dbService');
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 800,
     webPreferences: {
       nodeIntegration: true,
     }
   });
-  console.log("HI");
   win.loadFile('index.html');
 }
 
@@ -27,7 +26,7 @@ app.on('window-all-closed', () => {
 });
 
 ipcMain.on('test-it', (event, ... args) => {
-  console.log(args);
+  // console.log(args);
   console.log("test-it");
   event.reply('test-it', {1: 11,});
 });

@@ -1,4 +1,3 @@
-console.log("HI");
 const myNotification = new Notification('Title', {
   body: 'Notification from the Renderer process',
 });
