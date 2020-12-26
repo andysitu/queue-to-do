@@ -1,6 +1,8 @@
 const React = require('react');
 const ReactDom = require('react-dom');
 
+const {ipcRenderer} = require('electron');
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -11,7 +13,11 @@ class App extends React.Component {
   onClick_create_todo = () => {
     var to_dos = [...this.state.to_dos];
     to_dos.push({name: "New To-Do"});
-    this.setState({to_dos: to_dos,});
+    ipcRenderer.send("create-todo", {name: "New To-Do"});
+    ipcRenderer.on("create-todo", (event, data) => {
+      this.setState({to_dos: to_dos,});
+      console.log(data);
+    });
   };
   onClick_create_todo_item = () => {
 

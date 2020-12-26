@@ -11,6 +11,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = require('react');
 var ReactDom = require('react-dom');
 
+var _require = require('electron'),
+    ipcRenderer = _require.ipcRenderer;
+
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
@@ -22,7 +25,11 @@ var App = function (_React$Component) {
     _this.onClick_create_todo = function () {
       var to_dos = [].concat(_toConsumableArray(_this.state.to_dos));
       to_dos.push({ name: "New To-Do" });
-      _this.setState({ to_dos: to_dos });
+      ipcRenderer.send("create-todo", { name: "New To-Do" });
+      ipcRenderer.on("create-todo", function (event, data) {
+        _this.setState({ to_dos: to_dos });
+        console.log(data);
+      });
     };
 
     _this.onClick_create_todo_item = function () {};

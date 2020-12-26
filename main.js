@@ -32,6 +32,11 @@ ipcMain.on('test-it', (event, ... args) => {
   event.reply('test-it', {1: 11,});
 });
 
+ipcMain.on("create-todo", (event, ...args) => {
+  dbService.create_todo(args.name);
+  event.reply("create-todo", {name: args.name,})
+})
+
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0)  {
     createWindow();
