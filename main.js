@@ -1,7 +1,9 @@
 const { app, BrowserWindow, ipcMain }  = require('electron');
 
 const sqlite3 = require('sqlite3').verbose();
-db = new sqlite3.Database(':memory:');
+const db = new sqlite3.Database(':memory:');
+
+const  dbService = require('./dbService');
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -25,7 +27,6 @@ app.on('window-all-closed', () => {
 });
 
 ipcMain.on('test-it', (event, ... args) => {
-  console.log(event);
   console.log(args);
   console.log("test-it");
   event.reply('test-it', {1: 11,});
