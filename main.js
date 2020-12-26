@@ -1,5 +1,8 @@
 const { app, BrowserWindow, ipcMain }  = require('electron');
 
+const sqlite3 = require('sqlite3').verbose();
+db = new sqlite3.Database(':memory:');
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
@@ -17,6 +20,7 @@ app.whenReady().then(createWindow);
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') { // Mac - returns darwin
     app.quit();
+    db.close();
   }
 });
 
