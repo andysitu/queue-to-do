@@ -9,8 +9,8 @@ module.exports = function(db) {
       console.log("check");
       console.log(db);
     },
-    create_todo() {
-      console.log("create");
+    create_todo(name) {
+      console.log("create " + name);
     }
   }
 };
