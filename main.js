@@ -33,7 +33,10 @@ ipcMain.on('test-it', (event, ... args) => {
 });
 
 ipcMain.on("create-todo", (event, ...args) => {
-  dbService.create_todo(args.name);
+  if (args.length > 0) {
+    dbService.create_todo(args[0].name);
+  }
+  console.log(args);
   event.reply("create-todo", {name: args.name,})
 })
 
