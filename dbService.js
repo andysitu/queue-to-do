@@ -1,5 +1,6 @@
 module.exports = function(db) {
   function check_database() {
+    console.log("check_database");
     db.serialize(function() {
       db.run(`
         CREATE TABLE IF NOT EXISTS to_do 
@@ -7,9 +8,8 @@ module.exports = function(db) {
     });
   }
   return {
-    check() {
-      console.log("check");
-      console.log(db);
+    check_db() {
+      check_database();
     },
     create_todo(name) {
       console.log("create " + name);

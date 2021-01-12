@@ -14,7 +14,7 @@ function createWindow() {
     }
   });
   win.loadFile('index.html');
-  dbService.check();
+  dbService.check_db();
 }
 
 app.whenReady().then(createWindow);
