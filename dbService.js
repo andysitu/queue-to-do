@@ -13,6 +13,9 @@ module.exports = function(db) {
     },
     create_todo(name) {
       console.log("create " + name);
-    }
+    },
+    delete_all() {
+      db.run("DELETE FROM to_do");
+    },
   }
 };
