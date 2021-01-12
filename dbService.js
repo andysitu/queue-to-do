@@ -12,7 +12,10 @@ module.exports = function(db) {
       check_database();
     },
     create_todo(name) {
-      console.log("create " + name);
+      db.run(`INSERT INTO to_do (name) VALUES (?)`, [name,]);
+    },
+    get_todos() {
+
     },
     delete_all() {
       db.run("DELETE FROM to_do");
