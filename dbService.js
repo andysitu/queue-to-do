@@ -1,7 +1,9 @@
 module.exports = function(db) {
   function check_database() {
     db.serialize(function() {
-      db.run("CREATE TABLE IF NOT EXISTS some_table (id INTEGER PRIMARY KEY AUTOINCREMENT)");
+      db.run(`
+        CREATE TABLE IF NOT EXISTS to_do 
+          (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)`);
     });
   }
   return {
