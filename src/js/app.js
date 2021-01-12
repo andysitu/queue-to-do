@@ -28,7 +28,6 @@ var App = function (_React$Component) {
       ipcRenderer.send("create-todo", { name: "New To-Do" });
       ipcRenderer.on("create-todo", function (event, data) {
         _this.setState({ to_dos: to_dos });
-        console.log(data);
       });
     };
 
@@ -69,7 +68,7 @@ var App = function (_React$Component) {
             onClick: this.onClick_create_todo },
           'Create To-Do'
         ),
-        this.create_todos
+        this.create_todos()
       );
     }
   }]);
