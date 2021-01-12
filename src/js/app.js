@@ -34,6 +34,22 @@ var App = function (_React$Component) {
 
     _this.onClick_create_todo_item = function () {};
 
+    _this.create_todos = function () {
+      return _this.state.to_dos.map(function (todo, index) {
+        return React.createElement(
+          'div',
+          { key: index },
+          React.createElement('input', { type: 'text', defaultValue: todo.name }),
+          React.createElement(
+            'button',
+            { type: 'button',
+              onClick: _this.onClick_create_todo_item },
+            '+'
+          )
+        );
+      });
+    };
+
     _this.state = {
       to_dos: []
     };
@@ -43,8 +59,6 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       console.log(this.state);
       return React.createElement(
         'div',
@@ -55,19 +69,7 @@ var App = function (_React$Component) {
             onClick: this.onClick_create_todo },
           'Create To-Do'
         ),
-        this.state.to_dos.map(function (todo, index) {
-          return React.createElement(
-            'div',
-            { key: index },
-            React.createElement('input', { type: 'text', defaultValue: todo.name }),
-            React.createElement(
-              'button',
-              { type: 'button',
-                onClick: _this2.onClick_create_todo_item },
-              '+'
-            )
-          );
-        })
+        this.create_todos
       );
     }
   }]);

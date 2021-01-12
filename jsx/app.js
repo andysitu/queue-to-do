@@ -22,6 +22,19 @@ class App extends React.Component {
   onClick_create_todo_item = () => {
 
   };
+
+  create_todos = () => {
+    return this.state.to_dos.map((todo, index) => {
+      return (
+        <div key={index}>
+          <input type="text" defaultValue={todo.name}></input>
+          <button type="button" 
+            onClick={this.onClick_create_todo_item}>+</button>
+        </div>);
+    });
+  }
+
+
   render() {
     console.log(this.state);
     return (
@@ -29,14 +42,7 @@ class App extends React.Component {
         <button type="button"
           onClick={this.onClick_create_todo}>Create To-Do</button>
 
-        {this.state.to_dos.map((todo, index) => {
-          return (
-            <div key={index}>
-              <input type="text" defaultValue={todo.name}></input>
-              <button type="button" 
-                onClick={this.onClick_create_todo_item}>+</button>
-            </div>);
-        })}
+        {this.create_todos}
       </div>
     );
   }
