@@ -1,7 +1,8 @@
 const { app, BrowserWindow, ipcMain }  = require('electron');
 
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database(':memory:');
+// const db = new sqlite3.Database(':memory:');
+const db = new sqlite3.Database('todo_db.db');
 
 const  dbService = require('./dbService')(db);
 
