@@ -9,30 +9,42 @@ class App extends React.Component {
     this.state = {
       to_dos: [],
     };
+    this.load_todos();
   }
+
+  load_todos = () => {
+    ipcRenderer.send("get-todo");
+  };
+
   onClick_create_todo = () => {
     var to_dos = [...this.state.to_dos];
     to_dos.push({name: "New To-Do"});
     ipcRenderer.send("create-todo", {name: "New To-Do"});
     ipcRenderer.on("create-todo", (event, data) => {
-      this.setState({to_dos: to_dos,});
-      console.log(data);
+      this.setState({to_dos: to_dos,}, () => {
+
+      });
     });
   };
   onClick_create_todo_item = () => {
 
   };
+  onChange_todo_name = (e) => {
+    console.log(e.target.value);
+  }
 
   create_todos = () => {
     return this.state.to_dos.map((todo, index) => {
       return (
         <div key={index}>
-          <input type="text" defaultValue={todo.name}></input>
+          <input type="text" 
+            value={todo.name}
+            onChange={this.onChange_todo_name}></input>
           <button type="button" 
             onClick={this.onClick_create_todo_item}>+</button>
         </div>);
     });
-  }
+  };
 
 
   render() {
@@ -40,9 +52,10 @@ class App extends React.Component {
     return (
       <div>
         <button type="button"
-          onClick={this.onClick_create_todo}>Create To-Do</button>
+          onClick={this.onClick_create_todo}>Create To-Do
+        </button>
 
-        {this.create_todos}
+        {this.create_todos()}
       </div>
     );
   }

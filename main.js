@@ -32,11 +32,15 @@ ipcMain.on('test-it', (event, ... args) => {
   event.reply('test-it', {1: 11,});
 });
 
+ipcMain.on("get-todo", (event) => {
+  dbService.get_todos();
+});
+
 ipcMain.on("create-todo", (event, ...args) => {
   if (args.length > 0) {
     dbService.create_todo(args[0].name);
   }
-  console.log(args);
+  console.log("create", args);
   event.reply("create-todo", {name: args.name,})
 })
 

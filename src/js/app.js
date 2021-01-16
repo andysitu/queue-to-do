@@ -22,23 +22,33 @@ var App = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
+    _this.load_todos = function () {
+      ipcRenderer.send("get-todo");
+    };
+
     _this.onClick_create_todo = function () {
       var to_dos = [].concat(_toConsumableArray(_this.state.to_dos));
       to_dos.push({ name: "New To-Do" });
       ipcRenderer.send("create-todo", { name: "New To-Do" });
       ipcRenderer.on("create-todo", function (event, data) {
-        _this.setState({ to_dos: to_dos });
+        _this.setState({ to_dos: to_dos }, function () {});
       });
     };
 
     _this.onClick_create_todo_item = function () {};
+
+    _this.onChange_todo_name = function (e) {
+      console.log(e.target.value);
+    };
 
     _this.create_todos = function () {
       return _this.state.to_dos.map(function (todo, index) {
         return React.createElement(
           'div',
           { key: index },
-          React.createElement('input', { type: 'text', defaultValue: todo.name }),
+          React.createElement('input', { type: 'text',
+            value: todo.name,
+            onChange: _this.onChange_todo_name }),
           React.createElement(
             'button',
             { type: 'button',
@@ -52,6 +62,7 @@ var App = function (_React$Component) {
     _this.state = {
       to_dos: []
     };
+    _this.load_todos();
     return _this;
   }
 
