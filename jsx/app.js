@@ -15,7 +15,9 @@ class App extends React.Component {
   load_todos = () => {
     ipcRenderer.send("get-todo");
     ipcRenderer.on("get-todo", (event, data) => {
-      console.log(data);
+      this.setState({
+        to_dos: data,
+      });
     });
   };
 

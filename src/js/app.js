@@ -25,7 +25,9 @@ var App = function (_React$Component) {
     _this.load_todos = function () {
       ipcRenderer.send("get-todo");
       ipcRenderer.on("get-todo", function (event, data) {
-        console.log(data);
+        _this.setState({
+          to_dos: data
+        });
       });
     };
 
