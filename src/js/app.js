@@ -40,7 +40,10 @@ var App = function (_React$Component) {
       });
     };
 
-    _this.onClick_create_todo_item = function () {};
+    _this.onClick_create_todo_item = function () {
+      console.log("create");
+      _this.modalmenu.current.show();
+    };
 
     _this.onChange_todo_name = function (e) {
       console.log(e.target.value);
@@ -67,6 +70,7 @@ var App = function (_React$Component) {
     _this.state = {
       to_dos: []
     };
+    _this.modalmenu = React.createRef();
     _this.load_todos();
     return _this;
   }
@@ -85,7 +89,7 @@ var App = function (_React$Component) {
           'Create To-Do'
         ),
         this.create_todos(),
-        React.createElement(ModalMenu, null)
+        React.createElement(ModalMenu, { ref: this.modalmenu })
       );
     }
   }]);

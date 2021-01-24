@@ -16,9 +16,20 @@ var ModalMenu = function (_React$Component) {
   _inherits(ModalMenu, _React$Component);
 
   function ModalMenu() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, ModalMenu);
 
-    return _possibleConstructorReturn(this, (ModalMenu.__proto__ || Object.getPrototypeOf(ModalMenu)).apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ModalMenu.__proto__ || Object.getPrototypeOf(ModalMenu)).call.apply(_ref, [this].concat(args))), _this), _this.show = function () {
+      var container = document.getElementById("modalmenu-container");
+      container.classList.toggle("reveal");
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(ModalMenu, [{
@@ -26,7 +37,7 @@ var ModalMenu = function (_React$Component) {
     value: function render() {
       return React.createElement(
         'div',
-        null,
+        { id: 'modalmenu-container' },
         'Test'
       );
     }

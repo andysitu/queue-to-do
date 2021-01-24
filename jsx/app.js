@@ -9,6 +9,7 @@ class App extends React.Component {
     this.state = {
       to_dos: [],
     };
+    this.modalmenu = React.createRef();
     this.load_todos();
   }
 
@@ -32,7 +33,8 @@ class App extends React.Component {
     });
   };
   onClick_create_todo_item = () => {
-
+    console.log("create");
+    this.modalmenu.current.show();
   };
   onChange_todo_name = (e) => {
     console.log(e.target.value);
@@ -62,7 +64,7 @@ class App extends React.Component {
 
         {this.create_todos()}
 
-        <ModalMenu />
+        <ModalMenu ref={this.modalmenu}/>
       </div>
     );
   }

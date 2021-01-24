@@ -2,6 +2,6 @@
     display: none;
 }
 
-##modalmenu-container.reveal {
+#modalmenu-container.reveal {
     display: inline;
 }
