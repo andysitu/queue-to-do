@@ -5,6 +5,16 @@ module.exports = function(db) {
       db.run(`
         CREATE TABLE IF NOT EXISTS to_do 
           (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)`);
+      db.run(`
+        CREATE TABLE IF NOT EXISTS task 
+          (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            name TEXT, 
+            todo_id INT,
+            description TEXT,
+            FOREIGN KEY(todo_id) REFERENCES to_do(id) 
+              ON DELETE CASCADE ON UPDATE CASCADE
+          )`);
     });
   }
   return {
