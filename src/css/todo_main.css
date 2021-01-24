@@ -3,5 +3,24 @@
 }
 
 #modalmenu-container.reveal {
-    display: inline;
+    display: block;
+}
+
+#mm-content-container {
+    position: fixed;
+    z-index: 100;
+    background-color: white;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+#mm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .75);
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }

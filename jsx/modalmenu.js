@@ -10,7 +10,10 @@ class ModalMenu extends React.Component {
 
   render() {
     return (<div id="modalmenu-container">
-      Test
+      <div id="mm-overlay"></div>
+      <div id="mm-content-container">
+        <button type="button" onClick={this.show}>Close</button>
+      </div>
     </div>);
   }
 }

@@ -15,30 +15,44 @@ var _require = require('electron'),
 var ModalMenu = function (_React$Component) {
   _inherits(ModalMenu, _React$Component);
 
-  function ModalMenu() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
+  function ModalMenu(props) {
     _classCallCheck(this, ModalMenu);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    var _this = _possibleConstructorReturn(this, (ModalMenu.__proto__ || Object.getPrototypeOf(ModalMenu)).call(this, props));
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ModalMenu.__proto__ || Object.getPrototypeOf(ModalMenu)).call.apply(_ref, [this].concat(args))), _this), _this.show = function () {
+    _this.show = function () {
       var container = document.getElementById("modalmenu-container");
       container.classList.toggle("reveal");
-    }, _temp), _possibleConstructorReturn(_this, _ret);
+    };
+
+    _this.state = {
+      menu_type: "none"
+    };
+    return _this;
   }
 
   _createClass(ModalMenu, [{
+    key: 'show_menu',
+    value: function show_menu(menu_type) {}
+  }, {
+    key: 'set_menu',
+    value: function set_menu(menu_typee) {}
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
         'div',
         { id: 'modalmenu-container' },
-        'Test'
+        React.createElement('div', { id: 'mm-overlay' }),
+        React.createElement(
+          'div',
+          { id: 'mm-content-container' },
+          React.createElement(
+            'button',
+            { type: 'button', onClick: this.show },
+            'Close'
+          )
+        )
       );
     }
   }]);
