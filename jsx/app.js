@@ -61,6 +61,8 @@ class App extends React.Component {
         </button>
 
         {this.create_todos()}
+
+        <ModalMenu />
       </div>
     );
   }

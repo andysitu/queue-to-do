@@ -84,7 +84,8 @@ var App = function (_React$Component) {
             onClick: this.onClick_create_todo },
           'Create To-Do'
         ),
-        this.create_todos()
+        this.create_todos(),
+        React.createElement(ModalMenu, null)
       );
     }
   }]);
