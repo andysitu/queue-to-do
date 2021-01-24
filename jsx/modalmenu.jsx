@@ -43,9 +43,24 @@ class ModalMenu extends React.Component {
     }
   };
 
-  onClick_submit = (e) => {
+  get_data = (form) => {
+    var data = {};
+    if (this.state.additional_data) {
+      for (var k in this.state.additional_data) {
+        data[k] = this.state.additional_data[k];
+      }
+    }
+    var formData = new FormData(form);
+    for (var key of formData.keys()) {
+      data[key] = formData.get(key);
+    }
+    return data;
+  };
+
+  onSubmit_form = (e) => {
     e.preventDefault();
-    console.log("submit");
+    var data = this.get_data(e.target);
+    console.log(data);
   }
 
   render() {
@@ -53,11 +68,11 @@ class ModalMenu extends React.Component {
       <div id="mm-overlay">
       </div>
       <div id="mm-content-container">
-        <form>
+        <form onSubmit={this.onSubmit_form}>
         <button type="button" onClick={this.show}>Close</button>
         {this.create_menu()}
 
-        <button type="submit" onClick={this.onClick_submit}>Submit</button>
+        <button type="submit">Submit</button>
         </form>
       </div>
     </div>);
