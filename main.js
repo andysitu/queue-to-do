@@ -33,8 +33,11 @@ ipcMain.on('test-it', (event, ... args) => {
   event.reply('test-it', {1: 11,});
 });
 
-ipcMain.on("get-todo", (event) => {
-  dbService.get_todos();
+ipcMain.on("get-todo", (event, arg) => {
+  dbService.get_todos((data)=> {
+    event.reply("get-todo", data);
+  });
+  
 });
 
 ipcMain.on("create-todo", (event, ...args) => {

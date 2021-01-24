@@ -14,9 +14,11 @@ module.exports = function(db) {
     create_todo(name) {
       db.run(`INSERT INTO to_do (name) VALUES (?)`, [name,]);
     },
-    get_todos() {
+    get_todos(callback) {
       db.all(`SELECT * FROM to_do`, (err, rows) => {
-        console.log(rows);
+        if (callback) {
+          callback(rows);
+        }
       });
     },
     delete_all() {
