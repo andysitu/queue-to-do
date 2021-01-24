@@ -11,21 +11,11 @@ class ModalMenu extends React.Component {
   }
   show_menu(menu_type) {
     if (menu_type == "create_task") {
-      this.set_menu("create_task");
-    } else {
-      this.set_menu("none");
-    }
-  }
-  // Set menu_type to none first before actual type to clear screen
-  set_menu(menu_type) {
-    if (menu_type == "none") {
-      this.setState({menu_type: "none",})
-    } else {
-      this.setState({menu_type: "none",}, ()=> {
-        this.setState({menu_type: menu_type,}, ()=> {
-          this.show();
-        })
+      this.setState({menu_type: menu_type,}, ()=> {
+        this.show();
       })
+    } else {
+      this.setState({menu_type: "none",})
     }
   }
   create_menu() {
@@ -48,6 +38,9 @@ class ModalMenu extends React.Component {
   show = () => {
     var container = document.getElementById("modalmenu-container");
     container.classList.toggle("reveal");
+    if (!container.classList.contains("reveal")) {
+      this.setState({menu_type: "none"});
+    }
   };
 
   onClick_submit = (e) => {
