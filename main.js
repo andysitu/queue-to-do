@@ -37,7 +37,13 @@ ipcMain.on("get-todo", (event, arg) => {
   dbService.get_todos((data)=> {
     event.reply("get-todo", data);
   });
-  
+});
+
+ipcMain.on("create-task", (event, arg) => {
+  if (arg.todo_id) {
+    console.log(arg);
+    dbService.create_task(arg.todo_id);
+  }
 });
 
 ipcMain.on("create-todo", (event, ...args) => {

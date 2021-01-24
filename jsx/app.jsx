@@ -32,9 +32,10 @@ class App extends React.Component {
       });
     });
   };
-  onClick_create_todo_item = () => {
-    console.log("create");
-    this.modalmenu.current.show();
+  onClick_create_todo_item = (e) => {
+    // console.log("create");
+    // this.modalmenu.current.show();
+    ipcRenderer.send("create-task", {todo_id: e.target.getAttribute("todo_id")});
   };
   onChange_todo_name = (e) => {
     console.log(e.target.value);
@@ -43,11 +44,12 @@ class App extends React.Component {
   create_todos = () => {
     return this.state.to_dos.map((todo, index) => {
       return (
-        <div key={index}>
+        <div key={todo.id}>
           <input type="text" 
             value={todo.name}
             onChange={this.onChange_todo_name}></input>
-          <button type="button" 
+          <button type="button"
+            todo_id={todo.id}
             onClick={this.onClick_create_todo_item}>+</button>
         </div>);
     });
@@ -55,7 +57,6 @@ class App extends React.Component {
 
 
   render() {
-    console.log(this.state);
     return (
       <div>
         <button type="button"

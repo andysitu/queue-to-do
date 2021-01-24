@@ -11,7 +11,7 @@ module.exports = function(db) {
             id INTEGER PRIMARY KEY AUTOINCREMENT, 
             name TEXT, 
             todo_id INT,
-            description TEXT,
+            note TEXT,
             FOREIGN KEY(todo_id) REFERENCES to_do(id) 
               ON DELETE CASCADE ON UPDATE CASCADE
           )`);
@@ -23,6 +23,9 @@ module.exports = function(db) {
     },
     create_todo(name) {
       db.run(`INSERT INTO to_do (name) VALUES (?)`, [name,]);
+    },
+    create_task(todo_id) {
+      console.log(todo_id);
     },
     get_todos(callback) {
       db.all(`SELECT * FROM to_do`, (err, rows) => {
