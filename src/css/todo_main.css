@@ -1,0 +1,7 @@
+#modalmenu-container {
+    display: none;
+}
+
+##modalmenu-container.reveal {
+    display: inline;
+}
