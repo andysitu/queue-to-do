@@ -42,7 +42,7 @@ class App extends React.Component {
         property: "name",
         value: new_name,
       };
-      console.log(data);
+      ipcRenderer.send("edit-todo", data);
     }, 1000);
   };
 

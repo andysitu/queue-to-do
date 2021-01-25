@@ -34,6 +34,11 @@ module.exports = function(db) {
         }
       });
     },
+    edit_todo(todo_id, property, value) {
+      // Note: Can only use ? for parameter values
+      if (property == "name")
+        db.run("UPDATE to_do SET name = ? WHERE id = ?", [value, todo_id]);
+    },
     delete_all() {
       db.run("DELETE FROM to_do");
     },

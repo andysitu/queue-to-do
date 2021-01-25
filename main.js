@@ -39,6 +39,10 @@ ipcMain.on("get-todo", (event, arg) => {
   });
 });
 
+ipcMain.on("edit-todo", (event, arg) => {
+  dbService.edit_todo(arg.todo_id, arg.property, arg.value);
+});
+
 ipcMain.on("create-task", (event, arg) => {
   if (arg.todo_id) {
     console.log(arg);
