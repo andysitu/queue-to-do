@@ -22,6 +22,30 @@ class App extends React.Component {
     });
   };
 
+  onChange_todo_name_timer = (e) => {
+    var id = e.target.getAttribute("id"),
+        new_name = e.target.value,
+        index = e.target.getAttribute("index");
+
+    clearTimeout(this["todo_name_timer"]);
+
+    this.setState((state) => {
+      var new_todos = [...this.state.to_dos];
+      new_todos[index].name = new_name;
+
+      return {to_dos: new_todos,};
+    });
+
+    this["todo_name_timer"] = setTimeout(() => {
+      var data = {
+        todo_id: id,
+        property: "name",
+        value: new_name,
+      };
+      console.log(data);
+    }, 1000);
+  };
+
   onClick_create_todo = () => {
     var to_dos = [...this.state.to_dos];
     to_dos.push({name: "New To-Do"});
@@ -37,9 +61,6 @@ class App extends React.Component {
     // this.modalmenu.current.show();
     ipcRenderer.send("create-task", {todo_id: e.target.getAttribute("todo_id")});
   };
-  onChange_todo_name = (e) => {
-    console.log(e.target.value);
-  }
 
   create_todos = () => {
     return this.state.to_dos.map((todo, index) => {
@@ -47,7 +68,8 @@ class App extends React.Component {
         <div key={todo.id}>
           <input type="text" 
             value={todo.name}
-            onChange={this.onChange_todo_name}></input>
+            id={todo.id} index={index}
+            onChange={this.onChange_todo_name_timer}></input>
           <button type="button"
             todo_id={todo.id}
             onClick={this.onClick_create_todo_item}>+</button>
