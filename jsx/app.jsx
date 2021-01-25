@@ -11,6 +11,7 @@ class App extends React.Component {
     };
     this.modalmenu = React.createRef();
     this.load_todos();
+    this.todo_name_timer = null;
   }
 
   load_todos = () => {
