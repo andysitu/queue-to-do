@@ -17,6 +17,7 @@ class App extends React.Component {
   load_todos = () => {
     ipcRenderer.send("get-todo");
     ipcRenderer.on("get-todo", (event, data) => {
+      console.log(data);
       this.setState({
         to_dos: data,
       });
@@ -48,12 +49,15 @@ class App extends React.Component {
   };
 
   onClick_create_todo = () => {
-    var to_dos = [...this.state.to_dos];
-    to_dos.push({name: "New To-Do"});
     ipcRenderer.send("create-todo", {name: "New To-Do"});
     ipcRenderer.on("create-todo", (event, data) => {
-      this.setState({to_dos: to_dos,}, () => {
-
+      console.log(data);
+      this.setState((state) => {
+        var new_todo = [...state.to_dos];
+        new_todo.push(data);
+        return {
+          to_dos: new_todo,
+        };
       });
     });
   };
