@@ -21,8 +21,13 @@ module.exports = function(db) {
     check_db() {
       check_database();
     },
-    create_todo(name) {
-      db.run(`INSERT INTO to_do (name) VALUES (?)`, [name,]);
+    create_todo(name, callback) {
+      db.run(`INSERT INTO to_do (name) VALUES (?);`, [name,]);
+      db.get(`SELECT last_insert_rowid() as id`, (err, row) => {
+        if (!err) {
+          callback(row.id);
+        }
+      });
     },
     create_task(todo_id) {
       console.log(todo_id);
