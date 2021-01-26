@@ -39,6 +39,9 @@ module.exports = function(db) {
       if (property == "name")
         db.run("UPDATE to_do SET name = ? WHERE id = ?", [value, todo_id]);
     },
+    delete_todo(todo_id) {
+      db.run("DELETE FROM to_do WHERE id = ?", todo_id);
+    },
     delete_all() {
       db.run("DELETE FROM to_do");
     },

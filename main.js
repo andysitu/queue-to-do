@@ -56,7 +56,14 @@ ipcMain.on("create-todo", (event, ...args) => {
   }
   console.log("create", args);
   event.reply("create-todo", {name: args.name,})
-})
+});
+
+ipcMain.on("delete-todo", (event, arg) => {
+  if (arg.todo_id) {
+    dbService.delete_todo(arg.todo_id);
+    event.reply("delete-todo", {todo_id: arg.todo_id});
+  }
+});
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0)  {

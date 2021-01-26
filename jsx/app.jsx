@@ -62,6 +62,20 @@ class App extends React.Component {
     // this.modalmenu.current.show();
     ipcRenderer.send("create-task", {todo_id: e.target.getAttribute("todo_id")});
   };
+  onClick_delete_todo = (e) => {
+    var id = e.target.getAttribute("todo_id"),
+        index = e.target.getAttribute("index");
+    ipcRenderer.send("delete-todo", {todo_id: id});
+    ipcRenderer.on("delete-todo", (event, data) => {
+      this.setState((state) => {
+        var new_todos = [...state.to_dos];
+        new_todos.splice(index, 1);
+        return {
+          to_dos: new_todos,
+        }
+      });
+    });
+  }
 
   create_todos = () => {
     return this.state.to_dos.map((todo, index) => {
@@ -73,11 +87,17 @@ class App extends React.Component {
             onChange={this.onChange_todo_name_timer}></input>
           <button type="button"
             todo_id={todo.id}
-            onClick={this.onClick_create_todo_item}>+</button>
+            onClick={this.onClick_create_todo_item}
+          >+</button>
+          <button type="button"
+            todo_id={todo.id} index={index}
+            onClick={this.onClick_delete_todo}
+          >
+            x
+          </button>
         </div>);
     });
   };
-
 
   render() {
     return (
