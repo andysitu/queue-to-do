@@ -50,12 +50,13 @@ ipcMain.on("create-task", (event, arg) => {
   }
 });
 
-ipcMain.on("create-todo", (event, ...args) => {
-  if (args.length > 0) {
-    dbService.create_todo(args[0].name);
+ipcMain.on("create-todo", (event, arg) => {
+  if (arg.name && arg.name.length > 0) {
+    dbService.create_todo(arg.name, (new_id) => {
+      event.reply("create-todo", {name: arg.name, id: new_id,});
+    });
   }
-  console.log("create", args);
-  event.reply("create-todo", {name: args.name,})
+  
 });
 
 ipcMain.on("delete-todo", (event, arg) => {
