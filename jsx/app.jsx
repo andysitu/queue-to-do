@@ -115,20 +115,29 @@ class App extends React.Component {
     return this.state.todo_list.map((todo, index) => {
       return (
         <div key={todo.todo_id}>
-          <input type="text" 
-            value={todo.todo_name}
-            id={todo.todo_id} index={index}
-            onChange={this.onChange_todo_name_timer}></input>
-          <button type="button"
-            todo_id={todo.todo_id}
-            onClick={this.onClick_create_todo_task}
-          >+</button>
-          <button type="button"
-            todo_id={todo.todo_id} index={index}
-            onClick={this.onClick_delete_todo}
-          >
-            x
-          </button>
+          <div>
+            <input type="text" 
+              value={todo.todo_name}
+              id={todo.todo_id} index={index}
+              onChange={this.onChange_todo_name_timer}></input>
+            <button type="button"
+              todo_id={todo.todo_id}
+              onClick={this.onClick_create_todo_task}
+            >+</button>
+            <button type="button"
+              todo_id={todo.todo_id} index={index}
+              onClick={this.onClick_delete_todo}
+            >
+              x
+            </button>
+          </div>
+          <div>
+            <ul>
+              {todo.tasks.map(task => {
+                return (<li>{task.task_name}</li>);
+              })}
+            </ul>
+          </div>
         </div>);
     });
   };
