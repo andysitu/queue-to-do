@@ -41,8 +41,10 @@ module.exports = function(db) {
       });
     },
     get_todos(callback) {
-      db.all(`SELECT * FROM to_do`, (err, rows) => {
+      db.all(`SELECT * FROM to_do
+        LEFT JOIN task on task.todo_id = to_do.id`, (err, rows) => {
         if (callback) {
+          console.log(rows);
           callback(rows);
         }
       });
