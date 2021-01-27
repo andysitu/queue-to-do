@@ -52,8 +52,8 @@ ipcMain.on("create-task", (event, arg) => {
 
 ipcMain.on("create-todo", (event, arg) => {
   if (arg.name && arg.name.length > 0) {
-    dbService.create_todo(arg.name, (new_id) => {
-      event.reply("create-todo", {name: arg.name, id: new_id,});
+    dbService.create_todo(arg.name, (data) => {
+      event.reply("create-todo", data);
     });
   }
   

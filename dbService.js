@@ -23,9 +23,10 @@ module.exports = function(db) {
     },
     create_todo(name, callback) {
       db.run(`INSERT INTO to_do (name) VALUES (?);`, [name,]);
-      db.get(`SELECT last_insert_rowid() as id`, (err, row) => {
+      db.get(`SELECT * FROM to_do WHERE id in
+        (SELECT last_insert_rowid())`, (err, row) => {
         if (!err) {
-          callback(row.id);
+          callback(row);
         }
       });
     },
