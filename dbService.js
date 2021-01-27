@@ -3,7 +3,7 @@ module.exports = function(db) {
     console.log("check_database");
     db.serialize(function() {
       db.run(`
-        CREATE TABLE IF NOT EXISTS to_do 
+        CREATE TABLE IF NOT EXISTS todo 
           (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)`);
       db.run(`
         CREATE TABLE IF NOT EXISTS task 
@@ -12,7 +12,7 @@ module.exports = function(db) {
             name TEXT, 
             todo_id INT,
             note TEXT,
-            FOREIGN KEY(todo_id) REFERENCES to_do(id) 
+            FOREIGN KEY(todo_id) REFERENCES todo(id) 
               ON DELETE CASCADE ON UPDATE CASCADE
           )`);
     });
@@ -22,8 +22,8 @@ module.exports = function(db) {
       check_database();
     },
     create_todo(name, callback) {
-      db.run(`INSERT INTO to_do (name) VALUES (?);`, [name,]);
-      db.get(`SELECT * FROM to_do WHERE id in
+      db.run(`INSERT INTO todo (name) VALUES (?);`, [name,]);
+      db.get(`SELECT * FROM todo WHERE id in
         (SELECT last_insert_rowid())`, (err, row) => {
         if (!err) {
           callback(row);
@@ -41,8 +41,8 @@ module.exports = function(db) {
       });
     },
     get_todos(callback) {
-      db.all(`SELECT * FROM to_do
-        LEFT JOIN task on task.todo_id = to_do.id`, (err, rows) => {
+      db.all(`SELECT * FROM todo
+        LEFT JOIN task on task.todo_id = todo.id`, (err, rows) => {
         if (callback) {
           console.log(rows);
           callback(rows);
@@ -52,13 +52,13 @@ module.exports = function(db) {
     edit_todo(todo_id, property, value) {
       // Note: Can only use ? for parameter values
       if (property == "name")
-        db.run("UPDATE to_do SET name = ? WHERE id = ?", [value, todo_id]);
+        db.run("UPDATE todo SET name = ? WHERE id = ?", [value, todo_id]);
     },
     delete_todo(todo_id) {
-      db.run("DELETE FROM to_do WHERE id = ?", todo_id);
+      db.run("DELETE FROM todo WHERE id = ?", todo_id);
     },
     delete_all() {
-      db.run("DELETE FROM to_do");
+      db.run("DELETE FROM todo");
     },
   }
 };
