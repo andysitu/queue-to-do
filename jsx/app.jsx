@@ -62,9 +62,8 @@ class App extends React.Component {
     });
   };
   onClick_create_todo_item = (e) => {
-    // console.log("create");
-    // this.modalmenu.current.show();
-    ipcRenderer.send("create-task", {todo_id: e.target.getAttribute("todo_id")});
+    this.modalmenu.current.show_menu("create_task", (data) => {console.log(data)});
+    // ipcRenderer.send("create-task", {todo_id: e.target.getAttribute("todo_id")});
   };
   onClick_delete_todo = (e) => {
     var id = e.target.getAttribute("todo_id"),
@@ -79,7 +78,7 @@ class App extends React.Component {
         }
       });
     });
-  }
+  };
 
   create_todos = () => {
     return this.state.to_dos.map((todo, index) => {
