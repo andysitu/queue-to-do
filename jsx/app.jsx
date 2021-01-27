@@ -18,6 +18,9 @@ class App extends React.Component {
     ipcRenderer.send("get-todo");
     ipcRenderer.once("get-todo", (event, data) => {
       console.log(data);
+      if (!data) {
+        data = [];
+      }
       this.setState({
         to_dos: data,
       });
