@@ -45,7 +45,7 @@ class App extends React.Component {
         value: new_name,
       };
       ipcRenderer.send("edit-todo", data);
-    }, 1000);
+    }, 700);
   };
 
   onClick_create_todo = () => {
