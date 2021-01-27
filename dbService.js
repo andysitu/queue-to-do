@@ -30,8 +30,15 @@ module.exports = function(db) {
         }
       });
     },
-    create_task(todo_id) {
-      console.log(todo_id);
+    create_task(todo_id, task_name, task_note, callback) {
+      db.run(`INSERT INTO task (todo_id, name, note) VALUES (?, ?, ?);`, 
+        [todo_id, task_name, task_note]);
+      db.get(` SELECT * FROM task WHERE id in
+              (SELECT last_insert_rowid())`, (err, row) => {
+        if (!err) {
+          callback(row);
+        }
+      });
     },
     get_todos(callback) {
       db.all(`SELECT * FROM to_do`, (err, rows) => {
