@@ -96,9 +96,25 @@ class App extends React.Component {
       });
     });
   };
-  onClick_create_todo_item = (e) => {
-    this.modalmenu.current.show_menu("create_task", (data) => {console.log(data)});
-    // ipcRenderer.send("create-task", {todo_id: e.target.getAttribute("todo_id")});
+
+  onClick_create_task = (e) => {
+    var todo_id = e.target.getAttribute("todo_id"),
+        index = e.target.getAttribute("index");
+    this.modalmenu.current.show_menu(
+      "create_task", 
+      (data) => {
+        data.todo_id = todo_id;
+        ipcRenderer.send("create-task", data);
+        ipcRenderer.once("create-task",  (event, return_data) => {
+          this.setState( state => {
+            var new_list = [...state.todo_list];
+            new_list[index].tasks.push(
+              this.extract_data_to_task(return_data)
+            );
+            return new_list;
+          });
+        });
+      });
   };
   onClick_delete_todo = (e) => {
     var id = e.target.getAttribute("todo_id"),
@@ -125,8 +141,8 @@ class App extends React.Component {
               id={todo.todo_id} index={index}
               onChange={this.onChange_todo_name_timer}></input>
             <button type="button"
-              todo_id={todo.todo_id}
-              onClick={this.onClick_create_todo_task}
+              todo_id={todo.todo_id} index={index}
+              onClick={this.onClick_create_task}
             >+</button>
             <button type="button"
               todo_id={todo.todo_id} index={index}
