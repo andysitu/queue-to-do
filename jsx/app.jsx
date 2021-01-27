@@ -88,10 +88,10 @@ class App extends React.Component {
     ipcRenderer.once("create-todo", (event, data) => {
       console.log(data);
       this.setState((state) => {
-        var new_todo = [...state.todo_list];
-        new_todo.push(data);
+        var new_list = [...state.todo_list];
+        new_list.push(this.extract_data_to_todo(data));
         return {
-          todo_list: new_todo,
+          todo_list: new_list,
         };
       });
     });
