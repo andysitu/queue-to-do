@@ -7,14 +7,18 @@ class ModalMenu extends React.Component {
     super(props);
     this.state = {
       menu_type : "none",
-    }
+      callback: null,
+    };
+    this.callback = null;
   }
-  show_menu(menu_type) {
+  show_menu(menu_type, callback) {
+    this.callback = callback;
     if (menu_type == "create_task") {
-      this.setState({menu_type: menu_type,}, ()=> {
+      this.setState({menu_type: menu_type}, ()=> {
         this.show();
       })
     } else {
+      this.callback = null;
       this.setState({menu_type: "none",})
     }
   }
@@ -38,6 +42,7 @@ class ModalMenu extends React.Component {
   show = () => {
     var container = document.getElementById("modalmenu-container");
     container.classList.toggle("reveal");
+    // Destroys the menu element when hidden
     if (!container.classList.contains("reveal")) {
       this.setState({menu_type: "none"});
     }
@@ -64,7 +69,9 @@ class ModalMenu extends React.Component {
   onSubmit_form = (e) => {
     e.preventDefault();
     var data = this.get_data(e.target);
-    console.log(data);
+    if (this.callback) {
+      this.callback(data);
+    }
   };
 
   render() {
