@@ -7,7 +7,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      to_dos: [],
+      todo_list: [],
     };
     this.modalmenu = React.createRef();
     this.load_todos();
@@ -18,11 +18,8 @@ class App extends React.Component {
     ipcRenderer.send("get-todo");
     ipcRenderer.once("get-todo", (event, data) => {
       console.log(data);
-      if (!data) {
-        data = [];
-      }
       this.setState({
-        to_dos: data,
+        todo_list: data,
       });
     });
   };
@@ -35,10 +32,10 @@ class App extends React.Component {
     clearTimeout(this["todo_name_timer"]);
 
     this.setState((state) => {
-      var new_todos = [...this.state.to_dos];
+      var new_todos = [...this.state.todo_list];
       new_todos[index].todo_name = new_name;
 
-      return {to_dos: new_todos,};
+      return {todo_list: new_todos,};
     });
 
     this["todo_name_timer"] = setTimeout(() => {
@@ -56,10 +53,10 @@ class App extends React.Component {
     ipcRenderer.once("create-todo", (event, data) => {
       console.log(data);
       this.setState((state) => {
-        var new_todo = [...state.to_dos];
+        var new_todo = [...state.todo_list];
         new_todo.push(data);
         return {
-          to_dos: new_todo,
+          todo_list: new_todo,
         };
       });
     });
@@ -74,17 +71,17 @@ class App extends React.Component {
     ipcRenderer.send("delete-todo", {todo_id: id});
     ipcRenderer.once("delete-todo", (event, data) => {
       this.setState((state) => {
-        var new_todos = [...state.to_dos];
+        var new_todos = [...state.todo_list];
         new_todos.splice(index, 1);
         return {
-          to_dos: new_todos,
+          todo_list: new_todos,
         }
       });
     });
   };
 
   create_todos = () => {
-    return this.state.to_dos.map((todo, index) => {
+    return this.state.todo_list.map((todo, index) => {
       return (
         <div key={todo.todo_id}>
           <input type="text" 
