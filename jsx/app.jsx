@@ -17,9 +17,40 @@ class App extends React.Component {
   load_todos = () => {
     ipcRenderer.send("get-todo");
     ipcRenderer.once("get-todo", (event, data) => {
-      console.log(data);
+      let todo_list = [], 
+          todo_map = {},
+          index, todo;
+      
+      for (let i=0; i<data.length; i++) {
+        if (!(data[i].todo_id in todo_map)) {
+          todo_map[data[i].todo_id] = todo_list.length;
+          todo = {
+            todo_id: data[i].todo_id,
+            todo_name: data[i].todo_name,
+            tasks: [],
+          };
+          if (data[i].task_id !== null) {
+            todo.tasks.push({
+              task_name: data[i].task_name,
+              task_id: data[i].task_id,
+              task_note: data[i].task_note,
+            });
+          }
+          todo_list.push(todo);
+        } else {
+          if (data[i].task_id !== null) {
+            index = todo_map[data[i].todo_id];
+            todo_list[index].tasks.push({
+              task_name: data[i].task_name,
+              task_id: data[i].task_id,
+              task_note: data[i].task_note,
+            });
+          }
+        }
+      }
+      console.log(todo_list);
       this.setState({
-        todo_list: data,
+        todo_list: todo_list,
       });
     });
   };
