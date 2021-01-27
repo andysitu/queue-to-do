@@ -16,7 +16,7 @@ class App extends React.Component {
 
   load_todos = () => {
     ipcRenderer.send("get-todo");
-    ipcRenderer.on("get-todo", (event, data) => {
+    ipcRenderer.once("get-todo", (event, data) => {
       console.log(data);
       this.setState({
         to_dos: data,
@@ -50,7 +50,7 @@ class App extends React.Component {
 
   onClick_create_todo = () => {
     ipcRenderer.send("create-todo", {name: "New To-Do"});
-    ipcRenderer.on("create-todo", (event, data) => {
+    ipcRenderer.once("create-todo", (event, data) => {
       console.log(data);
       this.setState((state) => {
         var new_todo = [...state.to_dos];
@@ -70,7 +70,7 @@ class App extends React.Component {
     var id = e.target.getAttribute("todo_id"),
         index = e.target.getAttribute("index");
     ipcRenderer.send("delete-todo", {todo_id: id});
-    ipcRenderer.on("delete-todo", (event, data) => {
+    ipcRenderer.once("delete-todo", (event, data) => {
       this.setState((state) => {
         var new_todos = [...state.to_dos];
         new_todos.splice(index, 1);
