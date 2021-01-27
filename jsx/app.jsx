@@ -14,6 +14,21 @@ class App extends React.Component {
     this.todo_name_timer = null;
   }
 
+  extract_data_to_todo = (data) => {
+    return {
+      todo_id: data.todo_id,
+      todo_name: data.todo_name,
+      tasks: [],
+    }
+  }
+  extract_data_to_task = (data) => {
+    return {
+      task_name: data.task_name,
+      task_id: data.task_id,
+      task_note: data.task_note,
+    }
+  }
+
   load_todos = () => {
     ipcRenderer.send("get-todo");
     ipcRenderer.once("get-todo", (event, data) => {
@@ -24,27 +39,16 @@ class App extends React.Component {
       for (let i=0; i<data.length; i++) {
         if (!(data[i].todo_id in todo_map)) {
           todo_map[data[i].todo_id] = todo_list.length;
-          todo = {
-            todo_id: data[i].todo_id,
-            todo_name: data[i].todo_name,
-            tasks: [],
-          };
+          todo = this.extract_data_to_todo(data[i]);
           if (data[i].task_id !== null) {
-            todo.tasks.push({
-              task_name: data[i].task_name,
-              task_id: data[i].task_id,
-              task_note: data[i].task_note,
-            });
+            todo.tasks.push(this.extract_data_to_task(data[i]));
           }
+
           todo_list.push(todo);
         } else {
           if (data[i].task_id !== null) {
             index = todo_map[data[i].todo_id];
-            todo_list[index].tasks.push({
-              task_name: data[i].task_name,
-              task_id: data[i].task_id,
-              task_note: data[i].task_note,
-            });
+            todo_list[index].tasks.push(this.extract_data_to_task(data[i]));
           }
         }
       }
