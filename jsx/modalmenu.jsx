@@ -25,7 +25,7 @@ class ModalMenu extends React.Component {
     } else if (menu_type == "create_task") {
       return (<div>
         <div>
-          <label htmlFor="task-name-input">Task Name: </label>
+          <label htmlFor="task-name-input" className="focus">Task Name: </label>
           <input type="text" id="task-name-input" name="name"></input>
         </div>
         <div>
@@ -40,6 +40,10 @@ class ModalMenu extends React.Component {
     container.classList.toggle("reveal");
     if (!container.classList.contains("reveal")) {
       this.setState({menu_type: "none"});
+    }
+    var elements = document.getElementsByClassName("focus");
+    if(elements.length > 0) {
+      elements[0].focus();
     }
   };
 
