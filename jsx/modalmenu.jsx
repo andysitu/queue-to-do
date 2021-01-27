@@ -72,6 +72,7 @@ class ModalMenu extends React.Component {
     if (this.callback) {
       this.callback(data);
     }
+    this.show();
   };
 
   render() {
