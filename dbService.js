@@ -7,11 +7,11 @@ module.exports = function(db) {
       // db.run("DROP TABLE if exists task");
       db.run(`
         CREATE TABLE IF NOT EXISTS todo 
-          (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)`);
+          (todo_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)`);
       db.run(`
         CREATE TABLE IF NOT EXISTS task 
           (
-            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            task_id INTEGER PRIMARY KEY AUTOINCREMENT, 
             name TEXT, 
             todo_id INT,
             note TEXT,
