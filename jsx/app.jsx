@@ -36,7 +36,7 @@ class App extends React.Component {
 
     this.setState((state) => {
       var new_todos = [...this.state.to_dos];
-      new_todos[index].name = new_name;
+      new_todos[index].todo_name = new_name;
 
       return {to_dos: new_todos,};
     });
@@ -88,7 +88,7 @@ class App extends React.Component {
       return (
         <div key={todo.todo_id}>
           <input type="text" 
-            value={todo.name}
+            value={todo.todo_name}
             id={todo.todo_id} index={index}
             onChange={this.onChange_todo_name_timer}></input>
           <button type="button"

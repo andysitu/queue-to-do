@@ -7,15 +7,15 @@ module.exports = function(db) {
       // db.run("DROP TABLE if exists task");
       db.run(`
         CREATE TABLE IF NOT EXISTS todo 
-          (todo_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)`);
+          (todo_id INTEGER PRIMARY KEY AUTOINCREMENT, todo_name TEXT)`);
       db.run(`
         CREATE TABLE IF NOT EXISTS task 
           (
             task_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-            name TEXT, 
+            task_name TEXT, 
             todo_id INT,
-            note TEXT,
-            FOREIGN KEY(todo_id) REFERENCES todo(id) 
+            task_note TEXT,
+            FOREIGN KEY(todo_id) REFERENCES todo(todo_id) 
               ON DELETE CASCADE ON UPDATE CASCADE
           )`);
     });
@@ -25,7 +25,8 @@ module.exports = function(db) {
       check_database();
     },
     create_todo(name, callback) {
-      db.run(`INSERT INTO todo (name) VALUES (?);`, [name,]);
+      console.log(name);
+      db.run(`INSERT INTO todo (todo_name) VALUES (?);`, [name,]);
       db.get(`SELECT * FROM todo WHERE todo_id in
         (SELECT last_insert_rowid())`, (err, row) => {
         if (!err) {
@@ -34,9 +35,9 @@ module.exports = function(db) {
       });
     },
     create_task(todo_id, task_name, task_note, callback) {
-      db.run(`INSERT INTO task (todo_id, name, note) VALUES (?, ?, ?);`, 
+      db.run(`INSERT INTO task (todo_id, task_name, task_note) VALUES (?, ?, ?);`, 
         [todo_id, task_name, task_note]);
-      db.get(` SELECT * FROM task WHERE id in
+      db.get(` SELECT * FROM task WHERE task_id in
               (SELECT last_insert_rowid())`, (err, row) => {
         if (!err) {
           callback(row);
@@ -44,10 +45,9 @@ module.exports = function(db) {
       });
     },
     get_todos(callback) {
-      db.all(`SELECT * FROM todo
+      db.all(`SELECT todo.*, task.task_id, task.task_name, task.task_note FROM todo
         LEFT JOIN task on task.todo_id = todo.todo_id`, (err, rows) => {
         if (callback) {
-          console.log(rows);
           callback(rows);
         }
       });
@@ -55,10 +55,10 @@ module.exports = function(db) {
     edit_todo(todo_id, property, value) {
       // Note: Can only use ? for parameter values
       if (property == "name")
-        db.run("UPDATE todo SET name = ? WHERE id = ?", [value, todo_id]);
+        db.run("UPDATE todo SET task_name = ? WHERE todo_id = ?", [value, todo_id]);
     },
     delete_todo(todo_id) {
-      db.run("DELETE FROM todo WHERE id = ?", todo_id);
+      db.run("DELETE FROM todo WHERE todo_id = ?", todo_id);
     },
     delete_all() {
       db.run("DELETE FROM todo");
