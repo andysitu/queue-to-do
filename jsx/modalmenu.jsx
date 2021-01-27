@@ -65,12 +65,11 @@ class ModalMenu extends React.Component {
     e.preventDefault();
     var data = this.get_data(e.target);
     console.log(data);
-  }
+  };
 
   render() {
     return (<div id="modalmenu-container">
-      <div id="mm-overlay">
-      </div>
+      <div id="mm-overlay" onClick={this.show}></div>
       <div id="mm-content-container">
         <form onSubmit={this.onSubmit_form}>
         <button type="button" onClick={this.show}>Close</button>
