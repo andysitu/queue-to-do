@@ -86,17 +86,17 @@ class App extends React.Component {
   create_todos = () => {
     return this.state.to_dos.map((todo, index) => {
       return (
-        <div key={todo.id}>
+        <div key={todo.todo_id}>
           <input type="text" 
             value={todo.name}
-            id={todo.id} index={index}
+            id={todo.todo_id} index={index}
             onChange={this.onChange_todo_name_timer}></input>
           <button type="button"
-            todo_id={todo.id}
-            onClick={this.onClick_create_todo_item}
+            todo_id={todo.todo_id}
+            onClick={this.onClick_create_todo_task}
           >+</button>
           <button type="button"
-            todo_id={todo.id} index={index}
+            todo_id={todo.todo_id} index={index}
             onClick={this.onClick_delete_todo}
           >
             x

@@ -26,7 +26,7 @@ module.exports = function(db) {
     },
     create_todo(name, callback) {
       db.run(`INSERT INTO todo (name) VALUES (?);`, [name,]);
-      db.get(`SELECT * FROM todo WHERE id in
+      db.get(`SELECT * FROM todo WHERE todo_id in
         (SELECT last_insert_rowid())`, (err, row) => {
         if (!err) {
           callback(row);
@@ -45,7 +45,7 @@ module.exports = function(db) {
     },
     get_todos(callback) {
       db.all(`SELECT * FROM todo
-        LEFT JOIN task on task.todo_id = todo.id`, (err, rows) => {
+        LEFT JOIN task on task.todo_id = todo.todo_id`, (err, rows) => {
         if (callback) {
           console.log(rows);
           callback(rows);
