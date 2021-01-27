@@ -154,7 +154,7 @@ class App extends React.Component {
           <div>
             <ul>
               {todo.tasks.map(task => {
-                return (<li>{task.task_name}</li>);
+                return (<li key={task.task_id}>{task.task_name}</li>);
               })}
             </ul>
           </div>
