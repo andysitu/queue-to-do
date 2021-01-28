@@ -52,13 +52,16 @@ ipcMain.on("create-task", (event, arg) => {
   }
 });
 
+ipcMain.on("edit-task", (event, arg) => {
+  dbService.edit_task(arg.task_id, arg.property, arg.value);
+});
+
 ipcMain.on("create-todo", (event, arg) => {
   if (arg.name && arg.name.length > 0) {
     dbService.create_todo(arg.name, (data) => {
       event.reply("create-todo", data);
     });
   }
-  
 });
 
 ipcMain.on("delete-todo", (event, arg) => {
