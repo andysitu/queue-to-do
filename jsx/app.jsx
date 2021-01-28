@@ -136,8 +136,7 @@ class App extends React.Component {
 
   onChange_taskName = (e) => {
     var index = e.target.getAttribute("index"),
-        id = e.target.getAttribute("id"),
-        todo_id = e.target.getAttribute("todo_id"),
+    task_id = e.target.getAttribute("task_id"),
         todo_index = e.target.getAttribute("todo_index"),
         value = e.target.value;
     this.setState(state => {
@@ -148,7 +147,7 @@ class App extends React.Component {
     clearTimeout(this["task_name_timer"]);
     this["task_name_timer"] = setTimeout(() => {
       var data = {
-        task_id: id,
+        task_id: task_id,
         property: "name",
         value: value,
       };
@@ -182,7 +181,7 @@ class App extends React.Component {
                 return (
                 <li key={"task-"+task.task_id}>
                   <input value={task.task_name}
-                    todo_index={todo_index} todo_id={todo.todo_id}
+                    todo_index={todo_index}
                     index={task_index} task_id={task.task_id}
                     onChange={this.onChange_taskName}></input>
                 </li>);
