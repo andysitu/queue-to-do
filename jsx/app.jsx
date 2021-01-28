@@ -116,18 +116,21 @@ class App extends React.Component {
       });
   };
   onClick_delete_todo = (e) => {
-    var id = e.target.getAttribute("todo_id"),
+    let id = e.target.getAttribute("todo_id"),
         index = e.target.getAttribute("index");
-    ipcRenderer.send("delete-todo", {todo_id: id});
-    ipcRenderer.once("delete-todo", (event, data) => {
-      this.setState((state) => {
-        var new_todos = [...state.todo_list];
-        new_todos.splice(index, 1);
-        return {
-          todo_list: new_todos,
-        }
+    let result = window.confirm(`Are you sure you want to delete todo ${this.state.todo_list[index].todo_name}?`);
+    if (result)  {
+      ipcRenderer.send("delete-todo", {todo_id: id});
+      ipcRenderer.once("delete-todo", (event, data) => {
+        this.setState((state) => {
+          var new_todos = [...state.todo_list];
+          new_todos.splice(index, 1);
+          return {
+            todo_list: new_todos,
+          }
+        });
       });
-    });
+    }
   };
 
   create_todos = () => {
