@@ -32,10 +32,6 @@ class ModalMenu extends React.Component {
           <label htmlFor="task-name-input" className="focus">Task Name: </label>
           <input type="text" id="task-name-input" name="name"></input>
         </div>
-        <div>
-          <label htmlFor="task-note-input">Note: </label>
-          <input type="text" id="task-note-input" name="note"></input>
-        </div>
       </div>)
     }
   }

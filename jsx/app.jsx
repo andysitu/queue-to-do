@@ -25,7 +25,6 @@ class App extends React.Component {
     return {
       task_name: data.task_name,
       task_id: data.task_id,
-      task_note: data.task_note,
     }
   }
 
