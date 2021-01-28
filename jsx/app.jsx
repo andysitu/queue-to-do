@@ -12,6 +12,7 @@ class App extends React.Component {
     this.modalmenu = React.createRef();
     this.load_todos();
     this.todo_name_timer = null;
+    this.task_name_timer = null;
   }
 
   extract_data_to_todo = (data) => {
@@ -133,21 +134,47 @@ class App extends React.Component {
     }
   };
 
+  // onChange_todo_name_timer = (e) => {
+  //   clearTimeout(this["todo_name_timer"]);
+
+  //   this["todo_name_timer"] = setTimeout(() => {
+  //     var data = {
+  //       todo_id: id,
+  //       property: "name",
+  //       value: new_name,
+  //     };
+  //     ipcRenderer.send("edit-todo", data);
+  //   }, 700);
+  // };
+
+  onChange_taskName = (e) => {
+    var index = e.target.getAttribute("index"),
+        id = e.target.getAttribute("id"),
+        todo_id = e.target.getAttribute("todo_id"),
+        todo_index = e.target.getAttribute("todo_index"),
+        value = e.target.value;
+    this.setState(state => {
+      var new_list = [...state.todo_list];
+      new_list[todo_index].tasks[index].task_name = value;
+      return { todo_list: new_list, };
+    })
+  };
+
   create_todos = () => {
-    return this.state.todo_list.map((todo, index) => {
+    return this.state.todo_list.map((todo, todo_index) => {
       return (
         <div key={todo.todo_id}>
           <div>
             <input type="text" 
               value={todo.todo_name}
-              id={todo.todo_id} index={index}
+              id={todo.todo_id} index={todo_index}
               onChange={this.onChange_todo_name_timer}></input>
             <button type="button"
-              todo_id={todo.todo_id} index={index}
+              todo_id={todo.todo_id} index={todo_index}
               onClick={this.onClick_create_task}
             >+</button>
             <button type="button"
-              todo_id={todo.todo_id} index={index}
+              todo_id={todo.todo_id} index={todo_index}
               onClick={this.onClick_delete_todo}
             >
               x
@@ -155,8 +182,14 @@ class App extends React.Component {
           </div>
           <div>
             <ul>
-              {todo.tasks.map(task => {
-                return (<li key={task.task_id}>{task.task_name}</li>);
+              {todo.tasks.map((task, task_index) => {
+                return (
+                <li key={"task-"+task.task_id}>
+                  <input value={task.task_name}
+                    todo_index={todo_index} todo_id={todo.todo_id}
+                    index={task_index} task_id={task.task_id}
+                    onChange={this.onChange_taskName}></input>
+                </li>);
               })}
             </ul>
           </div>
