@@ -134,19 +134,6 @@ class App extends React.Component {
     }
   };
 
-  // onChange_todo_name_timer = (e) => {
-  //   clearTimeout(this["todo_name_timer"]);
-
-  //   this["todo_name_timer"] = setTimeout(() => {
-  //     var data = {
-  //       todo_id: id,
-  //       property: "name",
-  //       value: new_name,
-  //     };
-  //     ipcRenderer.send("edit-todo", data);
-  //   }, 700);
-  // };
-
   onChange_taskName = (e) => {
     var index = e.target.getAttribute("index"),
         id = e.target.getAttribute("id"),
@@ -157,7 +144,16 @@ class App extends React.Component {
       var new_list = [...state.todo_list];
       new_list[todo_index].tasks[index].task_name = value;
       return { todo_list: new_list, };
-    })
+    });
+    clearTimeout(this["task_name_timer"]);
+    this["task_name_timer"] = setTimeout(() => {
+      var data = {
+        task_id: id,
+        property: "name",
+        value: value,
+      };
+      ipcRenderer.send("edit-task", data);
+    }, 700);
   };
 
   create_todos = () => {
