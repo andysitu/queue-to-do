@@ -54,7 +54,7 @@ module.exports = function(db) {
     edit_todo(todo_id, property, value) {
       // Note: Can only use ? for parameter values
       if (property == "name") {
-        db.run("UPDATE todo SET task_name = ? WHERE todo_id = ?", [value, todo_id]);
+        db.run("UPDATE todo SET todo_name = ? WHERE todo_id = ?", [value, todo_id]);
       }
     },
     edit_task(task_id, property, value) {
