@@ -23,8 +23,9 @@ app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') { // Mac - returns darwin
-    app.quit();
+    console.log("exit");
     db.close();
+    app.exit(0);
   }
 });
 
