@@ -110,7 +110,7 @@ class App extends React.Component {
         ipcRenderer.once("create-task",  (event, return_data) => {
           this.setState( state => {
             var new_list = [...state.todo_list];
-            new_list[index].tasks = [...new_list[index].tasks];
+            new_list[index].tasks = [...state.todo_list[index].tasks];
             new_list[index].tasks.unshift(
               this.extract_data_to_task(return_data)
             );
