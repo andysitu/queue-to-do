@@ -3,7 +3,8 @@ import { ModalMenu } from "./modalmenu.js"
 const React = require('react');
 const ReactDom = require('react-dom');
 const {ipcRenderer, remote} = require('electron');
-const { Menu, MenuItem } = remote
+const { Menu, MenuItem } = remote;
+const { connect } = require('react-redux');
 
 class App extends React.Component {
   constructor(props) {

@@ -11,7 +11,7 @@ const initialState = {
  * RATHER THAN COPY THE ENTIRE THING
  */
 function todoReducer(state = initialState, action) {
-  if (action.type == "load_todos") {
+  if (action.type == "todo/load") {
     return {
       ...state,
       todo_list: action.payload,

@@ -7,8 +7,11 @@ import App from './app.js'
 const React = require('react');
 const ReactDom = require('react-dom');
 
+console.log(store.getState());
+
 ReactDom.render(
   (<Provider store={store}>
     <App />
   </Provider>), 
-  document.getElementById("main-container"));
+  document.getElementById("main-container")
+);
