@@ -1,8 +1,5 @@
 import { ModalMenu } from "./modalmenu.js"
 
-// import { Provider } from 'react-redux'
-import { store  } from './redux/store.js'
-
 const React = require('react');
 const ReactDom = require('react-dom');
 const {ipcRenderer, remote} = require('electron');
@@ -227,4 +224,4 @@ class App extends React.Component {
   }
 }
 
-ReactDom.render(<App />, document.getElementById("main-container"));
+export default App
