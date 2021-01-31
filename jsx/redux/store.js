@@ -9,6 +9,3 @@ import { todoReducer } from "./reducer.js"
 
 // Need to create store & create state after the function declaration
 const store = createStore(todoReducer);
-
-console.log(store);
-console.log(store.getState());
