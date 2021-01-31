@@ -2,7 +2,7 @@ export { store, }
 
 // import { createStore } from 'redux'
 // const { createStore } = require('redux');
-import { todoReducer } from "./todoreducer.js"
+import { todoReducer } from "./reducers/todoreducer.js"
 
 const { configureStore } = require('@reduxjs/toolkit')
 // const update = require('immutability-helper');
