@@ -1,5 +1,8 @@
 import { ModalMenu } from "./modalmenu.js"
 
+// import { Provider } from 'react-redux'
+import { store  } from './redux/store.js'
+
 const React = require('react');
 const ReactDom = require('react-dom');
 const {ipcRenderer, remote} = require('electron');
@@ -15,6 +18,12 @@ class App extends React.Component {
     this.load_todos();
     this.todo_name_timer = null;
     this.task_name_timer = null;
+
+    this.todo_contextmenu = null;
+  }
+
+  create_todo_contextmenu = () => {
+
   }
 
   extract_data_to_todo = (data) => {
@@ -138,6 +147,12 @@ class App extends React.Component {
       });
     }
   };
+  
+  onContextMenu_todo = (e) => {
+    // e.stopPropagation();
+    // e.preventDefault();
+    console.log(e.target);
+  }
 
   onChange_taskName = (e) => {
     var index = e.target.getAttribute("index"),
@@ -163,7 +178,7 @@ class App extends React.Component {
   create_todos = () => {
     return this.state.todo_list.map((todo, todo_index) => {
       return (
-        <div key={todo.todo_id}>
+        <div key={todo.todo_id} onContextMenu={this.onContextMenu_todo}>
           <div>
             <input type="text" 
               value={todo.todo_name}

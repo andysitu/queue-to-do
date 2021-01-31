@@ -1,14 +1,3 @@
-export { store, }
-
-// import { createStore } from 'redux'
-const { createStore } = require('redux');
-
-// const { configureStore } = require('@reduxjs/toolkit')
-// const update = require('immutability-helper');
-
-// const store = configureStore({reducer: todoReducer});
-
-
 const initialState = {
   test: 100,
   todo_list: [],
@@ -25,7 +14,7 @@ function todoReducer(state = initialState, action) {
       ...state,
       todo_list: action.payload,
     };
-  } else if (action.type == "hange_todo_name") {
+  } else if (action.type == "change_todo_name") {
     let new_state = {...state};
     new_state.todo_list = [...state.todo_list];
     new_state.todo_list[action.payload.index] = action.payload.name;
@@ -56,9 +45,3 @@ function todoReducer(state = initialState, action) {
     return state;
   }
 }
-
-// Need to create store & create state after the function declaration
-const store = createStore(todoReducer);
-
-console.log(store);
-console.log(store.getState());
