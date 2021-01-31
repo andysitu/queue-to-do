@@ -9,4 +9,8 @@ const { configureStore } = require('@reduxjs/toolkit')
 
 // Need to create store & create state after the function declaration
 // const store = createStore(todoReducer);
-const store = configureStore({reducer: todoReducer});
+const store = configureStore({
+  reducer: {
+    todo: todoReducer
+  }
+});
