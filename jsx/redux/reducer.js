@@ -1,3 +1,5 @@
+export { todoReducer }
+
 const initialState = {
   test: 100,
   todo_list: [],
