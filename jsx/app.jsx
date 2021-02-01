@@ -4,7 +4,25 @@ const React = require('react');
 const ReactDom = require('react-dom');
 const {ipcRenderer, remote} = require('electron');
 const { Menu, MenuItem } = remote;
-const { connect } = require('react-redux');
+
+const { useSelector, useDispatch } = require('react-redux')
+import { decrement, increment, incrementByAmount, selectTest } from './redux/todoSlice.js'
+
+
+function Test() {
+  const test = useSelector(selectTest);
+  const dispatch = useDispatch();
+
+  let increase =() => {
+    console.log("increase");
+    dispatch(increment());
+  }
+
+  return (<div>
+    <button onClick={increase}>Increase</button>
+    <div>{test}</div>
+  </div>)
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -213,6 +231,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Test />
+        <div>{this.test}</div>
         <button type="button"
           onClick={this.onClick_create_todo}>Create To-Do
         </button>
@@ -223,6 +243,10 @@ class App extends React.Component {
       </div>
     );
   }
+}
+
+const mapStateToProps = state => {
+  
 }
 
 export default App
