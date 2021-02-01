@@ -47,8 +47,8 @@ export const selectTest = state => state.todo.test;
 export const selectTodoList = state => state.todo.todo_list;
 
 export const loadToDo = () => {
-  return async (dispatch, getState) => {
-    const result = await ipcRenderer.invoke("get-todo", (event, data) => {
+  return (dispatch, getState) => {
+    ipcRenderer.invoke("get-todo", (event, data) => {
       let todo_list = [], 
         todo_map = {},
         index, todo;
