@@ -1,6 +1,7 @@
 import { ModalMenu } from "./modalmenu.js"
 
 const React = require('react');
+const {useState, useEffect} = require('react');
 const ReactDom = require('react-dom');
 const {ipcRenderer, remote} = require('electron');
 const { Menu, MenuItem } = remote;
@@ -14,7 +15,7 @@ function Test() {
   const dispatch = useDispatch();
 
   let increase =() => {
-    dispatch(increment());
+    dispatch(todoSlice.increment());
   }
 
   return (<div>
@@ -26,15 +27,57 @@ function Test() {
 function App() {
   const dispatch = useDispatch();
 
-  const todo_list = useSelector(todoSlice.selectTodoList);
+  // const todo_list = useSelector(todoSlice.selectTodoList);
 
   let modalmenu = React.createRef();
   let onClick_create_todo = () => {
     console.log("create_todo");
   }
 
+  useEffect(() => {
+    load_todo();
+  });
+
+  const extract_data_to_todo = (data) => {
+    return {
+      todo_id: data.todo_id,
+      todo_name: data.todo_name,
+      tasks: [],
+    }
+  }
+  const extract_data_to_task = (data) => {
+    return {
+      task_name: data.task_name,
+      task_id: data.task_id,
+    }
+  }
+
   let load_todo = () => {
-    dispatch(todoSlice.loadTodo());
+    ipcRenderer.send("get-todo");
+    ipcRenderer.once("get-todo", (event, data) => {
+      let new_list = [], 
+          todo_map = {},
+          index, todo;
+      
+      for (let i=0; i<data.length; i++) {
+        if (!(data[i].todo_id in todo_map)) {
+          todo_map[data[i].todo_id] = new_list.length;
+          todo = extract_data_to_todo(data[i]);
+          if (data[i].task_id !== null) {
+            todo.tasks.push(extract_data_to_task(data[i]));
+          }
+
+          new_list.push(todo);
+        } else {
+          if (data[i].task_id !== null) {
+            index = todo_map[data[i].todo_id];
+            new_list[index].tasks.push(extract_data_to_task(data[i]));
+          }
+        }
+      }
+      console.log(new_list);
+      dispatch(todoSlice.setTodo(new_list));
+    });
   }
 
   const cdreate_todos = () => {
@@ -77,8 +120,6 @@ function App() {
   let create_todos = () => {
     return (<div>Test</div>);
   }
-
-  // load_todo();
 
   return (<div>
     <Test />
