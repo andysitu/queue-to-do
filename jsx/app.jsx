@@ -25,16 +25,14 @@ function Test() {
 }
 
 function App(props) {
-  console.log("props", props);
   const dispatch = useDispatch();
 
+  let todo_name_timer = null;
   const todo_list = useSelector(todoSlice.selectTodoList);
 
   let modalmenu = React.createRef();
-  console.log(todo_list);
 
   useEffect(()=> {
-    console.log("test");
   })
 
   let onClick_create_todo = () => {
@@ -43,16 +41,39 @@ function App(props) {
       var todoData = props.extract_data_to_todo(data)
       dispatch(todoSlice.addTodo(todoData));
     });
-  }
+  };
 
   const onClick_delete_todo = (e) => {
     const id = e.target.getAttribute("todo_id"),
           index = e.target.getAttribute("index");
     const result = window.confirm(`Are you sure you want to delete todo ${todo_list[index].todo_name}?`);
     if (result)  {
-      dispatch(todoSlice.deleteTodo({ index:index}));
+      ipcRenderer.send("delete-todo", {todo_id: id});
+      ipcRenderer.once("delete-todo", (event, data) => {
+        dispatch(todoSlice.deleteTodo({ index:index}));
+      });
     }
-  }
+  };
+
+  const onChange_todo_name_timer = (e) => {
+    const id = e.target.getAttribute("id"),
+          new_name = e.target.value,
+          index = parseInt(e.target.getAttribute("index"));
+
+    clearTimeout(todo_name_timer);
+
+    dispatch(todoSlice.editTodo(
+      { index:index, property: "name", value: new_name}));
+
+    todo_name_timer = setTimeout(() => {
+      var data = {
+        todo_id: id,
+        property: "name",
+        value: new_name,
+      };
+      ipcRenderer.send("edit-todo", data);
+    }, 700);
+  };
 
   let create_todos = () => {
     return (
@@ -65,7 +86,7 @@ function App(props) {
               <input type="text" 
                 value={todo.todo_name}
                 id={todo.todo_id} index={todo_index}
-                // onChange={this.onChange_todo_name_timer}
+                onChange={onChange_todo_name_timer}
                 ></input>
               <button type="button"
                 todo_id={todo.todo_id} index={todo_index}

@@ -87,7 +87,6 @@ class App extends React.Component {
   onClick_create_todo = () => {
     ipcRenderer.send("create-todo", {name: "New To-Do"});
     ipcRenderer.once("create-todo", (event, data) => {
-      console.log(data);
       this.setState((state) => {
         var new_list = [...state.todo_list];
         new_list.push(this.extract_data_to_todo(data));

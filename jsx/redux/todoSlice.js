@@ -41,12 +41,20 @@ export const todoSlice = createSlice({
     },
     addTodo: (state, action) => {
       state.todo_list = [...state.todo_list, action.payload];
+    },
+    editTodo: (state, action) => {
+      console.log(action);
+      var new_todos = [...state.todo_list];
+      if (action.payload.property == "name") {
+        new_todos[action.payload.index].todo_name = action.payload.value;
+      }
+      state.todo_list = new_todos;
     }
   }
 });
 
 export const { increment, decrement, incrementByAmount, 
-                setTodo, deleteTodo, addTodo } = todoSlice.actions
+                setTodo, deleteTodo, addTodo, editTodo } = todoSlice.actions
 
 export default todoSlice.reducer
 
