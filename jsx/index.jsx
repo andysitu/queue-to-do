@@ -10,14 +10,14 @@ import App from './app.js'
 const React = require('react');
 const ReactDom = require('react-dom');
 
-const extract_data_to_todo = (data) => {
+function extract_data_to_todo(data) {
   return {
     todo_id: data.todo_id,
     todo_name: data.todo_name,
     tasks: [],
   }
 }
-const extract_data_to_task = (data) => {
+function extract_data_to_task(data) {
   return {
     task_name: data.task_name,
     task_id: data.task_id,
@@ -48,10 +48,13 @@ let load_todo = () => {
       }
     }
     store.dispatch(todoSlice.setTodo(new_list));
-    
+
     ReactDom.render(
       (<Provider store={store}>
-        <App />
+        <App 
+          extract_data_to_todo={extract_data_to_todo}
+          extract_data_to_task={extract_data_to_task}
+        />
       </Provider>), 
       document.getElementById("main-container")
     );

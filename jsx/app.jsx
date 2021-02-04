@@ -24,7 +24,8 @@ function Test() {
   </div>)
 }
 
-function App() {
+function App(props) {
+  console.log("props", props);
   const dispatch = useDispatch();
 
   const todo_list = useSelector(todoSlice.selectTodoList);
