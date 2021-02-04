@@ -27,57 +27,17 @@ function Test() {
 function App() {
   const dispatch = useDispatch();
 
-  // const todo_list = useSelector(todoSlice.selectTodoList);
+  const todo_list = useSelector(todoSlice.selectTodoList);
 
   let modalmenu = React.createRef();
+  console.log(todo_list);
+
+  useEffect(()=> {
+    console.log("test");
+  })
+
   let onClick_create_todo = () => {
     console.log("create_todo");
-  }
-
-  useEffect(() => {
-    load_todo();
-  });
-
-  const extract_data_to_todo = (data) => {
-    return {
-      todo_id: data.todo_id,
-      todo_name: data.todo_name,
-      tasks: [],
-    }
-  }
-  const extract_data_to_task = (data) => {
-    return {
-      task_name: data.task_name,
-      task_id: data.task_id,
-    }
-  }
-
-  let load_todo = () => {
-    ipcRenderer.send("get-todo");
-    ipcRenderer.once("get-todo", (event, data) => {
-      let new_list = [], 
-          todo_map = {},
-          index, todo;
-      
-      for (let i=0; i<data.length; i++) {
-        if (!(data[i].todo_id in todo_map)) {
-          todo_map[data[i].todo_id] = new_list.length;
-          todo = extract_data_to_todo(data[i]);
-          if (data[i].task_id !== null) {
-            todo.tasks.push(extract_data_to_task(data[i]));
-          }
-
-          new_list.push(todo);
-        } else {
-          if (data[i].task_id !== null) {
-            index = todo_map[data[i].todo_id];
-            new_list[index].tasks.push(extract_data_to_task(data[i]));
-          }
-        }
-      }
-      console.log(new_list);
-      dispatch(todoSlice.setTodo(new_list));
-    });
   }
 
   const cdreate_todos = () => {
