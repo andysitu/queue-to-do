@@ -18,19 +18,9 @@ const extract_data_to_task = (data) => {
 export const todoSlice = createSlice({
   name: "todo",
   initialState: {
-    test: 100,
     todo_list: [],
   },
   reducers: {
-    increment: state => {
-      state.test += 1;
-    },
-    decrement: state => {
-      state.test -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.test += action.payload;
-    },
     setTodo: (state, action) => {
       state.todo_list = action.payload;
     },
@@ -57,8 +47,7 @@ export const todoSlice = createSlice({
   }
 });
 
-export const { increment, decrement, incrementByAmount, 
-                setTodo, deleteTodo, addTodo, editTodo,
+export const { setTodo, deleteTodo, addTodo, editTodo,
                 addTask, editTask } = todoSlice.actions
 
 export default todoSlice.reducer

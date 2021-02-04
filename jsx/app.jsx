@@ -9,21 +9,6 @@ const { Menu, MenuItem } = remote;
 const { useSelector, useDispatch } = require('react-redux')
 import * as todoSlice from './redux/todoSlice.js'
 
-
-function Test() {
-  const test = useSelector(todoSlice.selectTest);
-  const dispatch = useDispatch();
-
-  let increase =() => {
-    dispatch(todoSlice.increment());
-  }
-
-  return (<div>
-    <button onClick={increase}>Increase</button>
-    <div>{test}</div>
-  </div>)
-}
-
 function App(props) {
   const dispatch = useDispatch();
 
