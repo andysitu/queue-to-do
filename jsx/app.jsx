@@ -40,6 +40,15 @@ function App() {
     console.log("create");
   }
 
+  const onClick_delete_todo = (e) => {
+    const id = e.target.getAttribute("todo_id"),
+          index = e.target.getAttribute("index");
+    const result = window.confirm(`Are you sure you want to delete todo ${todo_list[index].todo_name}?`);
+    if (result)  {
+      dispatch(todoSlice.deleteTodo({ index:index}));
+    }
+  }
+
   let create_todos = () => {
     return (
       todo_list.map((todo, todo_index)=> {
@@ -59,7 +68,7 @@ function App() {
               >+</button>
               <button type="button"
                 todo_id={todo.todo_id} index={todo_index}
-                // onClick={this.onClick_delete_todo}
+                onClick={onClick_delete_todo}
               >
                 x
               </button>
