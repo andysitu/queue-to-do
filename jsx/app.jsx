@@ -38,7 +38,11 @@ function App(props) {
   })
 
   let onClick_create_todo = () => {
-    console.log("create");
+    ipcRenderer.send("create-todo", {name: "New To-Do"});
+    ipcRenderer.once("create-todo", (event, data) => {
+      var todoData = props.extract_data_to_todo(data)
+      dispatch(todoSlice.addTodo(todoData));
+    });
   }
 
   const onClick_delete_todo = (e) => {
