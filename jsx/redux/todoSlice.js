@@ -35,20 +35,15 @@ export const todoSlice = createSlice({
       state.todo_list = action.payload;
     },
     deleteTodo: (state, action) => {
-      const new_todos = [...state.todo_list];
-      new_todos.splice(action.payload.index, 1);
-      state.todo_list = new_todos;
+      state.todo_list.splice(action.payload.index, 1);
     },
     addTodo: (state, action) => {
-      state.todo_list = [...state.todo_list, action.payload];
+      state.todo_list.push(action.payload);
     },
     editTodo: (state, action) => {
-      console.log(action);
-      var new_todos = [...state.todo_list];
       if (action.payload.property == "name") {
-        new_todos[action.payload.index].todo_name = action.payload.value;
+        state.todo_list[action.payload.index].todo_name = action.payload.value;
       }
-      state.todo_list = new_todos;
     },
     addTask: (state, action) => {
       state.todo_list[action.payload.index].tasks.unshift(action.payload.task);
