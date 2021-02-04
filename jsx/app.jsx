@@ -75,6 +75,25 @@ function App(props) {
     }, 700);
   };
 
+  const onClick_create_task = (e) => {
+    const todo_id = e.target.getAttribute("todo_id"),
+          index = e.target.getAttribute("index");
+    modalmenu.current.show_menu(
+      "create_task",
+      (data) => {
+        console.log(data);
+        data.todo_id = todo_id;
+        ipcRenderer.send("create-task", data);
+        ipcRenderer.once("create-task",  (event, return_data) => {
+          dispatch(todoSlice.addTask({
+            task: props.extract_data_to_task(return_data),
+            index: index,
+          }));
+        });
+      }
+    )
+  };
+
   let create_todos = () => {
     return (
       todo_list.map((todo, todo_index)=> {
@@ -90,7 +109,7 @@ function App(props) {
                 ></input>
               <button type="button"
                 todo_id={todo.todo_id} index={todo_index}
-                // onClick={this.onClick_create_task}
+                onClick={onClick_create_task}
               >+</button>
               <button type="button"
                 todo_id={todo.todo_id} index={todo_index}

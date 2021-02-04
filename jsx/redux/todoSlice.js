@@ -49,12 +49,16 @@ export const todoSlice = createSlice({
         new_todos[action.payload.index].todo_name = action.payload.value;
       }
       state.todo_list = new_todos;
+    },
+    addTask: (state, action) => {
+      state.todo_list[action.payload.index].tasks.unshift(action.payload.task);
     }
   }
 });
 
 export const { increment, decrement, incrementByAmount, 
-                setTodo, deleteTodo, addTodo, editTodo } = todoSlice.actions
+                setTodo, deleteTodo, addTodo, editTodo,
+                addTask } = todoSlice.actions
 
 export default todoSlice.reducer
 
