@@ -37,48 +37,50 @@ function App() {
   })
 
   let onClick_create_todo = () => {
-    console.log("create_todo");
+    console.log("create");
   }
 
-  const cdreate_todos = () => {
-    return this.state.todo_list.map((todo, todo_index) => {
-      return (
-        <div key={todo.todo_id} onContextMenu={this.onContextMenu_todo}>
-          <div>
-            <input type="text" 
-              value={todo.todo_name}
-              id={todo.todo_id} index={todo_index}
-              onChange={this.onChange_todo_name_timer}></input>
-            <button type="button"
-              todo_id={todo.todo_id} index={todo_index}
-              onClick={this.onClick_create_task}
-            >+</button>
-            <button type="button"
-              todo_id={todo.todo_id} index={todo_index}
-              onClick={this.onClick_delete_todo}
-            >
-              x
-            </button>
-          </div>
-          <div>
-            <ul>
-              {todo.tasks.map((task, task_index) => {
-                return (
-                <li key={"task-"+task.task_id}>
-                  <input value={task.task_name}
-                    todo_index={todo_index}
-                    index={task_index} task_id={task.task_id}
-                    onChange={this.onChange_taskName}></input>
-                </li>);
-              })}
-            </ul>
-          </div>
-        </div>);
-    });
-  };
-
   let create_todos = () => {
-    return (<div>Test</div>);
+    return (
+      todo_list.map((todo, todo_index)=> {
+        return (
+          <div key={todo.todo_id} 
+          // onContextMenu={this.onContextMenu_todo}
+          >
+            <div>
+              <input type="text" 
+                value={todo.todo_name}
+                id={todo.todo_id} index={todo_index}
+                // onChange={this.onChange_todo_name_timer}
+                ></input>
+              <button type="button"
+                todo_id={todo.todo_id} index={todo_index}
+                // onClick={this.onClick_create_task}
+              >+</button>
+              <button type="button"
+                todo_id={todo.todo_id} index={todo_index}
+                // onClick={this.onClick_delete_todo}
+              >
+                x
+              </button>
+            </div>
+            <div>
+              <ul>
+                {todo.tasks.map((task, task_index) => {
+                  return (
+                  <li key={"task-"+task.task_id}>
+                    <input value={task.task_name}
+                      todo_index={todo_index}
+                      index={task_index} task_id={task.task_id}
+                      // onChange={this.onChange_taskName}
+                    ></input>
+                  </li>);
+                })}
+              </ul>
+            </div>
+          </div>);
+      })
+    );
   }
 
   return (<div>
