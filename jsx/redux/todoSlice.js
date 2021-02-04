@@ -47,13 +47,19 @@ export const todoSlice = createSlice({
     },
     addTask: (state, action) => {
       state.todo_list[action.payload.index].tasks.unshift(action.payload.task);
+    },
+    editTask: (state, action) => {
+      if (action.payload.property == "name") {
+        state.todo_list[action.payload.todo_index]
+          .tasks[action.payload.index].task_name = action.payload.value;
+      }
     }
   }
 });
 
 export const { increment, decrement, incrementByAmount, 
                 setTodo, deleteTodo, addTodo, editTodo,
-                addTask } = todoSlice.actions
+                addTask, editTask } = todoSlice.actions
 
 export default todoSlice.reducer
 

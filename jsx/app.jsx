@@ -27,7 +27,9 @@ function Test() {
 function App(props) {
   const dispatch = useDispatch();
 
+  const timer_interval = 700;
   let todo_name_timer = null;
+  let task_name_timer = null;
   const todo_list = useSelector(todoSlice.selectTodoList);
 
   let modalmenu = React.createRef();
@@ -72,7 +74,7 @@ function App(props) {
         value: new_name,
       };
       ipcRenderer.send("edit-todo", data);
-    }, 700);
+    }, timer_interval);
   };
 
   const onClick_create_task = (e) => {
@@ -93,6 +95,29 @@ function App(props) {
       }
     )
   };
+
+  const onChange_taskName = (e) => {
+    const index = e.target.getAttribute("index"),
+          task_id = e.target.getAttribute("task_id"),
+          todo_index = e.target.getAttribute("todo_index"),
+          value = e.target.value;
+    dispatch(todoSlice.editTask({
+      property: "name",
+      index: index,
+      todo_index: todo_index,
+      value: value,
+    }));
+
+    clearTimeout(task_name_timer);
+    task_name_timer = setTimeout(() => {
+      var data = {
+        task_id: task_id,
+        property: "name",
+        value: value,
+      };
+      ipcRenderer.send("edit-task", data);
+    }, timer_interval);
+  }
 
   let create_todos = () => {
     return (
@@ -126,7 +151,7 @@ function App(props) {
                     <input value={task.task_name}
                       todo_index={todo_index}
                       index={task_index} task_id={task.task_id}
-                      // onChange={this.onChange_taskName}
+                      onChange={onChange_taskName}
                     ></input>
                   </li>);
                 })}
