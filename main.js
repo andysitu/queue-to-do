@@ -65,6 +65,12 @@ ipcMain.on("create-todo", (event, arg) => {
   }
 });
 
+ipcMain.on("delete-task", (event, arg) => {
+  if (arg.task_id)
+    dbService.delete_task(arg.task_id);
+  event.reply("delete-task", "OK");
+});
+
 ipcMain.on("delete-todo", (event, arg) => {
   if (arg.todo_id) {
     dbService.delete_todo(arg.todo_id);

@@ -104,6 +104,19 @@ function App(props) {
     }, timer_interval);
   }
 
+  const onClick_deleteTask = (e) => {
+    const todo_index = e.target.getAttribute("todo_index"),
+          task_index = e.target.getAttribute("task_index"),
+          task_id = e.target.getAttribute("task_id");
+    ipcRenderer.send("delete-task", {task_id: task_id});
+    ipcRenderer.on("delete-task", () => {
+      dispatch(todoSlice.deleteTask({
+        todo_index: todo_index,
+        task_index: task_index,
+      }));
+    });    
+  };
+
   let create_todos = () => {
     return (
       todo_list.map((todo, todo_index)=> {
@@ -138,6 +151,11 @@ function App(props) {
                       index={task_index} task_id={task.task_id}
                       onChange={onChange_taskName}
                     ></input>
+                    <button type="button"
+                      todo_index={todo_index}
+                      task_index={task_index} task_id={task.task_id}
+                      onClick={onClick_deleteTask}
+                    >x</button>
                   </li>);
                 })}
               </ul>

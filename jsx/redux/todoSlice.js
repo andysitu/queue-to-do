@@ -43,12 +43,16 @@ export const todoSlice = createSlice({
         state.todo_list[action.payload.todo_index]
           .tasks[action.payload.index].task_name = action.payload.value;
       }
+    },
+    deleteTask: (state, action) => {
+      state.todo_list[action.payload.todo_index].tasks.splice(
+        action.payload.task_index, 1);
     }
   }
 });
 
 export const { setTodo, deleteTodo, addTodo, editTodo,
-                addTask, editTask } = todoSlice.actions
+                addTask, editTask, deleteTask } = todoSlice.actions
 
 export default todoSlice.reducer
 

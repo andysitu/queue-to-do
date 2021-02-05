@@ -68,5 +68,8 @@ module.exports = function(db) {
     delete_all() {
       db.run("DELETE FROM todo");
     },
+    delete_task(task_id) {
+      db.run("DELETE FROM task WHERE task_id = ?", task_id);
+    }
   }
 };
