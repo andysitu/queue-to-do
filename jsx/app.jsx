@@ -174,7 +174,9 @@ function App(props) {
     <button type="button"
       onClick={onClick_create_todo}>Create To-Do
     </button>
-    {create_todos()}
+    <div>
+      {create_todos()}
+    </div>
     <ModalMenu ref={modalmenu}/>
   </div>)
 }
