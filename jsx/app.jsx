@@ -148,7 +148,6 @@ function App(props) {
   }
 
   return (<div>
-    <Test />
     <button type="button"
       onClick={onClick_create_todo}>Create To-Do
     </button>
