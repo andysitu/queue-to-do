@@ -7,15 +7,20 @@ module.exports = function(db) {
       // db.run("DROP TABLE if exists task");
       db.run(`
         CREATE TABLE IF NOT EXISTS todo 
-          (todo_id INTEGER PRIMARY KEY AUTOINCREMENT, todo_name TEXT)`);
+        (
+          todo_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+          todo_order INTEGER,
+          todo_name TEXT)`);
       db.run(`
         CREATE TABLE IF NOT EXISTS task 
           (
             task_id INTEGER PRIMARY KEY AUTOINCREMENT, 
             task_name TEXT, 
-            todo_id INT,
+            task_order INTEGER,
             task_done INT DEFAULT 0,
-            FOREIGN KEY(todo_id) REFERENCES todo(todo_id) 
+
+            fk_todo_id INT,
+            FOREIGN KEY(fk_todo_id) REFERENCES todo(todo_id) 
               ON DELETE CASCADE ON UPDATE CASCADE
           )`);
     });
@@ -34,7 +39,7 @@ module.exports = function(db) {
       });
     },
     create_task(todo_id, task_name, callback) {
-      db.run(`INSERT INTO task (todo_id, task_name) VALUES (?, ?);`, 
+      db.run(`INSERT INTO task (fk_todo_id, task_name) VALUES (?, ?);`, 
         [todo_id, task_name]);
       db.get(` SELECT * FROM task WHERE task_id in
               (SELECT last_insert_rowid())`, (err, row) => {
@@ -44,8 +49,8 @@ module.exports = function(db) {
       });
     },
     get_todos(callback) {
-      db.all(`SELECT todo.*, task.task_id, task.task_name, task.task_done FROM todo
-        LEFT JOIN task on task.todo_id = todo.todo_id`, (err, rows) => {
+      db.all(`SELECT todo.*, task.* FROM todo
+        LEFT JOIN task on task.fk_todo_id = todo.todo_id`, (err, rows) => {
         if (callback) {
           callback(rows);
         }
