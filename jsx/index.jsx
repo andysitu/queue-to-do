@@ -14,13 +14,16 @@ function extract_data_to_todo(data) {
   return {
     todo_id: data.todo_id,
     todo_name: data.todo_name,
+    todo_order: data.todo_order,
     tasks: [],
   }
 }
 function extract_data_to_task(data) {
   return {
+    done: data.task_done,
     task_name: data.task_name,
     task_id: data.task_id,
+    task_order: data.task_order,
   }
 }
 
