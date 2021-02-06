@@ -37,7 +37,11 @@ ipcMain.on('test-it', (event, ... args) => {
 
 ipcMain.on("get-todo", (event, arg) => {
   dbService.get_todos((data)=> {
-    event.reply("get-todo", data);
+    if (!data) {
+      event.reply("get-todo", []);
+    } else {
+      event.reply("get-todo", data);
+    }
   });
 });
 
