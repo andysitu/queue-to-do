@@ -14,6 +14,7 @@ module.exports = function(db) {
             task_id INTEGER PRIMARY KEY AUTOINCREMENT, 
             task_name TEXT, 
             todo_id INT,
+            task_done INT DEFAULT 0,
             FOREIGN KEY(todo_id) REFERENCES todo(todo_id) 
               ON DELETE CASCADE ON UPDATE CASCADE
           )`);
@@ -24,7 +25,6 @@ module.exports = function(db) {
       check_database();
     },
     create_todo(name, callback) {
-      console.log(name);
       db.run(`INSERT INTO todo (todo_name) VALUES (?);`, [name,]);
       db.get(`SELECT * FROM todo WHERE todo_id in
         (SELECT last_insert_rowid())`, (err, row) => {
@@ -44,7 +44,7 @@ module.exports = function(db) {
       });
     },
     get_todos(callback) {
-      db.all(`SELECT todo.*, task.task_id, task.task_name FROM todo
+      db.all(`SELECT todo.*, task.task_id, task.task_name, task.task_done FROM todo
         LEFT JOIN task on task.todo_id = todo.todo_id`, (err, rows) => {
         if (callback) {
           callback(rows);
