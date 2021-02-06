@@ -65,7 +65,3 @@ let load_todo = () => {
 }
 
 load_todo();
-
-console.log(store.getState());
-
-

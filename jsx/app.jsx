@@ -16,6 +16,7 @@ function App(props) {
   let todo_name_timer = null;
   let task_name_timer = null;
   const todo_list = useSelector(todoSlice.selectTodoList);
+  console.log(todo_list);
 
   let modalmenu = React.createRef();
 
@@ -68,7 +69,6 @@ function App(props) {
     modalmenu.current.show_menu(
       "create_task",
       (data) => {
-        console.log(data);
         data.todo_id = todo_id;
         ipcRenderer.send("create-task", data);
         ipcRenderer.once("create-task",  (event, return_data) => {

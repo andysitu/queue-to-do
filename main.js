@@ -30,7 +30,6 @@ app.on('window-all-closed', () => {
 });
 
 ipcMain.on('test-it', (event, ... args) => {
-  // console.log(args);
   console.log("test-it");
   event.reply('test-it', {1: 11,});
 });
