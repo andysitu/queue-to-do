@@ -53,13 +53,9 @@ function TaskRow(props) {
   return (
   <li key={"task-"+task.task_id}>
     <input value={task.task_name}
-      todo_index={todo_index}
-      index={task_index} task_id={task.task_id}
       onChange={onChange_taskName}
     ></input>
     <button type="button"
-      todo_index={todo_index}
-      task_index={task_index} task_id={task.task_id}
       onClick={onClick_deleteTask}
     >x</button>
   </li>);
