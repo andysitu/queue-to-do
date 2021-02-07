@@ -6,6 +6,8 @@ const ReactDom = require('react-dom');
 const {ipcRenderer, remote} = require('electron');
 const { Menu, MenuItem } = remote;
 
+import { TaskRow } from "./TaskRow.js"
+
 const { useSelector, useDispatch } = require('react-redux')
 import * as todoSlice from './redux/todoSlice.js'
 
@@ -14,7 +16,6 @@ function App(props) {
 
   const timer_interval = 700;
   let todo_name_timer = null;
-  let task_name_timer = null;
   const todo_list = useSelector(todoSlice.selectTodoList);
   console.log(todo_list);
 
@@ -81,47 +82,6 @@ function App(props) {
     )
   };
 
-  const onChange_taskName = (e) => {
-    const index = e.target.getAttribute("index"),
-          task_id = e.target.getAttribute("task_id"),
-          todo_index = e.target.getAttribute("todo_index"),
-          value = e.target.value;
-    dispatch(todoSlice.editTask({
-      property: "name",
-      index: index,
-      todo_index: todo_index,
-      value: value,
-    }));
-
-    clearTimeout(task_name_timer);
-    task_name_timer = setTimeout(() => {
-      var data = {
-        task_id: task_id,
-        property: "name",
-        value: value,
-      };
-      ipcRenderer.send("edit-task", data);
-    }, timer_interval);
-  }
-
-  const onClick_deleteTask = (e) => {
-    const todo_index = e.target.getAttribute("todo_index"),
-          task_index = e.target.getAttribute("task_index"),
-          task_id = e.target.getAttribute("task_id");
-    const result = window.confirm(`Are you sure you want to delete task ${
-      todo_list[todo_index].tasks[task_index].task_name}?`);
-    if (result) {
-      ipcRenderer.send("delete-task", {task_id: task_id});
-      ipcRenderer.on("delete-task", () => {
-        dispatch(todoSlice.deleteTask({
-          todo_index: todo_index,
-          task_index: task_index,
-        }));
-      });
-    }
-    
-  };
-
   let create_todos = () => {
     return (
       todo_list.map((todo, todo_index)=> {
@@ -150,18 +110,7 @@ function App(props) {
               <ul>
                 {todo.tasks.map((task, task_index) => {
                   return (
-                  <li key={"task-"+task.task_id}>
-                    <input value={task.task_name}
-                      todo_index={todo_index}
-                      index={task_index} task_id={task.task_id}
-                      onChange={onChange_taskName}
-                    ></input>
-                    <button type="button"
-                      todo_index={todo_index}
-                      task_index={task_index} task_id={task.task_id}
-                      onClick={onClick_deleteTask}
-                    >x</button>
-                  </li>);
+                  <TaskRow key={task.task_id} task_index={task_index} todo_index={todo_index} />);
                 })}
               </ul>
             </div>
