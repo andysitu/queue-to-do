@@ -75,6 +75,21 @@ module.exports = function(db) {
     },
     delete_task(task_id) {
       db.run("DELETE FROM task WHERE task_id = ?", task_id);
-    }
+    },
+    switch_tasks(task1_id, task2_id) {
+      db.get(`SELECT * FROM task WHERE task_id = ?`, task1_id, 
+        (err, row1)=> {
+          console.log(row1);
+          db.get(`SELECT * FROM task WHERE task_id = ?`, task2_id,
+            (err, row2) => {
+              const task1_order = (row2.task_order == null) ? 
+                row2.task_id  : row2.task_order;
+              const task2_order = (row1.task_order == null) ? 
+                row1.task_id  : row1.task_order;
+              db.run(`UPDATE task SET task_order = ? WHERE task_id = ?`, [task1_order, task1_id]);
+              db.run(`UPDATE task SET task_order = ? WHERE task_id = ?`, [task2_order, task2_id]);
+            });
+        });
+    },
   }
 };
