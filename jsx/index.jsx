@@ -53,16 +53,16 @@ let load_todo = () => {
 
     // Sort todos by todo_order, id if it doesn't exist
     new_list.sort((a,b) => {
-      const aValue = (a.todo_order) ? a.todo_order : a.todo_id,
-            bValue = (b.todo_order) ? b.todo_order : b.todo_id;
+      const aValue = (a.todo_order != null) ? a.todo_order : a.todo_id,
+            bValue = (b.todo_order != null) ? b.todo_order : b.todo_id;
       return aValue - bValue;
     });
     // Sort tasks in todos by task_order, id if it doesn't exist
     for (let i=0; i< new_list.length; i++) {
       if (new_list[i].tasks && new_list[i].tasks.length > 1) {
         new_list[i].tasks.sort((a,b) => {
-          const aValue = (a.task_order) ? a.task_order : a.todo_id,
-            bValue = (b.task_order) ? b.task_order : b.todo_id;
+          const aValue = (a.task_order != null) ? a.task_order : a.task_id,
+            bValue = (b.task_order != null) ? b.task_order : b.task_id;
           return aValue - bValue;
         });
       }
