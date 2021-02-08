@@ -81,10 +81,10 @@ ipcMain.on("delete-todo", (event, arg) => {
   }
 });
 
-ipcMain.on("switch-tasks", (event, arg) => {
+ipcMain.on("switch-task-order", (event, arg) => {
   console.log(arg);
   dbService.switch_tasks(arg.task1, arg.task2, ()=> {
-    event.reply("switch-tasks", "OK");
+    event.reply("switch-task-order", "OK");
   });
 });
 
