@@ -54,7 +54,7 @@ let load_todo = () => {
     // Sort todos by todo_order, id if it doesn't exist
     new_list.sort((a,b) => {
       const aValue = (a.todo_order) ? a.todo_order : a.todo_id,
-            bValue = (b.todo_order) ? b.todo_order : b.todo_id,
+            bValue = (b.todo_order) ? b.todo_order : b.todo_id;
       return aValue - bValue;
     });
     // Sort tasks in todos by task_order, id if it doesn't exist
@@ -62,7 +62,7 @@ let load_todo = () => {
       if (new_list[i].tasks && new_list[i].tasks.length > 1) {
         new_list[i].tasks.sort((a,b) => {
           const aValue = (a.task_order) ? a.task_order : a.todo_id,
-            bValue = (b.task_order) ? b.task_order : b.todo_id,
+            bValue = (b.task_order) ? b.task_order : b.todo_id;
           return aValue - bValue;
         });
       }
