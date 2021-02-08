@@ -50,6 +50,15 @@ function TaskRow(props) {
     }
   };
 
+  const onClick_moveUp = (e) => {
+    if (task_index >= 1) {
+      ipcRenderer.send("switch-tasks", {
+        task1: task.task_id, 
+        task2: todo_list[todo_index].tasks[task_index-1].task_id
+      });
+    }
+  };
+
   return (
   <li key={"task-"+task.task_id}>
     <input value={task.task_name}
@@ -58,5 +67,10 @@ function TaskRow(props) {
     <button type="button"
       onClick={onClick_deleteTask}
     >x</button>
+    <button type="button"
+      onClick={onClick_moveUp}
+    >
+      UP
+    </button>
   </li>);
 }

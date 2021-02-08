@@ -81,6 +81,11 @@ ipcMain.on("delete-todo", (event, arg) => {
   }
 });
 
+ipcMain.on("switch-tasks", (event, arg) => {
+  console.log(arg);
+  dbService.switch_tasks(arg.task1, arg.task2);
+});
+
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0)  {
     createWindow();
