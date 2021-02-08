@@ -83,7 +83,9 @@ ipcMain.on("delete-todo", (event, arg) => {
 
 ipcMain.on("switch-tasks", (event, arg) => {
   console.log(arg);
-  dbService.switch_tasks(arg.task1, arg.task2);
+  dbService.switch_tasks(arg.task1, arg.task2, ()=> {
+    event.reply("switch-tasks", "OK");
+  });
 });
 
 app.on('activate', () => {
