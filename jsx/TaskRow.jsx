@@ -41,7 +41,7 @@ function TaskRow(props) {
       todo_list[todo_index].tasks[task_index].task_name}?`);
     if (result) {
       ipcRenderer.send("delete-task", {task_id: task.task_id});
-      ipcRenderer.on("delete-task", () => {
+      ipcRenderer.once("delete-task", () => {
         dispatch(todoSlice.deleteTask({
           todo_index: todo_index,
           task_index: task_index,
@@ -55,6 +55,13 @@ function TaskRow(props) {
       ipcRenderer.send("switch-tasks", {
         task1: task.task_id, 
         task2: todo_list[todo_index].tasks[task_index-1].task_id
+      });
+      ipcRenderer.once("switch-tasks", () => {
+        dispatch(todoSlice.switchTasks({
+          todo_index: todo_index,
+          task1_index: task_index,
+          task2_index: task_index-1
+        }));
       });
     }
   };

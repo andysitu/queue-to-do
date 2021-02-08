@@ -47,12 +47,30 @@ export const todoSlice = createSlice({
     deleteTask: (state, action) => {
       state.todo_list[action.payload.todo_index].tasks.splice(
         action.payload.task_index, 1);
+    },
+    switchTasks: (state, action) => {
+      const tasks = state.todo_list[action.payload.todo_index]
+                      .tasks;
+      const item1 = tasks[action.payload.task1_index];
+      const item2 = tasks[action.payload.task2_index];
+
+      // switch task_order property
+      state.todo_list[action.payload.todo_index]
+        .tasks[action.payload.task1_index].task_order = item2.task_order;
+      state.todo_list[action.payload.todo_index]
+        .tasks[action.payload.task2_index].task_order = item1.task_order;
+      // switch tasks
+      state.todo_list[action.payload.todo_index]
+        .tasks[action.payload.task1_index] = item2;
+      state.todo_list[action.payload.todo_index]
+        .tasks[action.payload.task2_index] = item1;
     }
   }
 });
 
 export const { setTodo, deleteTodo, addTodo, editTodo,
-                addTask, editTask, deleteTask } = todoSlice.actions
+                addTask, editTask, deleteTask,
+                switchTasks } = todoSlice.actions
 
 export default todoSlice.reducer
 
