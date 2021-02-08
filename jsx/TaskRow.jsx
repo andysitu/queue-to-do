@@ -65,6 +65,21 @@ function TaskRow(props) {
       });
     }
   };
+  const onCilck_moveDown = (e) => {
+    if (task_index < todo_list[todo_index].tasks.length - 1) {
+      ipcRenderer.send("switch-tasks", {
+        task1: task.task_id, 
+        task2: todo_list[todo_index].tasks[task_index+1].task_id
+      });
+      ipcRenderer.once("switch-tasks", () => {
+        dispatch(todoSlice.switchTasks({
+          todo_index: todo_index,
+          task1_index: task_index,
+          task2_index: task_index+1
+        }));
+      });
+    }
+  };
 
   return (
   <li key={"task-"+task.task_id}>
@@ -75,9 +90,10 @@ function TaskRow(props) {
       onClick={onClick_deleteTask}
     >x</button>
     <button type="button"
-      onClick={onClick_moveUp}
-    >
-      UP
-    </button>
+      onClick={onClick_moveUp}>
+      UP</button>
+      <button type="button"
+      onClick={onCilck_moveDown}>
+      DOWN</button>
   </li>);
 }
