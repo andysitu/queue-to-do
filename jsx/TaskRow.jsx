@@ -82,7 +82,7 @@ function TaskRow(props) {
   };
 
   return (
-  <li key={"task-"+task.task_id}>
+  <li>
     <input value={task.task_name}
       onChange={onChange_taskName}
     ></input>

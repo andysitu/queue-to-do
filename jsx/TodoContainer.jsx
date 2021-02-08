@@ -63,7 +63,7 @@ function TodoContainer(props) {
     )
   };
 
-  return (<div key={todo.todo_id} 
+  return (<div
     // onContextMenu={this.onContextMenu_todo}
     >
       <div>
