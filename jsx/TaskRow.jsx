@@ -52,11 +52,11 @@ function TaskRow(props) {
 
   const onClick_moveUp = (e) => {
     if (task_index >= 1) {
-      ipcRenderer.send("switch-tasks", {
+      ipcRenderer.send("switch-task-order", {
         task1: task.task_id, 
         task2: todo_list[todo_index].tasks[task_index-1].task_id
       });
-      ipcRenderer.once("switch-tasks", () => {
+      ipcRenderer.once("switch-task-order", () => {
         dispatch(todoSlice.switchTasks({
           todo_index: todo_index,
           task1_index: task_index,
@@ -82,7 +82,7 @@ function TaskRow(props) {
   };
 
   return (
-  <li>
+  <li draggable="true">
     <input value={task.task_name}
       onChange={onChange_taskName}
     ></input>
