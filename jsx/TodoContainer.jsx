@@ -73,10 +73,12 @@ function TodoContainer(props) {
           onChange={onChange_todo_name_timer}
           ></input>
         <button type="button"
+          title="Add a task"
           todo_id={todo.todo_id} index={todo_index}
           onClick={onClick_create_task}
         >+</button>
         <button type="button"
+          title={"Delete `" + todo.todo_name + "`"}
           todo_id={todo.todo_id} index={todo_index}
           onClick={onClick_delete_todo}
         >
