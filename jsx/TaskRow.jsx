@@ -80,9 +80,17 @@ function TaskRow(props) {
       });
     }
   };
+  const completeTask = (e) => {
+    dispatch(todoSlice.completeTask({
+      todo_index: todo_index,
+      task_index: task_index,
+    }));
+  };
 
   return (
   <li draggable="true">
+    <input type="checkbox" checked={task.done != 0}
+      onChange={completeTask}></input>
     <input value={task.task_name}
       onChange={onChange_taskName}
     ></input>

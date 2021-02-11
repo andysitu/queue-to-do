@@ -69,12 +69,20 @@ export const todoSlice = createSlice({
       state.todo_list[action.payload.todo_index].showMultipleTasks = 
         !state.todo_list[action.payload.todo_index].showMultipleTasks;
     },
+    completeTask: (state, action) => {
+      const todo_index = action.payload.todo_index,
+            task_index = action.payload.task_index
+      state.todo_list[todo_index].tasks[task_index].done =
+        (state.todo_list[todo_index].tasks[task_index].done == 0) ?
+        1: 0;
+    }
   }
 });
 
 export const { setTodo, deleteTodo, addTodo, editTodo,
                 addTask, editTask, deleteTask,
-                switchTasks, toggleShowMultipleTasks
+                switchTasks, toggleShowMultipleTasks,
+                completeTask
               } = todoSlice.actions
 
 export default todoSlice.reducer
