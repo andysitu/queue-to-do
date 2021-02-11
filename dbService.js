@@ -10,7 +10,9 @@ module.exports = function(db) {
         (
           todo_id INTEGER PRIMARY KEY AUTOINCREMENT, 
           todo_order INTEGER,
-          todo_name TEXT)`);
+          todo_name TEXT,
+          todo_create_date TEXT
+        )`);
       db.run(`
         CREATE TABLE IF NOT EXISTS task 
           (
@@ -18,6 +20,8 @@ module.exports = function(db) {
             task_name TEXT, 
             task_order INTEGER,
             task_done INT DEFAULT 0,
+            task_create_date TEXT,
+            task_complete_date TEXT,
 
             fk_todo_id INT,
             FOREIGN KEY(fk_todo_id) REFERENCES todo(todo_id) 
