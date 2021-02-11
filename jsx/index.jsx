@@ -16,6 +16,7 @@ function extract_data_to_todo(data) {
     todo_name: data.todo_name,
     todo_order: data.todo_order,
     tasks: [],
+    showMultipleTasks: false,
   }
 }
 function extract_data_to_task(data) {

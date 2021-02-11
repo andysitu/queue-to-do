@@ -65,11 +65,13 @@ function TodoContainer(props) {
   };
 
   const toggleShowTasks = () => {
-    setShowMultipleTasks(!showMultipleTasks);
+    dispatch(todoSlice.toggleShowMultipleTasks({
+      todo_index: todo_index,
+    }));
   };
 
   const createTasks = () => {
-    if (showMultipleTasks) {
+    if (todo.showMultipleTasks) {
       return (todo.tasks.map((task, task_index) => {
         return (
         <TaskRow key={task.task_id} task_index={task_index} todo_index={todo_index} />);
@@ -82,7 +84,6 @@ function TodoContainer(props) {
       } else {
         return;
       }
-      
     }
   }
 
@@ -107,7 +108,7 @@ function TodoContainer(props) {
         <button type="button"
           onClick={toggleShowTasks}
         >
-        { showMultipleTasks ?
+        { todo.showMultipleTasks ?
           "^" : "v"
         }
         </button>
