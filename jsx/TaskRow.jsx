@@ -89,11 +89,17 @@ function TaskRow(props) {
     <button type="button"
       onClick={onClick_deleteTask}
     >x</button>
-    <button type="button"
+    { todo_list[todo_index].showMultipleTasks ?
+      <button type="button"
       onClick={onClick_moveUp}>
-      UP</button>
+      UP</button> : null
+    }
+    { todo_list[todo_index].showMultipleTasks ?
       <button type="button"
       onClick={onCilck_moveDown}>
-      DOWN</button>
+      DOWN</button> : null
+    }
+    
+    
   </li>);
 }
