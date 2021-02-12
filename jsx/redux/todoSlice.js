@@ -1,20 +1,6 @@
 const { createSlice } = require('@reduxjs/toolkit');
 const {ipcRenderer} = require('electron');
 
-const extract_data_to_todo = (data) => {
-  return {
-    todo_id: data.todo_id,
-    todo_name: data.todo_name,
-    tasks: [],
-  }
-}
-const extract_data_to_task = (data) => {
-  return {
-    task_name: data.task_name,
-    task_id: data.task_id,
-  }
-}
-
 export const todoSlice = createSlice({
   name: "todo",
   initialState: {
@@ -64,16 +50,27 @@ export const todoSlice = createSlice({
         .tasks[action.payload.task1_index] = item2;
       state.todo_list[action.payload.todo_index]
         .tasks[action.payload.task2_index] = item1;
+    },
+    toggleShowMultipleTasks: (state, action) => {
+      state.todo_list[action.payload.todo_index].showMultipleTasks = 
+        !state.todo_list[action.payload.todo_index].showMultipleTasks;
+    },
+    completeTask: (state, action) => {
+      const todo_index = action.payload.todo_index,
+            task_index = action.payload.task_index
+      state.todo_list[todo_index].tasks[task_index].done =
+        (state.todo_list[todo_index].tasks[task_index].done == 0) ?
+        1: 0;
     }
   }
 });
 
 export const { setTodo, deleteTodo, addTodo, editTodo,
                 addTask, editTask, deleteTask,
-                switchTasks } = todoSlice.actions
+                switchTasks, toggleShowMultipleTasks,
+                completeTask
+              } = todoSlice.actions
 
 export default todoSlice.reducer
-
-export const selectTest = state => state.todo.test;
 
 export const selectTodoList = state => state.todo.todo_list;

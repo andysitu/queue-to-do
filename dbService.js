@@ -10,7 +10,9 @@ module.exports = function(db) {
         (
           todo_id INTEGER PRIMARY KEY AUTOINCREMENT, 
           todo_order INTEGER,
-          todo_name TEXT)`);
+          todo_name TEXT,
+          todo_create_date TEXT
+        )`);
       db.run(`
         CREATE TABLE IF NOT EXISTS task 
           (
@@ -18,6 +20,8 @@ module.exports = function(db) {
             task_name TEXT, 
             task_order INTEGER,
             task_done INT DEFAULT 0,
+            task_create_date TEXT,
+            task_complete_date TEXT,
 
             fk_todo_id INT,
             FOREIGN KEY(fk_todo_id) REFERENCES todo(todo_id) 
@@ -30,7 +34,9 @@ module.exports = function(db) {
       check_database();
     },
     create_todo(name, callback) {
-      db.run(`INSERT INTO todo (todo_name) VALUES (?);`, [name,]);
+      const date = new Date();
+      db.run(`INSERT INTO todo (todo_name, todo_create_date) VALUES (?, ?);`, 
+        [name, date.toISOString()]);
       db.get(`SELECT * FROM todo WHERE todo_id in
         (SELECT last_insert_rowid())`, (err, row) => {
         if (!err) {
@@ -39,8 +45,11 @@ module.exports = function(db) {
       });
     },
     create_task(todo_id, task_name, callback) {
-      db.run(`INSERT INTO task (fk_todo_id, task_name) VALUES (?, ?);`, 
-        [todo_id, task_name]);
+      const date = new Date();
+      db.run(`
+        INSERT INTO task 
+          (fk_todo_id, task_name, task_create_date) VALUES (?, ?, ?);`, 
+        [todo_id, task_name, date.toISOString()]);
       db.get(` SELECT * FROM task WHERE task_id in
               (SELECT last_insert_rowid())`, (err, row) => {
         if (!err) {

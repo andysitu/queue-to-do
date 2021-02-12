@@ -52,11 +52,11 @@ function TaskRow(props) {
 
   const onClick_moveUp = (e) => {
     if (task_index >= 1) {
-      ipcRenderer.send("switch-tasks", {
+      ipcRenderer.send("switch-task-order", {
         task1: task.task_id, 
         task2: todo_list[todo_index].tasks[task_index-1].task_id
       });
-      ipcRenderer.once("switch-tasks", () => {
+      ipcRenderer.once("switch-task-order", () => {
         dispatch(todoSlice.switchTasks({
           todo_index: todo_index,
           task1_index: task_index,
@@ -80,20 +80,34 @@ function TaskRow(props) {
       });
     }
   };
+  const completeTask = (e) => {
+    dispatch(todoSlice.completeTask({
+      todo_index: todo_index,
+      task_index: task_index,
+    }));
+  };
 
   return (
-  <li>
+  <li draggable="true">
+    <input type="checkbox" checked={task.done != 0}
+      onChange={completeTask}></input>
     <input value={task.task_name}
       onChange={onChange_taskName}
     ></input>
     <button type="button"
       onClick={onClick_deleteTask}
     >x</button>
-    <button type="button"
+    { todo_list[todo_index].showMultipleTasks ?
+      <button type="button"
       onClick={onClick_moveUp}>
-      UP</button>
+      UP</button> : null
+    }
+    { todo_list[todo_index].showMultipleTasks ?
       <button type="button"
       onClick={onCilck_moveDown}>
-      DOWN</button>
+      DOWN</button> : null
+    }
+    
+    
   </li>);
 }
