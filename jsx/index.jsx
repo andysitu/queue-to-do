@@ -89,7 +89,7 @@ let load_todo = () => {
     }
 
     store.dispatch(todoSlice.setTodo(new_list));
-    store.dispatch(taskSlice.setTask(task_dict))
+    store.dispatch(taskSlice.setTasks(task_dict))
 
     ReactDom.render(
       (<Provider store={store}>
