@@ -2,6 +2,7 @@ const React = require('react');
 const { useSelector, useDispatch } = require('react-redux')
 const {ipcRenderer} = require('electron');
 import * as todoSlice from './redux/todoSlice.js'
+import * as taskSlice from './redux/taskSlice.js'
 
 export { TaskRow }
 
@@ -9,6 +10,7 @@ function TaskRow(props) {
   const dispatch = useDispatch();
 
   const todo_list = useSelector(todoSlice.selectTodoList);
+  const task_dict = useSelector(taskSlice.selectTaskDict);
   const timer_interval = 700;
   const task_index = props.task_index,
         todo_index = props.todo_index,

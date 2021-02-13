@@ -52,4 +52,4 @@ export const { addTask, editTask, deleteTask,
 
 export default taskSlice.reducer
 
-export const selectTodoList = state => state.task.tasks_dict;
+export const selectTaskDict = state => state.task.tasks_dict;
