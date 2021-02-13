@@ -14,7 +14,7 @@ export const taskSlice = createSlice({
       state.tasks_dict[action.payload.todo_id] = [];
     },
     addTask: (state, action) => {
-      state.tasks_dict[action.payload.todo_id].unshift(action.payload.task);
+      state.tasks_dict[action.payload.todo_id].push(action.payload.task);
     },
     editTask: (state, action) => {
       if (action.payload.property == "name") {
