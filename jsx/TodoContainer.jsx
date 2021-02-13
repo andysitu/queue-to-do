@@ -2,6 +2,7 @@ const React = require('react');
 const { useSelector, useDispatch } = require('react-redux')
 const {ipcRenderer} = require('electron');
 import * as todoSlice from './redux/todoSlice.js'
+import * as taskSlice from './redux/taskSlice.js'
 
 import { TaskRow } from "./TaskRow.js"
 
@@ -10,6 +11,7 @@ export { TodoContainer }
 function TodoContainer(props) {
   const dispatch = useDispatch();
   const todo_list = useSelector(todoSlice.selectTodoList);
+  const task_dict = useSelector(taskSlice.selectTaskDict);
   console.log(todo_list);
 
   const todo_index = props.todo_index;
@@ -73,13 +75,13 @@ function TodoContainer(props) {
 
   const createTasks = () => {
     if (todo.showMultipleTasks) {
-      return (todo.tasks.map((task, task_index) => {
+      return (task_dict[todo_id].map((task, task_index) => {
         return (
         <TaskRow key={task.task_id} task_index={task_index} todo_index={todo_index} todo_id={todo_id} />);
       }))
     } else {
-      if (todo.tasks.length > 0) {
-        const task = todo.tasks[0];
+      if (task_dict[todo_id].length > 0) {
+        const task = task_dict[todo_id][0];
         return (
           <TaskRow key={task.task_id} task_index={0} todo_index={todo_index} todo_id={todo_id} />);
       } else {

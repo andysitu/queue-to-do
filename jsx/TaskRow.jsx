@@ -11,14 +11,15 @@ function TaskRow(props) {
 
   const todo_list = useSelector(todoSlice.selectTodoList);
   const task_dict = useSelector(taskSlice.selectTaskDict);
+  
   const timer_interval = 700;
   const task_index = props.task_index,
         todo_index = props.todo_index,
         todo_id = props.todo_id;
 
   let task_name_timer = null;
-        
-  const task = todo_list[todo_index].tasks[task_index];
+  
+  const task = task_dict[todo_id][task_index];
 
   const onChange_taskName = (e) => {
     const value = e.target.value;
