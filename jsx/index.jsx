@@ -3,6 +3,7 @@ import { store  } from './redux/store.js'
 const { Provider } = require("react-redux")
 const { useDispatch } = require('react-redux')
 import * as todoSlice from './redux/todoSlice.js'
+import * as taskSlice from './redux/taskSlice.js'
 const {ipcRenderer, remote} = require('electron');
 
 import App from './app.js'
@@ -35,6 +36,7 @@ let load_todo = () => {
   ipcRenderer.once("get-todo", (event, data) => {
     let new_list = [], 
         todo_map = {},
+        task_dict = {},
         index, todo;
     
     for (let i=0; i<data.length; i++) {
@@ -45,12 +47,17 @@ let load_todo = () => {
           todo.tasks.push(extract_data_to_task(data[i]));
         }
 
+        task_dict[todo.todo_id] = [];
+
         new_list.push(todo);
       } else {
         if (data[i].task_id !== null) {
           index = todo_map[data[i].todo_id];
           new_list[index].tasks.push(extract_data_to_task(data[i]));
         }
+      }
+      if (data[i].task_id !== null) {
+        task_dict[todo.todo_id].push(extract_data_to_task(data[i]));
       }
     }
 
@@ -60,6 +67,8 @@ let load_todo = () => {
             bValue = (b.todo_order != null) ? b.todo_order : b.todo_id;
       return aValue - bValue;
     });
+
+    let todo_id;
     // Sort tasks in todos by task_order, id if it doesn't exist
     for (let i=0; i< new_list.length; i++) {
       if (new_list[i].tasks && new_list[i].tasks.length > 1) {
@@ -69,9 +78,18 @@ let load_todo = () => {
           return aValue - bValue;
         });
       }
+      todo_id = new_list[i].todo_id;
+      if (task_dict[todo_id].length > 1) {
+        task_dict[todo_id].tasks.sort((a,b) => {
+          const aValue = (a.task_order != null) ? a.task_order : a.task_id,
+            bValue = (b.task_order != null) ? b.task_order : b.task_id;
+          return aValue - bValue;
+        });
+      }
     }
 
     store.dispatch(todoSlice.setTodo(new_list));
+    store.dispatch(taskSlice.setTask(task_dict))
 
     ReactDom.render(
       (<Provider store={store}>
