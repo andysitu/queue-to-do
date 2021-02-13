@@ -18,7 +18,7 @@ export const taskSlice = createSlice({
     },
     editTask: (state, action) => {
       if (action.payload.property == "name") {
-        state.tasks_dict[action.payload.todo_id][action.payload.index]
+        state.tasks_dict[action.payload.todo_id][action.payload.task_index]
           .task_name = action.payload.value;
       }
     },

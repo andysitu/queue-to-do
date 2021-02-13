@@ -23,10 +23,10 @@ function TaskRow(props) {
 
   const onChange_taskName = (e) => {
     const value = e.target.value;
-    dispatch(todoSlice.editTask({
+    dispatch(taskSlice.editTask({
       property: "name",
-      index: task_index,
-      todo_index: todo_index,
+      task_index: task_index,
+      todo_id: todo_id,
       value: value,
     }));
 
@@ -62,8 +62,8 @@ function TaskRow(props) {
         task2: todo_list[todo_index].tasks[task_index-1].task_id
       });
       ipcRenderer.once("switch-task-order", () => {
-        dispatch(todoSlice.switchTasks({
-          todo_index: todo_index,
+        dispatch(taskSlice.switchTasks({
+          todo_id: todo_id,
           task1_index: task_index,
           task2_index: task_index-1
         }));
@@ -77,8 +77,8 @@ function TaskRow(props) {
         task2: todo_list[todo_index].tasks[task_index+1].task_id
       });
       ipcRenderer.once("switch-task-order", () => {
-        dispatch(todoSlice.switchTasks({
-          todo_index: todo_index,
+        dispatch(taskSlice.switchTasks({
+          todo_id: todo_id,
           task1_index: task_index,
           task2_index: task_index+1
         }));
@@ -86,8 +86,8 @@ function TaskRow(props) {
     }
   };
   const completeTask = (e) => {
-    dispatch(todoSlice.completeTask({
-      todo_index: todo_index,
+    dispatch(taskSlice.completeTask({
+      todo_id: todo_id,
       task_index: task_index,
     }));
   };
