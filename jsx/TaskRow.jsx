@@ -11,7 +11,9 @@ function TaskRow(props) {
   const todo_list = useSelector(todoSlice.selectTodoList);
   const timer_interval = 700;
   const task_index = props.task_index,
-        todo_index = props.todo_index;
+        todo_index = props.todo_index,
+        todo_id = props.todo_id;
+
   let task_name_timer = null;
         
   const task = todo_list[todo_index].tasks[task_index];
