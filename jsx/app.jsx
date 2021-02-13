@@ -9,6 +9,7 @@ const { Menu, MenuItem } = remote;
 
 const { useSelector, useDispatch } = require('react-redux')
 import * as todoSlice from './redux/todoSlice.js'
+import * as taskSlice from './redux/taskSlice.js'
 
 function App(props) {
   const dispatch = useDispatch();
@@ -18,12 +19,13 @@ function App(props) {
   let modalmenu = React.createRef();
 
   useEffect(()=> {
-  })
+  });
 
   let onClick_create_todo = () => {
     ipcRenderer.send("create-todo", {name: "New To-Do"});
     ipcRenderer.once("create-todo", (event, data) => {
       var todoData = props.extract_data_to_todo(data)
+      dispatch(taskSlice.createdTodo({todo_id: todoData.todo_id}));
       dispatch(todoSlice.addTodo(todoData));
     });
   };
@@ -38,7 +40,7 @@ function App(props) {
             todo_index={todo_index}/>);
       })
     );
-  }
+  };
 
   return (<div>
     <button type="button"
