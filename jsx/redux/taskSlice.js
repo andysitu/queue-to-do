@@ -7,6 +7,9 @@ export const taskSlice = createSlice({
     tasks_dict: {}, // [todo_id] : [Array of tasks]
   },
   reducers: {
+    setTask: (state, action) => {
+      state.tasks_dict = action.payload;
+    },
     addTask: (state, action) => {
       state.tasks_dict[action.payload.todo_id].unshift(action.payload.task);
     },
@@ -47,7 +50,7 @@ export const taskSlice = createSlice({
 });
 
 export const { addTask, editTask, deleteTask,
-                switchTasks, completeTask
+                switchTasks, completeTask, setTask
               } = taskSlice.actions
 
 export default taskSlice.reducer
