@@ -80,7 +80,7 @@ let load_todo = () => {
       }
       todo_id = new_list[i].todo_id;
       if (task_dict[todo_id].length > 1) {
-        task_dict[todo_id].tasks.sort((a,b) => {
+        task_dict[todo_id].sort((a,b) => {
           const aValue = (a.task_order != null) ? a.task_order : a.task_id,
             bValue = (b.task_order != null) ? b.task_order : b.task_id;
           return aValue - bValue;
