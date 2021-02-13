@@ -43,19 +43,12 @@ let load_todo = () => {
       if (!(data[i].todo_id in todo_map)) {
         todo_map[data[i].todo_id] = new_list.length;
         todo = extract_data_to_todo(data[i]);
-        if (data[i].task_id !== null) {
-          todo.tasks.push(extract_data_to_task(data[i]));
-        }
 
         task_dict[todo.todo_id] = [];
 
         new_list.push(todo);
-      } else {
-        if (data[i].task_id !== null) {
-          index = todo_map[data[i].todo_id];
-          new_list[index].tasks.push(extract_data_to_task(data[i]));
-        }
       }
+
       if (data[i].task_id !== null) {
         task_dict[todo.todo_id].push(extract_data_to_task(data[i]));
       }
@@ -71,13 +64,6 @@ let load_todo = () => {
     let todo_id;
     // Sort tasks in todos by task_order, id if it doesn't exist
     for (let i=0; i< new_list.length; i++) {
-      if (new_list[i].tasks && new_list[i].tasks.length > 1) {
-        new_list[i].tasks.sort((a,b) => {
-          const aValue = (a.task_order != null) ? a.task_order : a.task_id,
-            bValue = (b.task_order != null) ? b.task_order : b.task_id;
-          return aValue - bValue;
-        });
-      }
       todo_id = new_list[i].todo_id;
       if (task_dict[todo_id].length > 1) {
         task_dict[todo_id].sort((a,b) => {
