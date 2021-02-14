@@ -45,8 +45,8 @@ export const taskSlice = createSlice({
     completeTask: (state, action) => {
       const todo_id = action.payload.todo_id,
             task_index = action.payload.task_index
-      state.tasks_dict[todo_id][task_index].done =
-        (state.tasks_dict[todo_id][task_index].done == 0) ?
+      state.tasks_dict[todo_id][task_index].task_done =
+        (state.tasks_dict[todo_id][task_index].task_done == 0) ?
         1: 0;
     }
   }

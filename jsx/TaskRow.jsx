@@ -94,7 +94,7 @@ function TaskRow(props) {
 
   return (
   <li draggable="true">
-    <input type="checkbox" checked={task.done != 0}
+    <input type="checkbox" checked={task.task_done != 0}
       onChange={completeTask}></input>
     <input value={task.task_name}
       onChange={onChange_taskName}

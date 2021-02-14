@@ -23,7 +23,7 @@ function extract_data_to_todo(data) {
 }
 function extract_data_to_task(data) {
   return {
-    done: data.task_done,
+    task_done: data.task_done,
     task_name: data.task_name,
     task_id: data.task_id,
     task_order: data.task_order,
