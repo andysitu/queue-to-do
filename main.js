@@ -92,7 +92,7 @@ ipcMain.on("complete-task", (event, arg) => {
   dbService.complete_task(arg.task_id, arg.task_done, () =>{
     event.reply("complete-task");
   })
-})
+});
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0)  {
