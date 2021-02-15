@@ -86,10 +86,18 @@ function TaskRow(props) {
     }
   };
   const completeTask = (e) => {
-    dispatch(taskSlice.completeTask({
-      todo_id: todo_id,
-      task_index: task_index,
-    }));
+    console.log(task);
+    ipcRenderer.send("complete-task", {
+      task_id: task.task_id,
+      task_done: task.task_done == 0 ? 1 : 0,
+    });
+    ipcRenderer.once("complete-task", () => {
+      dispatch(taskSlice.completeTask({
+        todo_id: todo_id,
+        task_index: task_index,
+      }));
+    })
+    
   };
 
   return (

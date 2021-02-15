@@ -100,5 +100,13 @@ module.exports = function(db) {
             });
         });
     },
+    complete_task(task_id, task_done, callback) {
+      db.run("UPDATE task SET task_done = ? WHERE task_id = ?", [task_done, task_id],
+      () => {
+        if (callback)
+          callback();
+      });
+
+    }
   }
 };
