@@ -25,6 +25,7 @@ function App(props) {
     ipcRenderer.send("create-todo", {name: "New To-Do"});
     ipcRenderer.once("create-todo", (event, data) => {
       var todoData = props.extract_data_to_todo(data)
+      // Add to task dictionary/obj also
       dispatch(taskSlice.createdTodo({todo_id: todoData.todo_id}));
       dispatch(todoSlice.addTodo(todoData));
     });

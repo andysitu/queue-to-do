@@ -97,7 +97,7 @@ function TodoContainer(props) {
     // onContextMenu={this.onContextMenu_todo}
     >
       <div>
-        <input type="text" 
+        <input type="text" id={"todo-name-" + todo.todo_id}
           value={todo.todo_name}
           onChange={onChange_todo_name_timer}
           ></input>
