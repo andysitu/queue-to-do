@@ -1,4 +1,5 @@
-const React = require('react');
+const React = require('react')
+const {useState, useEffect} = require('react')
 const { useSelector, useDispatch } = require('react-redux')
 const {ipcRenderer} = require('electron');
 import * as todoSlice from './redux/todoSlice.js'
@@ -12,6 +13,7 @@ function TodoContainer(props) {
   const dispatch = useDispatch();
   const todo_list = useSelector(todoSlice.selectTodoList);
   const task_dict = useSelector(taskSlice.selectTaskDict);
+  const newlyCreatedId = useSelector(todoSlice.selectNewlyCreatedId);
   
   const todo_index = props.todo_index;
   const modalmenu = props.modalmenu;
@@ -20,8 +22,14 @@ function TodoContainer(props) {
   const todo_id = todo.todo_id;
   const tasks = task_dict[todo_id];
 
-  console.log(todo_list);
-  console.log(tasks);
+  // Select/focus on input if the todo was newly created
+  useEffect(()=> {
+    if (newlyCreatedId == todo_id) {
+      let input = document.getElementById("todo-name-" + todo.todo_id);
+      input.select();
+      dispatch(todoSlice.delNewlyCreatedId());
+    }
+  });
 
   const timer_interval = 700;
   let todo_name_timer = null;

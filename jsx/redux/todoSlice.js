@@ -5,6 +5,7 @@ export const todoSlice = createSlice({
   name: "todo",
   initialState: {
     todo_list: [],
+    newlyCreatedId: -1,
   },
   reducers: {
     setTodo: (state, action) => {
@@ -15,6 +16,7 @@ export const todoSlice = createSlice({
     },
     addTodo: (state, action) => {
       state.todo_list.push(action.payload);
+      state.newlyCreatedId = action.payload.todo_id;
     },
     editTodo: (state, action) => {
       if (action.payload.property == "name") {
@@ -25,13 +27,17 @@ export const todoSlice = createSlice({
       state.todo_list[action.payload.todo_index].showMultipleTasks = 
         !state.todo_list[action.payload.todo_index].showMultipleTasks;
     },
+    delNewlyCreatedId: state => {
+      state.newlyCreatedId = -1;
+    }
   }
 });
 
 export const { setTodo, deleteTodo, addTodo, editTodo,
-                toggleShowMultipleTasks
+                toggleShowMultipleTasks, delNewlyCreatedId
               } = todoSlice.actions
 
 export default todoSlice.reducer
 
 export const selectTodoList = state => state.todo.todo_list;
+export const selectNewlyCreatedId = state => state.todo.newlyCreatedId;
