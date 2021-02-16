@@ -12,13 +12,17 @@ function TodoContainer(props) {
   const dispatch = useDispatch();
   const todo_list = useSelector(todoSlice.selectTodoList);
   const task_dict = useSelector(taskSlice.selectTaskDict);
-  console.log(todo_list);
-
+  
   const todo_index = props.todo_index;
   const modalmenu = props.modalmenu;
   const todo = todo_list[todo_index];
+  
   const todo_id = todo.todo_id;
+  const tasks = todo_list[todo_id];
   const [showMultipleTasks, setShowMultipleTasks] = React.useState(false);
+
+  console.log(todo_list);
+  console.log(tasks);
 
   const timer_interval = 700;
   let todo_name_timer = null;
@@ -75,13 +79,13 @@ function TodoContainer(props) {
 
   const createTasks = () => {
     if (todo.showMultipleTasks) {
-      return (task_dict[todo_id].map((task, task_index) => {
+      return (tasks.map((task, task_index) => {
         return (
         <TaskRow key={task.task_id} task_index={task_index} todo_index={todo_index} todo_id={todo_id} />);
       }))
     } else {
-      if (task_dict[todo_id].length > 0) {
-        const task = task_dict[todo_id][0];
+      if (tasks.length > 0) {
+        const task = tasks[0];
         return (
           <TaskRow key={task.task_id} task_index={0} todo_index={todo_index} todo_id={todo_id} />);
       } else {
