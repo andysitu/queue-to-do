@@ -18,7 +18,7 @@ function TodoContainer(props) {
   const todo = todo_list[todo_index];
   
   const todo_id = todo.todo_id;
-  const tasks = todo_list[todo_id];
+  const tasks = task_dict[todo_id];
   const [showMultipleTasks, setShowMultipleTasks] = React.useState(false);
 
   console.log(todo_list);
@@ -112,13 +112,14 @@ function TodoContainer(props) {
         >
           x
         </button>
-        <button type="button"
-          onClick={toggleShowTasks}
-        >
-        { todo.showMultipleTasks ?
-          "^" : "v"
+        {
+          tasks && tasks.length > 1 ?
+          (<button type="button" onClick={toggleShowTasks}>
+            { todo.showMultipleTasks ?
+              "^" : "v"}
+          </button>) : null
         }
-        </button>
+        
       </div>
       <div>
         <ul>
