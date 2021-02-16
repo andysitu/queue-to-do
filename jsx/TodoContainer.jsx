@@ -19,7 +19,6 @@ function TodoContainer(props) {
   
   const todo_id = todo.todo_id;
   const tasks = task_dict[todo_id];
-  const [showMultipleTasks, setShowMultipleTasks] = React.useState(false);
 
   console.log(todo_list);
   console.log(tasks);
@@ -82,7 +81,7 @@ function TodoContainer(props) {
       return (tasks.map((task, task_index) => {
         return (
         <TaskRow key={task.task_id} task_index={task_index} todo_index={todo_index} todo_id={todo_id} />);
-      }))
+      }));
     } else {
       if (tasks.length > 0) {
         const task = tasks[0];
