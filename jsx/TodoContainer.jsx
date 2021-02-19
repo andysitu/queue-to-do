@@ -84,6 +84,12 @@ function TodoContainer(props) {
     }));
   };
 
+  const createTask = (task, task_index) => {
+    return (
+      <TaskRow key={task.task_id} task_index={task_index} 
+        todo_index={todo_index} todo_id={todo_id} />);
+  }
+
   const createTasks = () => {
     if (todo.showMultipleTasks) {
       return (tasks.map((task, task_index) => {
@@ -92,9 +98,15 @@ function TodoContainer(props) {
       }));
     } else {
       if (tasks.length > 0) {
-        const task = tasks[0];
-        return (
-          <TaskRow key={task.task_id} task_index={0} todo_index={todo_index} todo_id={todo_id} />);
+        let task;
+        for (let i = 0; i < tasks.length; i++) {
+          if (tasks[i].task_done == 0) {
+            task = tasks[i];
+            break;
+          }
+        }
+        if (task == null) { return; }
+        return (<TaskRow key={task.task_id} task_index={0} todo_index={todo_index} todo_id={todo_id} />);
       } else {
         return;
       }
