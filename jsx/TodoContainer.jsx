@@ -115,15 +115,16 @@ function TodoContainer(props) {
       return tasksList;
     } else {
       if (tasks.length > 0) {
-        let task;
+        let task, task_index;
         for (let i = 0; i < tasks.length; i++) {
           if (tasks[i].task_done == 0) {
             task = tasks[i];
+            task_index = i;
             break;
           }
         }
         if (task == null) { return; }
-        return (<TaskRow key={task.task_id} task_index={0} todo_index={todo_index} todo_id={todo_id} />);
+        return (<TaskRow key={task.task_id} task_index={task_index} todo_index={todo_index} todo_id={todo_id} />);
       } else {
         return;
       }
