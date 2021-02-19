@@ -92,10 +92,27 @@ function TodoContainer(props) {
 
   const createTasks = () => {
     if (todo.showMultipleTasks) {
-      return (tasks.map((task, task_index) => {
-        return (
-        <TaskRow key={task.task_id} task_index={task_index} todo_index={todo_index} todo_id={todo_id} />);
-      }));
+      let complete = [],
+          incomplete = [];
+      for (let i = 0; i < tasks.length; i++) {
+        // i is for task_index that TaskRow needs to get task data
+        if (tasks[i].task_done == 0) {
+          incomplete.push([tasks[i], i]);
+        } else {
+          complete.push([tasks[i], i]);
+        }
+      }
+      const tasksList = [];
+      incomplete.forEach( (taskArr) => {
+        tasksList.push(
+          createTask(taskArr[0], taskArr[1]));
+      });
+      const num_incomplete = incomplete.length;
+      complete.forEach( (taskArr) => {
+        tasksList.push(
+          createTask(taskArr[0], taskArr[1]));
+      });
+      return tasksList;
     } else {
       if (tasks.length > 0) {
         let task;
