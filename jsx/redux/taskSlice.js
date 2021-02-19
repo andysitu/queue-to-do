@@ -5,6 +5,8 @@ export const taskSlice = createSlice({
   name: "task",
   initialState: {
     tasks_dict: {}, // [todo_id] : [Array of tasks]
+    complete_tasks_dict: {},
+    incomplete_tasks_dict: {}
   },
   reducers: {
     setTasks: (state, action) => {
