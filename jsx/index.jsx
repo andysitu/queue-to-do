@@ -17,7 +17,6 @@ function extract_data_to_todo(data) {
     todo_name: data.todo_name,
     todo_order: data.todo_order,
     todo_create_date: data.todo_create_date,
-    tasks: [],
     showMultipleTasks: false,
   }
 }
@@ -37,20 +36,31 @@ let load_todo = () => {
     let new_list = [], 
         todo_map = {},
         task_dict = {},
-        index, todo;
-    
+        incomplete_tasks = {},
+        complete_tasks = {},
+        task, todo, todo_id;
     for (let i=0; i<data.length; i++) {
-      if (!(data[i].todo_id in todo_map)) {
-        todo_map[data[i].todo_id] = new_list.length;
+      todo_id = data[i].todo_id;
+      if (!(todo_id in todo_map)) {
+        todo_map[todo_id] = new_list.length;
         todo = extract_data_to_todo(data[i]);
 
-        task_dict[todo.todo_id] = [];
+        task_dict[todo_id] = [];
+        incomplete_tasks[todo_id] = [];
+        complete_tasks[todo_id] = [];
 
         new_list.push(todo);
       }
 
       if (data[i].task_id !== null) {
-        task_dict[todo.todo_id].push(extract_data_to_task(data[i]));
+        task = extract_data_to_task(data[i]);
+        task_dict[todo_id].push(task);
+        
+        if (task.task_done == 1) {
+          complete_tasks[todo_id].push(task);
+        } else {
+          incomplete_tasks[todo_id].push(task);
+        }
       }
     }
 
@@ -61,21 +71,31 @@ let load_todo = () => {
       return aValue - bValue;
     });
 
-    let todo_id;
+    function sortTask(a,b) {
+      const aValue = (a.task_order != null) ? a.task_order : a.task_id,
+        bValue = (b.task_order != null) ? b.task_order : b.task_id;
+      return aValue - bValue;
+    }
+
     // Sort tasks in todos by task_order, id if it doesn't exist
     for (let i=0; i< new_list.length; i++) {
       todo_id = new_list[i].todo_id;
       if (task_dict[todo_id].length > 1) {
-        task_dict[todo_id].sort((a,b) => {
-          const aValue = (a.task_order != null) ? a.task_order : a.task_id,
-            bValue = (b.task_order != null) ? b.task_order : b.task_id;
-          return aValue - bValue;
-        });
+        task_dict[todo_id].sort(sortTask);
+      }
+      if (complete_tasks[todo_id].length > 1) {
+        complete_tasks[todo_id].sort(sortTask);
+      }
+      if (incomplete_tasks[todo_id].length > 1) {
+        incomplete_tasks[todo_id].sort(sortTask);
       }
     }
-
     store.dispatch(todoSlice.setTodo(new_list));
-    store.dispatch(taskSlice.setTasks(task_dict))
+    store.dispatch(taskSlice.setTasks({
+      tasks_dict: task_dict,
+      incomplete_tasks: incomplete_tasks,
+      complete_tasks: complete_tasks
+    }));
 
     ReactDom.render(
       (<Provider store={store}>
