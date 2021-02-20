@@ -11,15 +11,19 @@ function TaskRow(props) {
 
   const todo_list = useSelector(todoSlice.selectTodoList);
   const task_dict = useSelector(taskSlice.selectTaskDict);
-  
+    
   const timer_interval = 700;
   const task_index = props.task_index,
         todo_index = props.todo_index,
         todo_id = props.todo_id;
+  let task;
+  if (props.task_type == "complete") {
+    task = useSelector(taskSlice.selectCompleteTasks)[todo_id][task_index];
+  } else {
+    task = useSelector(taskSlice.selectIncompleteTasks)[todo_id][task_index];
+  }
 
   let task_name_timer = null;
-  
-  const task = task_dict[todo_id][task_index];
 
   const onChange_taskName = (e) => {
     const value = e.target.value;
