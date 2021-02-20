@@ -13,6 +13,8 @@ function TodoContainer(props) {
   const dispatch = useDispatch();
   const todo_list = useSelector(todoSlice.selectTodoList);
   const task_dict = useSelector(taskSlice.selectTaskDict);
+  const complete_tasks = useSelector(taskSlice.selectCompleteTasks);
+  const incomplete_tasks = useSelector(taskSlice.selectIncompleteTasks);
   const newlyCreatedId = useSelector(todoSlice.selectNewlyCreatedId);
   
   const todo_index = props.todo_index;
