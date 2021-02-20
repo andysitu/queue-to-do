@@ -55,10 +55,17 @@ export const taskSlice = createSlice({
     },
     completeTask: (state, action) => {
       const todo_id = action.payload.todo_id,
-            task_index = action.payload.task_index
-      state.tasks_dict[todo_id][task_index].task_done =
-        (state.tasks_dict[todo_id][task_index].task_done == 0) ?
-        1: 0;
+            task_index = action.payload.task_index;
+      const task_dict_name = (action.payload.task_type == "complete") ?
+        "complete_tasks" : "incomplete_tasks";
+      state[task_dict_name][todo_id][task_index].task_done =
+        (action.payload.task_type == "complete") ?
+        0: 1;
+      const task = state[task_dict_name][todo_id].splice(task_index, 1)[0];
+
+      const other_task_dict_name = (action.payload.task_type == "complete") ?
+              "incomplete_tasks" : "complete_tasks"
+      state[other_task_dict_name][todo_id].push(task);
     }
   }
 });
