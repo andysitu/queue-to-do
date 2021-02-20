@@ -53,6 +53,7 @@ function TaskRow(props) {
         dispatch(taskSlice.deleteTask({
           todo_id: todo_id,
           task_index: task_index,
+          task_type: props.task_type,
         }));
       });
     }

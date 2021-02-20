@@ -27,8 +27,13 @@ export const taskSlice = createSlice({
       }
     },
     deleteTask: (state, action) => {
-      state.tasks_dict[action.payload.todo_id].splice(
-        action.payload.task_index, 1);
+      if (action.payload.task_type == "complete") {
+        state.complete_tasks[action.payload.todo_id].splice(
+          action.payload.task_index, 1);  
+      } else {
+        state.incomplete_tasks[action.payload.todo_id].splice(
+          action.payload.task_index, 1);
+      }
     },
     switchTasks: (state, action) => {
       const tasks = state.tasks_dict[action.payload.todo_id];
