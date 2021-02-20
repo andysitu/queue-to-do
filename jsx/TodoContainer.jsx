@@ -12,7 +12,6 @@ export { TodoContainer }
 function TodoContainer(props) {
   const dispatch = useDispatch();
   const todo_list = useSelector(todoSlice.selectTodoList);
-  const task_dict = useSelector(taskSlice.selectTaskDict);
   const newlyCreatedId = useSelector(todoSlice.selectNewlyCreatedId);
   
   const todo_index = props.todo_index;
@@ -20,7 +19,6 @@ function TodoContainer(props) {
   const todo = todo_list[todo_index];
   
   const todo_id = todo.todo_id;
-  const tasks = task_dict[todo_id];
   const complete_tasks = useSelector(taskSlice.selectCompleteTasks)[todo_id];
   const incomplete_tasks = useSelector(taskSlice.selectIncompleteTasks)[todo_id];
 
@@ -107,11 +105,11 @@ function TodoContainer(props) {
       });
       return tasksList;
     } else {
-      if (tasks.length > 0) {
+      if (incomplete_tasks.length > 0) {
         let task, task_index;
-        for (let i = 0; i < tasks.length; i++) {
-          if (tasks[i].task_done == 0) {
-            task = tasks[i];
+        for (let i = 0; i < incomplete_tasks.length; i++) {
+          if (incomplete_tasks[i].task_done == 0) {
+            task = incomplete_tasks[i];
             task_index = i;
             break;
           }
@@ -143,7 +141,7 @@ function TodoContainer(props) {
           x
         </button>
         {
-          tasks && tasks.length > 1 ?
+          incomplete_tasks && incomplete_tasks.length > 1 ?
           (<button type="button" onClick={toggleShowTasks}>
             { todo.showMultipleTasks ?
               "^" : "v"}
