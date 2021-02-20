@@ -13,8 +13,6 @@ function TodoContainer(props) {
   const dispatch = useDispatch();
   const todo_list = useSelector(todoSlice.selectTodoList);
   const task_dict = useSelector(taskSlice.selectTaskDict);
-  const complete_tasks = useSelector(taskSlice.selectCompleteTasks);
-  const incomplete_tasks = useSelector(taskSlice.selectIncompleteTasks);
   const newlyCreatedId = useSelector(todoSlice.selectNewlyCreatedId);
   
   const todo_index = props.todo_index;
@@ -23,6 +21,8 @@ function TodoContainer(props) {
   
   const todo_id = todo.todo_id;
   const tasks = task_dict[todo_id];
+  const complete_tasks = useSelector(taskSlice.selectCompleteTasks)[todo_id];
+  const incomplete_tasks = useSelector(taskSlice.selectIncompleteTasks)[todo_id];
 
   // Select/focus on input if the todo was newly created
   useEffect(()=> {
@@ -86,33 +86,24 @@ function TodoContainer(props) {
     }));
   };
 
-  const createTask = (task, task_index) => {
+  const createTask = (task, task_index, task_type) => {
     return (
       <TaskRow key={task.task_id} task_index={task_index} 
+        task_type={task_type}
         todo_index={todo_index} todo_id={todo_id} />);
   }
 
   const createTasks = () => {
     if (todo.showMultipleTasks) {
-      let complete = [],
-          incomplete = [];
-      for (let i = 0; i < tasks.length; i++) {
-        // i is for task_index that TaskRow needs to get task data
-        if (tasks[i].task_done == 0) {
-          incomplete.push([tasks[i], i]);
-        } else {
-          complete.push([tasks[i], i]);
-        }
-      }
+      
       const tasksList = [];
-      incomplete.forEach( (taskArr) => {
+      incomplete_tasks.forEach((task, index) => {
         tasksList.push(
-          createTask(taskArr[0], taskArr[1]));
+          createTask(task, index, "incomplete"));
       });
-      const num_incomplete = incomplete.length;
-      complete.forEach( (taskArr) => {
+      complete_tasks.forEach((task, index) => {
         tasksList.push(
-          createTask(taskArr[0], taskArr[1]));
+          createTask(task, index, "complete"));
       });
       return tasksList;
     } else {
