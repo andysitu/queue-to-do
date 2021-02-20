@@ -69,7 +69,7 @@ function TodoContainer(props) {
         data.todo_id = todo.todo_id;
         ipcRenderer.send("create-task", data);
         ipcRenderer.once("create-task",  (event, return_data) => {
-          dispatch(taskSlice.addTask({
+          dispatch(taskSlice.createTask({
             todo_id: todo_id,
             task: props.extract_data_to_task(return_data),
           }));

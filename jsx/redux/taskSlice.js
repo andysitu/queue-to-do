@@ -17,7 +17,7 @@ export const taskSlice = createSlice({
     createdTodo: (state, action) => {
       state.tasks_dict[action.payload.todo_id] = [];
     },
-    addTask: (state, action) => {
+    createTask: (state, action) => {
       state.tasks_dict[action.payload.todo_id].push(action.payload.task);
     },
     editTask: (state, action) => {
@@ -56,7 +56,7 @@ export const taskSlice = createSlice({
   }
 });
 
-export const { addTask, editTask, deleteTask,
+export const { createTask, editTask, deleteTask,
                 switchTasks, completeTask, setTasks,
                 createdTodo
               } = taskSlice.actions
