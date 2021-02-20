@@ -10,7 +10,9 @@ export const taskSlice = createSlice({
   },
   reducers: {
     setTasks: (state, action) => {
-      state.tasks_dict = action.payload;
+      state.tasks_dict = action.payload.tasks_dict;
+      state.complete_tasks = action.payload.complete_tasks;
+      state.incomplete_tasks = action.payload.incomplete_tasks;
     },
     createdTodo: (state, action) => {
       state.tasks_dict[action.payload.todo_id] = [];
