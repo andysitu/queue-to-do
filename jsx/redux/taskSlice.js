@@ -64,3 +64,5 @@ export const { addTask, editTask, deleteTask,
 export default taskSlice.reducer
 
 export const selectTaskDict = state => state.task.tasks_dict;
+export const selectCompleteTasks = state => state.task.complete_tasks;
+export const selectIncompleteTasks = state => state.task.incomplete_tasks;
