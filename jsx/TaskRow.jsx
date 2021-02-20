@@ -10,7 +10,6 @@ function TaskRow(props) {
   const dispatch = useDispatch();
 
   const todo_list = useSelector(todoSlice.selectTodoList);
-  const task_dict = useSelector(taskSlice.selectTaskDict);
     
   const timer_interval = 700;
   const task_index = props.task_index,
@@ -47,7 +46,7 @@ function TaskRow(props) {
 
   const onClick_deleteTask = (e) => {
     const result = window.confirm(`Are you sure you want to delete task ${
-      task_dict[todo_id][task_index].task_name}?`);
+      task.task_name}?`);
     if (result) {
       ipcRenderer.send("delete-task", {task_id: task.task_id});
       ipcRenderer.once("delete-task", () => {
