@@ -21,8 +21,10 @@ export const taskSlice = createSlice({
       state.incomplete_tasks[action.payload.todo_id].push(action.payload.task);
     },
     editTask: (state, action) => {
+      const task_dict_name = (action.payload.task_type == "complete") ?
+        "complete_tasks" : "incomplete_tasks";
       if (action.payload.property == "name") {
-        state.tasks_dict[action.payload.todo_id][action.payload.task_index]
+        state[task_dict_name][action.payload.todo_id][action.payload.task_index]
           .task_name = action.payload.value;
       }
     },

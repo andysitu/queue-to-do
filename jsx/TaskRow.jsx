@@ -28,6 +28,7 @@ function TaskRow(props) {
     const value = e.target.value;
     dispatch(taskSlice.editTask({
       property: "name",
+      task_type: props.task_type,
       task_index: task_index,
       todo_id: todo_id,
       value: value,
