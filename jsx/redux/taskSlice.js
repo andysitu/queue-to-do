@@ -40,19 +40,21 @@ export const taskSlice = createSlice({
       }
     },
     switchTasks: (state, action) => {
-      const tasks = state.tasks_dict[action.payload.todo_id];
+      const task_dict_name = (action.payload.task_type == "complete") ?
+        "complete_tasks" : "incomplete_tasks";
+      const tasks = state[task_dict_name][action.payload.todo_id];
       const item1 = tasks[action.payload.task1_index];
       const item2 = tasks[action.payload.task2_index];
 
       // switch task_order property
-      state.tasks_dict[action.payload.todo_id][action.payload.task1_index]
+      state.state[task_dict_name][action.payload.todo_id][action.payload.task1_index]
         .task_order = item2.task_order;
-      state.tasks_dict[action.payload.todo_id][action.payload.task2_index]
+      state.state[task_dict_name][action.payload.todo_id][action.payload.task2_index]
         .task_order = item1.task_order;
       // switch tasks
-      state.tasks_dict[action.payload.todo_id][action.payload.task1_index] 
+      state.state[task_dict_name][action.payload.todo_id][action.payload.task1_index] 
         = item2;
-      state.tasks_dict[action.payload.todo_id][action.payload.task2_index] 
+      state.state[task_dict_name][action.payload.todo_id][action.payload.task2_index] 
         = item1;
     },
     completeTask: (state, action) => {
