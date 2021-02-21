@@ -129,7 +129,7 @@ function TodoContainer(props) {
         <input type="text" id={"todo-name-" + todo.todo_id}
           value={todo.todo_name}
           onChange={onChange_todo_name_timer}
-          ></input>
+          ></input> 
         <button type="button"
           title="Add a task"
           onClick={onClick_create_task}
@@ -141,7 +141,7 @@ function TodoContainer(props) {
           x
         </button>
         {
-          incomplete_tasks && incomplete_tasks.length > 1 ?
+          (incomplete_tasks.length > 1 || complete_tasks.length > 0) ?
           (<button type="button" onClick={toggleShowTasks}>
             { todo.showMultipleTasks ?
               "^" : "v"}
