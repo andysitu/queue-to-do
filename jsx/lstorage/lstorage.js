@@ -6,6 +6,6 @@ const lstorage = {
     return ids;
   },
   saveMultipleTasks(task_ids) {
-    localStorage.setItem(this.multipleTasksIds_key, JSON.parse(task_ids))
+    localStorage.setItem(this.multipleTasksIds_key, JSON.stringify(task_ids))
   }
 };
