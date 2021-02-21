@@ -1,7 +1,6 @@
 // import { Provider } from 'react-redux'
 import { store  } from './redux/store.js'
 const { Provider } = require("react-redux")
-const { useDispatch } = require('react-redux')
 import * as todoSlice from './redux/todoSlice.js'
 import * as taskSlice from './redux/taskSlice.js'
 const {ipcRenderer, remote} = require('electron');
@@ -16,7 +15,6 @@ const multipleTasksList = lstorage.getMultipleTasks();
 multipleTasksList.forEach(id=>{
   multipleTasksIdsSet.add(id);
 });
-
 
 function extract_data_to_todo(data) {
   const showMultipleTasks = multipleTasksIdsSet.has(data.todo_id) ?
