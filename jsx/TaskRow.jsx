@@ -106,7 +106,7 @@ function TaskRow(props) {
   };
 
   return (
-  <li draggable="true">
+  <div draggable="true" className="task-container">
     <input type="checkbox" checked={task.task_done != 0}
       onChange={completeTask}></input>
     <input value={task.task_name}
@@ -125,7 +125,5 @@ function TaskRow(props) {
       onClick={onCilck_moveDown}>
       DOWN</button> : null
     }
-    
-    
-  </li>);
+  </div>);
 }

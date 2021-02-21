@@ -122,7 +122,8 @@ function TodoContainer(props) {
     }
   }
 
-  return (<div
+  return (
+  <div
     // onContextMenu={this.onContextMenu_todo}
     >
       <div>
@@ -140,19 +141,15 @@ function TodoContainer(props) {
         >
           x
         </button>
-        {
-          (incomplete_tasks.length > 1 || complete_tasks.length > 0) ?
+        {(incomplete_tasks.length > 1 || complete_tasks.length > 0) ?
           (<button type="button" onClick={toggleShowTasks}>
-            { todo.showMultipleTasks ?
-              "^" : "v"}
+            { todo.showMultipleTasks ? "^" : "v"}
           </button>) : null
         }
         
       </div>
-      <div>
-        <ul>
-          {createTasks()}
-        </ul>
+      <div class="tasks-container">
+        {createTasks()}
       </div>
     </div>);
 }
