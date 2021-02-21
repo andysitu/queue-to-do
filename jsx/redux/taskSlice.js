@@ -68,6 +68,11 @@ export const taskSlice = createSlice({
       const other_task_dict_name = (action.payload.task_type == "complete") ?
               "incomplete_tasks" : "complete_tasks"
       state[other_task_dict_name][todo_id].push(task);
+      state[other_task_dict_name][todo_id].sort(((a,b) => {
+        const aValue = (a.task_order != null) ? a.task_order : a.task_id,
+          bValue = (b.task_order != null) ? b.task_order : b.task_id;
+        return aValue - bValue;
+      }));
     }
   }
 });
