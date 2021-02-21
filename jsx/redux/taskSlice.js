@@ -16,6 +16,8 @@ export const taskSlice = createSlice({
     },
     createdTodo: (state, action) => {
       state.tasks_dict[action.payload.todo_id] = [];
+      state.complete_tasks[action.payload.todo_id] = [];
+      state.incomplete_tasks[action.payload.todo_id] = [];
     },
     createTask: (state, action) => {
       state.incomplete_tasks[action.payload.todo_id].push(action.payload.task);
