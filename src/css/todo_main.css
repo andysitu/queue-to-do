@@ -30,6 +30,10 @@ body {
     overflow: hidden;
 }
 
+#todo-task-container {
+    margin-top: 10px;
+}
+
 .tasks-container {
     margin: 10px 5px;
 }
@@ -42,8 +46,15 @@ button {
     margin: 0 1px;
 }
 
+button:hover {
+    background-color: darkgrey;
+    opacity: 0.65;
+
+}
+
 input[type=text] {
     border-radius: 2px;
     padding: 4px;
     border: 1px solid grey;
 }
+
