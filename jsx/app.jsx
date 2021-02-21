@@ -11,13 +11,19 @@ const { useSelector, useDispatch } = require('react-redux')
 import * as todoSlice from './redux/todoSlice.js'
 import * as taskSlice from './redux/taskSlice.js'
 
-function App(props) {
-  const dispatch = useDispatch();
-  
-  const todo_list = useSelector(todoSlice.selectTodoList);
+// Replace this in App to save todo_list to localStorage upon
+// closing / refreshing window
+let passTodoList = () => {return null;};
+let addedOnload = false;
 
+if (!addedOnload) {
+  addedOnload = true;
   window.onbeforeunload = function() {
-    let ids = [];
+    let ids = [],
+        todo_list = passTodoList();
+    if (todo_list == null) {
+      todo_list = [];
+    }
     todo_list.forEach(todo => {
       if (todo.showMultipleTasks) {
         ids.push(todo.todo_id);
@@ -25,8 +31,21 @@ function App(props) {
     });
     lstorage.saveMultipleTasks(ids);
   };
+}
 
+function App(props) {
+  const dispatch = useDispatch();
+  
+  const todo_list = useSelector(todoSlice.selectTodoList);
+  
   let modalmenu = React.createRef();
+
+  // Replace global variable with newest function rendition passTodoList.
+  // Returns the newest todo_list that will be saved in localstorage
+  // to save user settings
+  passTodoList = () => {
+    return todo_list;
+  }
 
   useEffect(()=> {
   });
