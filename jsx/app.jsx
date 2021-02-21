@@ -16,6 +16,16 @@ function App(props) {
   
   const todo_list = useSelector(todoSlice.selectTodoList);
 
+  window.onbeforeunload = function() {
+    let ids = [];
+    todo_list.forEach(todo => {
+      if (todo.showMultipleTasks) {
+        ids.push(todo.todo_id);
+      }
+    });
+    lstorage.saveMultipleTasks(ids);
+  };
+
   let modalmenu = React.createRef();
 
   useEffect(()=> {

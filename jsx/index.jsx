@@ -11,13 +11,22 @@ import App from './app.js'
 const React = require('react');
 const ReactDom = require('react-dom');
 
+const multipleTasksIdsSet = new Set();
+const multipleTasksList = lstorage.getMultipleTasks();
+multipleTasksList.forEach(id=>{
+  multipleTasksIdsSet.add(id);
+});
+
+
 function extract_data_to_todo(data) {
+  const showMultipleTasks = multipleTasksIdsSet.has(data.todo_id) ?
+    true : false;
   return {
     todo_id: data.todo_id,
     todo_name: data.todo_name,
     todo_order: data.todo_order,
     todo_create_date: data.todo_create_date,
-    showMultipleTasks: false,
+    showMultipleTasks: showMultipleTasks,
   }
 }
 function extract_data_to_task(data) {
@@ -108,5 +117,4 @@ let load_todo = () => {
     );
   });
 }
-
 load_todo();
