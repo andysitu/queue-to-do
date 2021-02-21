@@ -1,8 +1,12 @@
 # queue-to-do
 
+NPM build script to compile TSX & JSX
+
+> npm run-script build:js
+
 Babel JSX Preprocessor
 
-> npx babel --watch jsx --out-dir ./src/js --extensions ".js,.jsx,.ts"
+> npx babel --watch jsx --out-dir ./src/js --extensions ".js,.jsx,.ts,.tsx"
 
 Old command : Previously encountered errors with async/await usage
 
