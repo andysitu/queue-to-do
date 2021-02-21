@@ -8,7 +8,8 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "rebuild": "electron-rebuild -f -w sqlite3"
+    "rebuild": "electron-rebuild -f -w sqlite3",
+    "build:js": "babel --watch jsx --out-dir ./src/js --extensions \".js,.jsx,.ts,.tsx\""
   },
   "keywords": [],
   "author": "Andy Situ",
