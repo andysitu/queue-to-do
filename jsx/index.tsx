@@ -10,15 +10,11 @@ import App from './app.js'
 const React = require('react');
 const ReactDom = require('react-dom');
 
-const multipleTasksIdsSet = new Set();
-const multipleTasksList = lstorage.getMultipleTasks();
-multipleTasksList.forEach(id=>{
-  multipleTasksIdsSet.add(id);
-});
+const todo_settings = lstorage.getSettings();
 
 function extract_data_to_todo(data) {
-  const showMultipleTasks = multipleTasksIdsSet.has(data.todo_id) ?
-    true : false;
+  const showMultipleTasks = data.todo_id in todo_settings ?
+  todo_settings[data.todo_id].showMultipleTasks : false;
   return {
     todo_id: data.todo_id,
     todo_name: data.todo_name,

@@ -24,12 +24,7 @@ if (!addedOnload) {
     if (todo_list == null) {
       todo_list = [];
     }
-    todo_list.forEach(todo => {
-      if (todo.showMultipleTasks) {
-        ids.push(todo.todo_id);
-      }
-    });
-    lstorage.saveMultipleTasks(ids);
+    lstorage.saveSettings(todo_list);
   };
 }
 
