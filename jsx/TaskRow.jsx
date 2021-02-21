@@ -62,10 +62,11 @@ function TaskRow(props) {
     if (task_index >= 1) {
       ipcRenderer.send("switch-task-order", {
         task1: task.task_id, 
-        task2: todo_list[todo_index].tasks[task_index-1].task_id
+        task2: tasks[task_index-1].task_id
       });
       ipcRenderer.once("switch-task-order", () => {
         dispatch(taskSlice.switchTasks({
+          task_type: props.task_type,
           todo_id: todo_id,
           task1_index: task_index,
           task2_index: task_index-1
@@ -74,13 +75,14 @@ function TaskRow(props) {
     }
   };
   const onCilck_moveDown = (e) => {
-    if (task_index < todo_list[todo_index].tasks.length - 1) {
+    if (task_index < tasks.length - 1) {
       ipcRenderer.send("switch-task-order", {
         task1: task.task_id, 
-        task2: todo_list[todo_index].tasks[task_index+1].task_id
+        task2: tasks[task_index+1].task_id
       });
       ipcRenderer.once("switch-task-order", () => {
         dispatch(taskSlice.switchTasks({
+          task_type: props.task_type,
           todo_id: todo_id,
           task1_index: task_index,
           task2_index: task_index+1
