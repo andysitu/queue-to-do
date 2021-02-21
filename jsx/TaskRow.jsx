@@ -109,14 +109,9 @@ function TaskRow(props) {
   <div draggable="true" className="task-container">
     <input type="checkbox" checked={task.task_done != 0}
       onChange={completeTask}></input>
-    <input value={task.task_name}
-      onChange={onChange_taskName}
-    ></input>
-    <button type="button"
-      onClick={onClick_deleteTask}
-    >
-      <i className="bi bi-x"></i>
-    </button>
+    <input value={task.task_name} type="text"
+      onChange={onChange_taskName}></input>
+      
     { todo_list[todo_index].showMultipleTasks ?
       <button type="button"
           onClick={onClick_moveUp}>
@@ -129,5 +124,9 @@ function TaskRow(props) {
         <i className="bi bi-chevron-down"></i>
       </button> : null
     }
+
+    <button type="button" onClick={onClick_deleteTask}>
+      <i className="bi bi-trash"></i>
+    </button>
   </div>);
 }

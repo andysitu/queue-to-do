@@ -141,7 +141,7 @@ function TodoContainer(props) {
           title={"Delete `" + todo.todo_name + "`"}
           onClick={onClick_delete_todo}
         >
-          <i className="bi bi-x"></i>
+          <i className="bi bi-trash"></i>
         </button>
         {(incomplete_tasks.length > 1 || complete_tasks.length > 0) ?
           (<button type="button" onClick={toggleShowTasks}>
