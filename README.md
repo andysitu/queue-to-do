@@ -2,7 +2,7 @@
 
 Babel JSX Preprocessor
 
-> npx babel --watch jsx --out-dir ./src/js
+> npx babel --watch jsx --out-dir ./src/js --extensions ".js,.jsx,.ts"
 
 Old command : Previously encountered errors with async/await usage
 
