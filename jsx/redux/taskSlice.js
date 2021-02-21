@@ -47,14 +47,14 @@ export const taskSlice = createSlice({
       const item2 = tasks[action.payload.task2_index];
 
       // switch task_order property
-      state.state[task_dict_name][action.payload.todo_id][action.payload.task1_index]
+      state[task_dict_name][action.payload.todo_id][action.payload.task1_index]
         .task_order = item2.task_order;
-      state.state[task_dict_name][action.payload.todo_id][action.payload.task2_index]
+      state[task_dict_name][action.payload.todo_id][action.payload.task2_index]
         .task_order = item1.task_order;
       // switch tasks
-      state.state[task_dict_name][action.payload.todo_id][action.payload.task1_index] 
+      state[task_dict_name][action.payload.todo_id][action.payload.task1_index] 
         = item2;
-      state.state[task_dict_name][action.payload.todo_id][action.payload.task2_index] 
+      state[task_dict_name][action.payload.todo_id][action.payload.task2_index] 
         = item1;
     },
     completeTask: (state, action) => {
