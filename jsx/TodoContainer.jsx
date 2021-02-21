@@ -134,21 +134,25 @@ function TodoContainer(props) {
         <button type="button"
           title="Add a task"
           onClick={onClick_create_task}
-        >+</button>
+        >
+          <i className="bi bi-plus"></i>
+        </button>
         <button type="button"
           title={"Delete `" + todo.todo_name + "`"}
           onClick={onClick_delete_todo}
         >
-          x
+          <i className="bi bi-x"></i>
         </button>
         {(incomplete_tasks.length > 1 || complete_tasks.length > 0) ?
           (<button type="button" onClick={toggleShowTasks}>
-            { todo.showMultipleTasks ? "^" : "v"}
+            { todo.showMultipleTasks ? 
+              <i className="bi bi-chevron-up"></i> : 
+              <i className="bi bi-chevron-down"></i>}
           </button>) : null
         }
         
       </div>
-      <div class="tasks-container">
+      <div className="tasks-container">
         {createTasks()}
       </div>
     </div>);
