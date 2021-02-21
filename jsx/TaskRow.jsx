@@ -16,9 +16,9 @@ function TaskRow(props) {
         todo_index = props.todo_index,
         todo_id = props.todo_id;
   const tasks = (props.task_type == "complete") ?
-          useSelector(taskSlice.selectCompleteTasks) :
-          useSelector(taskSlice.selectIncompleteTasks);
-  const task = tasks[todo_id][task_index];
+          useSelector(taskSlice.selectCompleteTasks)[todo_id] :
+          useSelector(taskSlice.selectIncompleteTasks)[todo_id];
+  const task = tasks[task_index];
 
   let task_name_timer = null;
 
