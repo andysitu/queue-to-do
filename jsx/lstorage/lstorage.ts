@@ -4,16 +4,7 @@ interface TodoState {
 }
 
 const lstorage = {
-  multipleTasksIds_key: "multipleTasksIds",
   todo_settings_key: "todo_settings",
-  getMultipleTasks() {
-    const ids = JSON.parse(localStorage.getItem(this.multipleTasksIds_key));
-    if (ids == null) return [];
-    return ids;
-  },
-  saveMultipleTasks(task_ids) {
-    localStorage.setItem(this.multipleTasksIds_key, JSON.stringify(task_ids))
-  },
   saveSettings(todo_list: Array<TodoState>) {
     let settings = {};
     todo_list.forEach(todo => {
