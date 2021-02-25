@@ -69,6 +69,16 @@ function App(props) {
     });
   };
 
+  let onClick_loadFile = () => {
+    ipcRenderer.send('load-file');
+    ipcRenderer.once("load-file", (event, data)=> {
+      if (data == "OK")
+        window.alert("Done");
+      else
+        window.alert("ERROR: " + data);
+    });
+  };
+
   let create_todos = () => {
     return (
       todo_list.map((todo, todo_index)=> {
@@ -87,6 +97,9 @@ function App(props) {
     </button>
     <button type="button" onClick={onClick_saveFile}>
       Save File
+    </button>
+    <button type="button" onClick={onClick_loadFile}>
+      Load File
     </button>
     <div>
       {create_todos()}
