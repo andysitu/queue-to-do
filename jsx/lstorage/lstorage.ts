@@ -13,6 +13,9 @@ const lstorage = {
     });
     localStorage.setItem(this.todo_settings_key, JSON.stringify(settings));
   },
+  saveSettings(settings) {
+    localStorage.setItem(this.todo_settings_key, JSON.stringify(settings));
+  }
   getSettings() {
     return JSON.parse(localStorage.getItem(this.todo_settings_key));
   }
