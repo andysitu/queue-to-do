@@ -5,7 +5,7 @@ interface TodoState {
 
 const lstorage = {
   todo_settings_key: "todo_settings",
-  saveSettings(todo_list: Array<TodoState>) {
+  saveSettingsFromTodoList(todo_list: Array<TodoState>) {
     let settings = {};
     todo_list.forEach(todo => {
       settings[todo.todo_id] ={};

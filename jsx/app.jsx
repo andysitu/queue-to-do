@@ -24,7 +24,7 @@ if (!addedOnload) {
     if (todo_list == null) {
       todo_list = [];
     }
-    lstorage.saveSettings(todo_list);
+    lstorage.saveSettingsFromTodoList(todo_list);
   };
 }
 
