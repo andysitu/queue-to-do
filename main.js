@@ -133,7 +133,7 @@ ipcMain.on("load-file", (event, arg) => {
     }
 
     let data = JSON.parse(jsonData);
-    console.log(data);
+    dbService.load_data(data.data_list);
 
     event.reply("load-file", "OK");
   });
