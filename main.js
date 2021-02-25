@@ -135,7 +135,7 @@ ipcMain.on("load-file", (event, arg) => {
     let data = JSON.parse(jsonData);
     dbService.load_data(data.data_list);
 
-    event.reply("load-file", "OK");
+    event.reply("load-file", data);
   });
 });
 
