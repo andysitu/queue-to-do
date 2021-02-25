@@ -102,7 +102,10 @@ ipcMain.on("complete-task", (event, arg) => {
 ipcMain.on("save-file", (event, arg) => {
   const path = "data/data.json";
   mkdirp(getDirName(path), function(err) {
-    if (err) event.reply("save-file", "Error");
+    if (err) {
+      event.reply("save-file", err);
+      return;
+    }
 
     fs.writeFile("data/data.json", JSON.stringify(arg), 'utf8', ()=>{
       event.reply("save-file", "OK");

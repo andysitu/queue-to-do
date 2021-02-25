@@ -61,10 +61,13 @@ function App(props) {
       settings: lstorage.getSettings(),
     };
     ipcRenderer.send("save-file", data);
-    ipcRenderer.once("save-file", ()=> {
-      window.alert("Done");
-    })
-  }
+    ipcRenderer.once("save-file", (event, data)=> {
+      if (data == "OK")
+        window.alert("Done");
+      else
+        window.alert("ERROR: " + data);
+    });
+  };
 
   let create_todos = () => {
     return (
