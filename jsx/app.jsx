@@ -57,15 +57,14 @@ function App(props) {
 
   let onClick_saveFile = () => {
     let data = {
-      todo_list : todo_list,
       settings: lstorage.getSettings(),
     };
     ipcRenderer.send("save-file", data);
-    ipcRenderer.once("save-file", (event, data)=> {
-      if (data == "OK")
+    ipcRenderer.once("save-file", (event, response)=> {
+      if (response == "OK")
         window.alert("Done");
       else
-        window.alert("ERROR: " + data);
+        window.alert("ERROR: " + response);
     });
   };
 

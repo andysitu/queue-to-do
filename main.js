@@ -100,17 +100,27 @@ ipcMain.on("complete-task", (event, arg) => {
 
 // Save to data/data/json
 ipcMain.on("save-file", (event, arg) => {
-  const path = "data/data.json";
-  mkdirp(getDirName(path), function(err) {
-    if (err) {
-      event.reply("save-file", err);
-      return;
-    }
+  dbService.get_todos((data)=> {
+    if (data) {
+      const path = "data/data.json";
+      mkdirp(getDirName(path), function(err) {
+        if (err) {
+          event.reply("save-file", err);
+          return;
+        }
+        
+        let saveData = {
+          settings: arg.settings,
+          data_list: data,
+        };
 
-    fs.writeFile("data/data.json", JSON.stringify(arg), 'utf8', ()=>{
-      event.reply("save-file", "OK");
-    });
+        fs.writeFile("data/data.json", JSON.stringify(saveData), 'utf8', ()=>{
+          event.reply("save-file", "OK");
+        });
+      });
+    }
   });
+  
 });
 
 ipcMain.on("load-file", (event, arg) => {
