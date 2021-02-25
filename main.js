@@ -111,7 +111,22 @@ ipcMain.on("save-file", (event, arg) => {
       event.reply("save-file", "OK");
     });
   });
-  
+});
+
+ipcMain.on("load-file", (event, arg) => {
+  const path = "data/data.json";
+  fs.readFile(path, {encoding: 'utf-8'}, function(err, jsonData) {
+    if (err) {
+      console.log(err);
+      event.reply("load-file", err);
+      return;
+    }
+
+    let data = JSON.parse(jsonData);
+    console.log(data);
+
+    event.reply("load-file", "OK");
+  });
 });
 
 app.on('activate', () => {
