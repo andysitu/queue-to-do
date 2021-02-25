@@ -6,6 +6,10 @@ const db = new sqlite3.Database('todo_db.db');
 
 const  dbService = require('./dbService')(db);
 
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const getDirName = require('path').dirname;
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 1000,
@@ -91,7 +95,20 @@ ipcMain.on("switch-task-order", (event, arg) => {
 ipcMain.on("complete-task", (event, arg) => {
   dbService.complete_task(arg.task_id, arg.task_done, () =>{
     event.reply("complete-task");
-  })
+  });
+});
+
+// Save to data/data/json
+ipcMain.on("save-file", (event, arg) => {
+  const path = "data/data.json";
+  mkdirp(getDirName(path), function(err) {
+    if (err) event.reply("save-file", "Error");
+
+    fs.writeFile("data/data.json", JSON.stringify(arg), 'utf8', ()=>{
+      event.reply("save-file", "OK");
+    });
+  });
+  
 });
 
 app.on('activate', () => {
