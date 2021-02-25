@@ -11,7 +11,8 @@ module.exports = function(db) {
           todo_id INTEGER PRIMARY KEY AUTOINCREMENT, 
           todo_order INTEGER,
           todo_name TEXT,
-          todo_create_date TEXT
+          todo_create_date TEXT,
+          old_todo_id INTEGER
         )`);
       db.run(`
         CREATE TABLE IF NOT EXISTS task 
@@ -30,6 +31,41 @@ module.exports = function(db) {
     });
   }
   return {
+    load_data(rowData) {
+      db.run("DELETE FROM todo");
+      db.run("DELETE FROM task");
+      let data, todo_order;
+      const seenTodos = new Set();
+
+      // First create the todos with new todo_ids 
+      for (let i = 0; i < rowData.length; i++) {
+        data = rowData[i];
+        if (!(seenTodos.has(data.todo_id))) {
+          todo_order = data.todo_order ? data.todo_order : data.todo_id;
+          seenTodos.add(data.todo_id)
+          db.run(
+            `INSERT INTO todo (todo_name, todo_order, todo_create_date, old_todo_id) 
+              VALUES (?, ?, ?, ?);`, 
+            [data.todo_name, todo_order, data.todo_create_date, data.todo_id]);
+        }
+      }
+      for (let i = 0; i < rowData.length; i++) {
+        data = rowData[i];
+        if (data.task_id != null) {
+          db.get(`SELECT * FROM todo WHERE old_todo_id = ?`, [data.todo_id], (err, row)=>{
+            let todoData = rowData[i],
+                task_order = todoData.task_order ? todoData.task_order : todoData.task_id;;
+            db.run(`
+              INSERT INTO task 
+                (fk_todo_id, task_name, task_create_date, 
+                  task_done, task_complete_date, task_order) 
+                  VALUES (?, ?, ?, ?, ?, ?);`, 
+              [row.todo_id, todoData.task_name, todoData.task_create_date, 
+                todoData.task_done, todoData.task_complete_date, task_order]);
+          });
+        }
+      }
+    },
     check_db() {
       check_database();
     },
