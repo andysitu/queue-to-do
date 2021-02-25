@@ -71,10 +71,7 @@ function App(props) {
   let onClick_loadFile = () => {
     ipcRenderer.send('load-file');
     ipcRenderer.once("load-file", (event, data)=> {
-      if (data == "OK")
-        window.alert("Done");
-      else
-        window.alert("ERROR: " + data);
+      location.reload();
     });
   };
 
