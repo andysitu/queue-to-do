@@ -55,6 +55,17 @@ function App(props) {
     });
   };
 
+  let onClick_saveFile = () => {
+    let data = {
+      todo_list : todo_list,
+      settings: lstorage.getSettings(),
+    };
+    ipcRenderer.send("save-file", data);
+    ipcRenderer.once("save-file", ()=> {
+      window.alert("Done");
+    })
+  }
+
   let create_todos = () => {
     return (
       todo_list.map((todo, todo_index)=> {
@@ -68,8 +79,11 @@ function App(props) {
   };
 
   return (<div>
-    <button type="button"
-      onClick={onClick_create_todo}>Create To-Do
+    <button type="button" onClick={onClick_create_todo}>
+      Create To-Do
+    </button>
+    <button type="button" onClick={onClick_saveFile}>
+      Save File
     </button>
     <div>
       {create_todos()}
