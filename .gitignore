@@ -107,3 +107,4 @@ package-lock.json
 *.db
 /src/js/*
 /data/*
+g_settings.json
