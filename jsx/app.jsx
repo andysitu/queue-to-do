@@ -19,8 +19,7 @@ let addedOnload = false;
 if (!addedOnload) {
   addedOnload = true;
   window.onbeforeunload = function() {
-    let ids = [],
-        todo_list = passTodoList();
+    let todo_list = passTodoList();
     if (todo_list == null) {
       todo_list = [];
     }
@@ -30,8 +29,10 @@ if (!addedOnload) {
 
 function App(props) {
   const dispatch = useDispatch();
-  
+
   const todo_list = useSelector(todoSlice.selectTodoList);
+
+  const gCredentials = lstorage.getGCredentials();
   
   let modalmenu = React.createRef();
 
