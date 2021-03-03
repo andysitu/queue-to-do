@@ -40,7 +40,7 @@ module.exports = function(db) {
       // First create the todos with new todo_ids 
       for (let i = 0; i < rowData.length; i++) {
         data = rowData[i];
-        if (!(seenTodos.has(data.todo_id))) {
+        if (data.todo_id && !(seenTodos.has(data.todo_id))) {
           todo_order = data.todo_order ? data.todo_order : data.todo_id;
           seenTodos.add(data.todo_id)
           db.run(
