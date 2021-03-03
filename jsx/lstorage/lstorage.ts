@@ -6,6 +6,8 @@ interface TodoState {
 }
 
 const lstorage = {
+  session_apiKey: "apiKey",
+  session_clientId: "clientId",
   todo_settings_key: "todo_settings",
   gApiFilename: "g_settings.json",
   saveSettingsFromTodoList(todo_list: Array<TodoState>) {
@@ -22,11 +24,29 @@ const lstorage = {
   getSettings() {
     return JSON.parse(localStorage.getItem(this.todo_settings_key));
   },
-  loadGCredentials(callback) {
+  loadGCredentialsToSession(clientId, apiKey) {
+    sessionStorage.setItem(this.session_apiKey, apiKey);
+    sessionStorage.setItem(this.session_clientId, clientId);
+  },
+  getGCredentials() {
+    let clientId = sessionStorage.getItem(this.session_clientId),
+        apiKey = sessionStorage.getItem(this.session_apiKey);
+    if (clientId && apiKey) {
+      return {
+        clientId: clientId, apiKey: apiKey
+      };
+    }
+    return null;
+  },
+  loadGCredentials() {
+    let that = this;
     fs.readFile(this.gApiFilename, {encoding: 'utf-8'}, function(err, jsonData) {
-      console.log(jsonData);
-      if (callback) {
-        callback(JSON.parse(jsonData));
+      // console.log(jsonData)
+      if (jsonData) {
+        let data = JSON.parse(jsonData);
+        if (data.apiKey && data.clientId) {
+          that.loadGCredentialsToSession(data.clientId, data.apiKey);
+        }
       }
     });
   },
