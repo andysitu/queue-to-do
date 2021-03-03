@@ -11,19 +11,25 @@ class ModalMenu extends React.Component {
     super(props);
     this.state = {
       menu_type : "none",
+      data: {},
       callback: null,
     };
     this.callback = null;
   }
-  show_menu(menu_type, callback) {
+  show_menu(menu_type, callback, data) {
     this.callback = callback;
     if (menu_type == "create_task" || menu_type == "google_api") {
-      this.setState({menu_type: menu_type}, ()=> {
+      this.setState({
+        menu_type: menu_type,
+        data: data,
+      }, ()=> {
         this.show();
       });
     } else {
       this.callback = null;
-      this.setState({menu_type: "none",})
+      this.setState({
+        data: {},
+        menu_type: "none",})
     }
   }
   create_menu() {
@@ -36,14 +42,17 @@ class ModalMenu extends React.Component {
         </div>
       </div>)
     } else if (menu_type == "google_api") {
+      const data = (this.state.data) ? this.state.data : {};
       return (<div>
         <div>
           <label htmlFor="client-id-input" className="focus">Client ID: </label>
-          <input type="text" id="client-id-input" name="clientId"></input>
+          <input type="text" id="client-id-input" name="clientId"
+            defaultValue={data.clientId}></input>
         </div>
         <div>
           <label htmlFor="api-key-input" className="focus">API Key </label>
-          <input type="text" id="api-key-input" name="apiKey"></input>
+          <input type="text" id="api-key-input" name="apiKey"
+            defaultValue={data.apiKey}></input>
         </div>
       </div>)
     } else {
