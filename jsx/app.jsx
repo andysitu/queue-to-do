@@ -87,6 +87,15 @@ function App(props) {
     );
   };
 
+  const showGoogleKeyMenu = () => {
+    modalmenu.current.show_menu(
+      "google_api",
+      (data) => {
+        lstorage.saveGCredentials(data);
+      }
+    )
+  };
+
   return (<div>
     <button type="button" onClick={onClick_create_todo}>
       Create To-Do
@@ -96,6 +105,9 @@ function App(props) {
     </button>
     <button type="button" onClick={onClick_loadFile}>
       Load File
+    </button>
+    <button type="button" onClick={showGoogleKeyMenu}>
+      Set Sync
     </button>
     <div>
       {create_todos()}
