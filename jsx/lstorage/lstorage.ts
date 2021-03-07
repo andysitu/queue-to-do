@@ -24,10 +24,19 @@ const lstorage = {
   getSettings() {
     return JSON.parse(localStorage.getItem(this.todo_settings_key));
   },
+  /**
+   * Saves Google API Credentials to session.
+   * @param {String} clientId client ID of Google API Key
+   * @param {String} apiKey Api Key of Google API key
+   */
   loadGCredentialsToSession(clientId, apiKey) {
     sessionStorage.setItem(this.session_apiKey, apiKey);
     sessionStorage.setItem(this.session_clientId, clientId);
   },
+  /**
+   * Loads Google API Credentials from Session Storage and returns it
+   * @returns {Object} Object with keys clientId, apiKey
+   */
   getGCredentials() {
     let clientId = sessionStorage.getItem(this.session_clientId),
         apiKey = sessionStorage.getItem(this.session_apiKey);
@@ -38,6 +47,10 @@ const lstorage = {
     }
     return null;
   },
+  /**
+   * Reads Google Credentials from file & loads it to Session Storage
+   * via using loadGCredentialsToSession.
+   */
   loadGCredentials() {
     let that = this;
     fs.readFile(this.gApiFilename, {encoding: 'utf-8'}, function(err, jsonData) {
@@ -50,6 +63,12 @@ const lstorage = {
       }
     });
   },
+  /**
+   * Saves Google API Credentials to file with filename specified by
+   * gApiFileName proprety.
+   * @param data API credential data, converted to JSON
+   * @param callback callback to run once finished
+   */
   saveGCredentials(data, callback) {
     if (data.apiKey && data.clientId) {
       if (!callback) {
