@@ -54,6 +54,10 @@ class ModalMenu extends React.Component {
           <input type="text" id="api-key-input" name="apiKey"
             defaultValue={data.apiKey}></input>
         </div>
+        <div>
+          <label htmlFor="client-id-input" className="focus">Password</label>
+          <input type="text" id="password-input" name="password"></input>
+        </div>
       </div>)
     } else {
       return;
