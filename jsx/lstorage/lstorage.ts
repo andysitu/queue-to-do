@@ -10,7 +10,7 @@ const lstorage = {
   session_apiKey: "apiKey",
   session_clientId: "clientId",
   todo_settings_key: "todo_settings",
-  gApiFilename: "g_settings.json",
+  gApiFilename: "g_settings.txt",
   saveSettingsFromTodoList(todo_list: Array<TodoState>) {
     let settings = {};
     todo_list.forEach(todo => {
