@@ -76,6 +76,9 @@ const lstorage = {
       }
       fs.writeFile(this.gApiFilename, JSON.stringify(data), 'utf-8', callback);
     }
-    
+  },
+  loadGData() {
+    const gCredentials = lstorage.getGCredentials();
+    console.log(gCredentials)
   }
 };
