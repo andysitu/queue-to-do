@@ -32,7 +32,7 @@ function App(props) {
 
   const todo_list = useSelector(todoSlice.selectTodoList);
 
-  let gCredentials = lstorage.getGCredentials();
+  let gData = lstorage.loadGData();
   
   let modalmenu = React.createRef();
 
@@ -93,9 +93,8 @@ function App(props) {
       "google_api",
       (data) => {
         lstorage.saveGCredentials(data);
-        gCredentials = data;
       },
-      gCredentials
+      {},
     )
   };
 
