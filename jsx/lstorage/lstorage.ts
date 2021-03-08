@@ -90,14 +90,13 @@ const lstorage = {
     const key = crypto
                 .createHash("sha256")
                 .update(password)
-                .digest(),
-          cipher = crypto.createCipheriv("aes-256-cbc", key, resizedIV);
+                .digest();
     const decipher = crypto.createDecipheriv("aes-256-cbc", key, resizedIV);
     return decipher.update(hashedMsg, "hex", "binary") + decipher.final("binary")
   },
   /**
    * Saves Google API Credentials to file with filename specified by
-   * gApiFileName proprety.
+   * gApiFileName proprety as encrypted text.
    * @param data API credential data, converted to JSON
    * @param callback callback to run once finished
    */
@@ -109,12 +108,11 @@ const lstorage = {
       let o = {...data};
       delete o.password;
       let hashedMsg = this.encrypt(data.password, JSON.stringify(o));
-      console.log(hashedMsg);
 
       let msg = this.decrypt(data.password, hashedMsg);
       console.log(msg)
 
-      // fs.writeFile(this.gApiFilename, JSON.stringify(data), 'utf-8', callback);
+      fs.writeFile(this.gApiFilename, hashedMsg, 'utf-8', callback);
     }
   },
   loadGData() {
