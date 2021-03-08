@@ -108,3 +108,4 @@ package-lock.json
 /src/js/*
 /data/*
 g_settings.json
+g_settings.txt
