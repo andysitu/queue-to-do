@@ -52,12 +52,15 @@ const lstorage = {
    * Reads Google Credentials from file & loads it to Session Storage
    * via using loadGCredentialsToSession.
    */
-  loadGCredentials() {
+  loadGCredentials(password) {
+    if (password != null) {
+      return;
+    }
     let that = this;
-    fs.readFile(this.gApiFilename, {encoding: 'utf-8'}, function(err, jsonData) {
+    fs.readFile(this.gApiFilename, {encoding: 'utf-8'}, function(err, encryptedData) {
       // console.log(jsonData)
-      if (jsonData) {
-        let data = JSON.parse(jsonData);
+      if (encryptedData) {
+        let data = JSON.parse(this.decrypt(password, encryptedData));
         if (data.apiKey && data.clientId) {
           that.loadGCredentialsToSession(data.clientId, data.apiKey);
         }
@@ -108,9 +111,6 @@ const lstorage = {
       let o = {...data};
       delete o.password;
       let hashedMsg = this.encrypt(data.password, JSON.stringify(o));
-
-      let msg = this.decrypt(data.password, hashedMsg);
-      console.log(msg)
 
       fs.writeFile(this.gApiFilename, hashedMsg, 'utf-8', callback);
     }
