@@ -47,16 +47,16 @@ class ModalMenu extends React.Component {
         <div>
           <label htmlFor="client-id-input" className="focus">Client ID: </label>
           <input type="text" id="client-id-input" name="clientId"
-            defaultValue={data.clientId}></input>
+            defaultValue={data.clientId} required></input>
         </div>
         <div>
           <label htmlFor="api-key-input" className="focus">API Key </label>
           <input type="text" id="api-key-input" name="apiKey"
-            defaultValue={data.apiKey}></input>
+            defaultValue={data.apiKey} required></input>
         </div>
         <div>
           <label htmlFor="client-id-input" className="focus">Password</label>
-          <input type="text" id="password-input" name="password"></input>
+          <input type="text" id="password-input" name="password" required></input>
         </div>
       </div>)
     } else {
