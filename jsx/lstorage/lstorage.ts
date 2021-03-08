@@ -1,4 +1,5 @@
 const fs = require('fs');
+const crypto = require("crypto");
 
 interface TodoState {
   showMultipleTasks: boolean,
@@ -70,11 +71,48 @@ const lstorage = {
    * @param callback callback to run once finished
    */
   saveGCredentials(data, callback) {
-    if (data.apiKey && data.clientId) {
+    if (data.apiKey && data.clientId && data.password) {
       if (!callback) {
         callback = ()=>{};
       }
-      fs.writeFile(this.gApiFilename, JSON.stringify(data), 'utf-8', callback);
+      let o = {...data};
+      delete o.password;
+      console.log(data);
+      let resizedIV = Buffer.allocUnsafe(16),
+
+          iv = crypto
+            .createHash("sha256")
+            .update("myHashedIV")
+            .digest();
+      iv.copy(resizedIV);
+      o = JSON.stringify(o)
+      console.log(o);
+      console.log(typeof o)
+
+      // o = "hello";
+
+      const key = crypto
+                    .createHash("sha256")
+                    .update(data.password)
+                    .digest(),
+            cipher = crypto.createCipheriv("aes-256-cbc", key, resizedIV);
+
+      let hashedMsg = cipher.update(o, "binary", "hex") + cipher.final("hex");
+      console.log(hashedMsg);
+
+      resizedIV = Buffer.allocUnsafe(16),
+
+      iv = crypto
+        .createHash("sha256")
+        .update("myHashedIV")
+        .digest();
+      iv.copy(resizedIV);
+
+      const decipher = crypto.createDecipheriv("aes-256-cbc", key, resizedIV);
+      
+      console.log(decipher.update(hashedMsg, "hex", "binary") + decipher.final("binary"))
+
+      // fs.writeFile(this.gApiFilename, JSON.stringify(data), 'utf-8', callback);
     }
   },
   loadGData() {
