@@ -64,6 +64,37 @@ const lstorage = {
       }
     });
   },
+  encrypt(password, data) {
+    const resizedIV = Buffer.allocUnsafe(16),
+        iv = crypto
+          .createHash("sha256")
+          .update("myHashedIV")
+          .digest();
+
+    iv.copy(resizedIV);
+    const key = crypto
+                .createHash("sha256")
+                .update(password)
+                .digest(),
+          cipher = crypto.createCipheriv("aes-256-cbc", key, resizedIV);
+    return cipher.update(data, "binary", "hex") + cipher.final("hex");
+  },
+  decrypt(password, hashedMsg) {
+    const resizedIV = Buffer.allocUnsafe(16),
+        iv = crypto
+          .createHash("sha256")
+          .update("myHashedIV")
+          .digest();
+
+    iv.copy(resizedIV);
+    const key = crypto
+                .createHash("sha256")
+                .update(password)
+                .digest(),
+          cipher = crypto.createCipheriv("aes-256-cbc", key, resizedIV);
+    const decipher = crypto.createDecipheriv("aes-256-cbc", key, resizedIV);
+    return decipher.update(hashedMsg, "hex", "binary") + decipher.final("binary")
+  },
   /**
    * Saves Google API Credentials to file with filename specified by
    * gApiFileName proprety.
@@ -77,40 +108,11 @@ const lstorage = {
       }
       let o = {...data};
       delete o.password;
-      console.log(data);
-      let resizedIV = Buffer.allocUnsafe(16),
-
-          iv = crypto
-            .createHash("sha256")
-            .update("myHashedIV")
-            .digest();
-      iv.copy(resizedIV);
-      o = JSON.stringify(o)
-      console.log(o);
-      console.log(typeof o)
-
-      // o = "hello";
-
-      const key = crypto
-                    .createHash("sha256")
-                    .update(data.password)
-                    .digest(),
-            cipher = crypto.createCipheriv("aes-256-cbc", key, resizedIV);
-
-      let hashedMsg = cipher.update(o, "binary", "hex") + cipher.final("hex");
+      let hashedMsg = this.encrypt(data.password, JSON.stringify(o));
       console.log(hashedMsg);
 
-      resizedIV = Buffer.allocUnsafe(16),
-
-      iv = crypto
-        .createHash("sha256")
-        .update("myHashedIV")
-        .digest();
-      iv.copy(resizedIV);
-
-      const decipher = crypto.createDecipheriv("aes-256-cbc", key, resizedIV);
-      
-      console.log(decipher.update(hashedMsg, "hex", "binary") + decipher.final("binary"))
+      let msg = this.decrypt(data.password, hashedMsg);
+      console.log(msg)
 
       // fs.writeFile(this.gApiFilename, JSON.stringify(data), 'utf-8', callback);
     }
