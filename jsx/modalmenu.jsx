@@ -41,6 +41,11 @@ class ModalMenu extends React.Component {
           <input type="text" id="task-name-input" name="name"></input>
         </div>
       </div>)
+    } else if (menu_type == "settings_password") {
+      return <div>
+        <label htmlFor="password-input" className="focus">SettingsPassword: </label>
+        <input type="password" id="password-input" name="password" required></input>
+      </div>
     } else if (menu_type == "google_api") {
       const data = (this.state.data) ? this.state.data : {};
       return (<div>
@@ -50,12 +55,12 @@ class ModalMenu extends React.Component {
             defaultValue={data.clientId} required></input>
         </div>
         <div>
-          <label htmlFor="api-key-input" className="focus">API Key </label>
+          <label htmlFor="api-key-input">API Key </label>
           <input type="text" id="api-key-input" name="apiKey"
             defaultValue={data.apiKey} required></input>
         </div>
         <div>
-          <label htmlFor="client-id-input" className="focus">Password</label>
+          <label htmlFor="password-input">Password</label>
           <input type="text" id="password-input" name="password" required></input>
         </div>
       </div>)
