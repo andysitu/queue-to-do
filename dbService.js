@@ -31,40 +31,48 @@ module.exports = function(db) {
     });
   }
   return {
-    load_data(rowData) {
-      db.run("DELETE FROM todo");
-      db.run("DELETE FROM task");
-      let data, todo_order;
-      const seenTodos = new Set();
+    load_data(rowData, callback) {
+      db.serialize(function() {
+        db.run("DELETE FROM todo");
+        db.run("DELETE FROM task");
+        const seenTodos = new Set();
 
-      // First create the todos with new todo_ids 
-      for (let i = 0; i < rowData.length; i++) {
-        data = rowData[i];
-        if (data.todo_id && !(seenTodos.has(data.todo_id))) {
-          todo_order = data.todo_order ? data.todo_order : data.todo_id;
-          seenTodos.add(data.todo_id)
-          db.run(
-            `INSERT INTO todo (todo_name, todo_order, todo_create_date, old_todo_id) 
-              VALUES (?, ?, ?, ?);`, 
-            [data.todo_name, todo_order, data.todo_create_date, data.todo_id]);
+        // First create the todos with new todo_ids 
+        for (let i = 0; i < rowData.length; i++) {
+          let data = rowData[i];
+          if (data.todo_id && !(seenTodos.has(data.todo_id))) {
+            let todo_order = data.todo_order ? data.todo_order : data.todo_id;
+            seenTodos.add(data.todo_id)
+            db.run(
+              `INSERT INTO todo (todo_name, todo_order, todo_create_date, old_todo_id) 
+                VALUES (?, ?, ?, ?);`, 
+              [data.todo_name, todo_order, data.todo_create_date, data.todo_id]);
+          }
         }
-      }
-      for (let i = 0; i < rowData.length; i++) {
-        data = rowData[i];
-        if (data.task_id != null) {
+        // Create their tasks  from the data as well
+        for (let i = 0; i < rowData.length; i++) {
+          let data = rowData[i];
+          if (data.task_id == null) continue;
+
+          let task_name = (data.task_name != null) ? data.task_name : "";
+          // Need to get new todo_id
           db.get(`SELECT * FROM todo WHERE old_todo_id = ?`, [data.todo_id], (err, row)=>{
-            let todoData = rowData[i],
-                task_order = todoData.task_order ? todoData.task_order : todoData.task_id;;
+            let task_order = data.task_order ? data.task_order : data.task_id;;
             db.run(`
               INSERT INTO task 
                 (fk_todo_id, task_name, task_create_date, 
                   task_done, task_complete_date, task_order) 
-                  VALUES (?, ?, ?, ?, ?, ?);`, 
-              [row.todo_id, todoData.task_name, todoData.task_create_date, 
-                todoData.task_done, todoData.task_complete_date, task_order]);
+                  VALUES (?, ?, ?, ?, ?, ?);`,
+              [row.todo_id, task_name, data.task_create_date, 
+                data.task_done, data.task_complete_date, task_order]);
           });
         }
-      }
+        db.get("GET * FROM todo", ()=> {
+          if (callback) {
+            callback();
+          }
+        });
+      });
     },
     check_db() {
       check_database();
