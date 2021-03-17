@@ -6,14 +6,28 @@ module.exports = function(db) {
       // db.run("DROP TABLE if exists todo");
       // db.run("DROP TABLE if exists task");
       db.run(`
+        CREATE TABLE IF NOT EXISTS container
+        (
+          contaier_id INTEGER PRIMARY KEY AUTOINCREMENT,
+          container_name TEXT,
+          container_create_date TEXT,
+          container_order INTEGER,
+        )
+      `);
+      db.run(`
         CREATE TABLE IF NOT EXISTS todo 
         (
           todo_id INTEGER PRIMARY KEY AUTOINCREMENT, 
           todo_order INTEGER,
           todo_name TEXT,
           todo_create_date TEXT,
-          old_todo_id INTEGER
-        )`);
+          old_todo_id INTEGER,
+          
+          fk_container_id INT,
+          FOREIGN KEY(fk_container_id) REFERENCES container(container_id)
+            ON DELETE CASCADE ON UPDATE CASCADE
+        )
+      `);
       db.run(`
         CREATE TABLE IF NOT EXISTS task 
           (
