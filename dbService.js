@@ -17,7 +17,7 @@ module.exports = function(db) {
       db.run(`
         CREATE TABLE IF NOT EXISTS todo 
         (
-          todo_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+          todo_id INTEGER PRIMARY KEY AUTOINCREMENT,
           todo_order INTEGER,
           todo_name TEXT,
           todo_create_date TEXT,
@@ -30,18 +30,19 @@ module.exports = function(db) {
       `);
       db.run(`
         CREATE TABLE IF NOT EXISTS task 
-          (
-            task_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-            task_name TEXT, 
-            task_order INTEGER,
-            task_create_date TEXT,
-            task_complete_date TEXT,
+        (
+          task_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+          task_name TEXT, 
           task_order INTEGER,
+          task_done INTEGER DEFAULT 0,
+          task_create_date TEXT,
+          task_complete_date TEXT,
 
-            FOREIGN KEY(fk_todo_id) REFERENCES todo(todo_id) 
-              ON DELETE CASCADE ON UPDATE CASCADE
-          )`);
           fk_todo_id INTEGER,
+          FOREIGN KEY(fk_todo_id) REFERENCES todo(todo_id) 
+            ON DELETE CASCADE ON UPDATE CASCADE
+        )
+      `);
     });
   }
   return {
