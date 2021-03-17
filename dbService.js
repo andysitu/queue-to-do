@@ -23,7 +23,7 @@ module.exports = function(db) {
           todo_create_date TEXT,
           old_todo_id INTEGER,
           
-          fk_container_id INT,
+          fk_container_id INTEGER,
           FOREIGN KEY(fk_container_id) REFERENCES container(container_id)
             ON DELETE CASCADE ON UPDATE CASCADE
         )
@@ -34,14 +34,14 @@ module.exports = function(db) {
             task_id INTEGER PRIMARY KEY AUTOINCREMENT, 
             task_name TEXT, 
             task_order INTEGER,
-            task_done INT DEFAULT 0,
             task_create_date TEXT,
             task_complete_date TEXT,
+          task_order INTEGER,
 
-            fk_todo_id INT,
             FOREIGN KEY(fk_todo_id) REFERENCES todo(todo_id) 
               ON DELETE CASCADE ON UPDATE CASCADE
           )`);
+          fk_todo_id INTEGER,
     });
   }
   return {
