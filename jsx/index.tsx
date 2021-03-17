@@ -100,8 +100,6 @@ function loadData(data) {
 }
 
 let load_todo = () => {
-  // lstorage.loadGCredentials();
-
   ipcRenderer.send("get-todo");
   ipcRenderer.once("get-todo", (event, data) => {
     loadData(data);    
