@@ -10,12 +10,7 @@ const fs = require('fs');
 
 module.exports.loadRouter = loadRouter;
 
-function loadRouter(dbService) {
-  ipcMain.on('test-it', (event, ... args) => {
-    console.log("test-it");
-    event.reply('test-it', {1: 11,});
-  });
-  
+function loadRouter(dbService) {  
   ipcMain.on("get-todo", (event, arg) => {
     dbService.get_todos((data)=> {
       if (!data) {
