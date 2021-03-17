@@ -53,14 +53,14 @@ const lstorage = {
    * via using loadGCredentialsToSession.
    */
   loadGCredentials(password) {
-    if (password != null) {
+    if (password == null) {
       return;
     }
     let that = this;
     fs.readFile(this.gApiFilename, {encoding: 'utf-8'}, function(err, encryptedData) {
       // console.log(jsonData)
       if (encryptedData) {
-        let data = JSON.parse(this.decrypt(password, encryptedData));
+        let data = JSON.parse(that.decrypt(password, encryptedData));
         if (data.apiKey && data.clientId) {
           that.loadGCredentialsToSession(data.clientId, data.apiKey);
         }
