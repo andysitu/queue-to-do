@@ -11,7 +11,7 @@ module.exports = function(db) {
           contaier_id INTEGER PRIMARY KEY AUTOINCREMENT,
           container_name TEXT,
           container_create_date TEXT,
-          container_order INTEGER,
+          container_order INTEGER
         )
       `);
       db.run(`
