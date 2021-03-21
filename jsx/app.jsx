@@ -86,19 +86,28 @@ function App(props) {
     );
   };
 
-  return (<div>
-    <button type="button" onClick={onClick_create_todo}>
-      Create To-Do
-    </button>
-    <button type="button" onClick={onClick_saveFile}>
-      Save File
-    </button>
-    <button type="button" onClick={onClick_loadFile}>
-      Load File
-    </button>
+  return (
+  <div>
     <div>
-      {create_todos()}
+      <select size="10">
+        <option value="">Main</option>
+      </select>
     </div>
+    <div>
+      <button type="button" onClick={onClick_create_todo}>
+        Create To-Do
+      </button>
+      <button type="button" onClick={onClick_saveFile}>
+        Save File
+      </button>
+      <button type="button" onClick={onClick_loadFile}>
+        Load File
+      </button>
+      <div>
+        {create_todos()}
+      </div>
+    </div>
+    
     <ModalMenu ref={modalmenu}/>
   </div>)
 }
