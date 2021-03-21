@@ -86,9 +86,21 @@ function App(props) {
     );
   };
 
+  let onClick_createContainer = () => {
+    modalmenu.current.show_menu("create_container", (data) => {
+      if (data.name) {
+        ipcRenderer.send("create-container", {name: data.name});
+        // ipcRenderer.once("create-container", (event, data)=> {});
+      }
+    }, {});
+  };
+
   return (
   <div>
     <div>
+      <button type="button" onClick={onClick_createContainer}>
+        Create Container
+      </button>
       <select size="10">
         <option value="">Main</option>
       </select>
