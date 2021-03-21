@@ -13,12 +13,18 @@ export const containerSlice = createSlice({
     },
     addContainer: (state, action) => {
       state.containers.push(action.payload.container);
+    },
+    setContainers: (state, action) => {
+      console.log(action.payload)
+      state.containers = action.payload.containers;
     }
   }
 });
 
-export const { setSelected } = containerSlice.actions
+export const { 
+  setSelected, setContainers, addContainer } = containerSlice.actions
 
 export default containerSlice.reducer
 
 export const selectSelected = state => state.container.selected
+export const selectContainers = state => state.container.containers;
