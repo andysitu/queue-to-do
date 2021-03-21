@@ -8,6 +8,7 @@ const {ipcRenderer, remote} = require('electron');
 const { Menu, MenuItem } = remote;
 
 const { useSelector, useDispatch } = require('react-redux')
+import * as containerSlice from './redux/containerSlice.js'
 import * as todoSlice from './redux/todoSlice.js'
 import * as taskSlice from './redux/taskSlice.js'
 
@@ -31,6 +32,8 @@ function App(props) {
   const dispatch = useDispatch();
 
   const todo_list = useSelector(todoSlice.selectTodoList);
+  const containers = useSelector(containerSlice.selectContainers);
+  console.log(containers);
   
   let modalmenu = React.createRef();
 
