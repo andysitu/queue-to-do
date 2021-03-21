@@ -113,9 +113,9 @@ function loadRouter(dbService) {
   });
 
   ipcMain.on("get-containers", (event, arg) => {
-    dbService.loadContainers((data)=>{
-      console.log(data);
-      event.reply("get-containers");
+    dbService.getContainers((containers)=>{
+      console.log(containers);
+      event.reply("get-containers", containers);
     })
   });
 
