@@ -100,19 +100,24 @@ function loadData(data) {
 }
 
 let load_todo = () => {
-  ipcRenderer.send("get-todo");
-  ipcRenderer.once("get-todo", (event, data) => {
-    loadData(data);    
+  ipcRenderer.send("get-containers");
+  ipcRenderer.once("get-containers", (event, data) => {
+    console.log(data);
+    ipcRenderer.send("get-todo");
+    ipcRenderer.once("get-todo", (event, data) => {
+      loadData(data);    
 
-    ReactDom.render(
-      (<Provider store={store}>
-        <App 
-          extract_data_to_todo={extract_data_to_todo}
-          extract_data_to_task={extract_data_to_task}
-        />
-      </Provider>), 
-      document.getElementById("main-container")
-    );
-  });
+      ReactDom.render(
+        (<Provider store={store}>
+          <App 
+            extract_data_to_todo={extract_data_to_todo}
+            extract_data_to_task={extract_data_to_task}
+          />
+        </Provider>), 
+        document.getElementById("main-container")
+      );
+    });
+  })
+  
 }
 load_todo();

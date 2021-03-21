@@ -46,6 +46,14 @@ module.exports = function(db) {
     });
   }
   return {
+    loadContainers(callback) {
+      console.log("containers");
+      db.get("SELECT * FROM container", (err, row) => {
+        if (!err) {
+          callback(row);
+        }
+      });
+    },
     load_data(rowData, callback) {
       db.serialize(function() {
         db.run("DELETE FROM todo");
