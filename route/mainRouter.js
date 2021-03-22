@@ -111,4 +111,18 @@ function loadRouter(dbService) {
       });
     });
   });
+
+  ipcMain.on("get-containers", (event, arg) => {
+    dbService.getContainers((containers)=>{
+      console.log(containers);
+      event.reply("get-containers", containers);
+    })
+  });
+
+  ipcMain.on("create-container", (event, arg) => {
+    console.log(arg);
+    dbService.createContainer(arg.name, (container)=> {
+      console.log(container);
+    });
+  })
 }

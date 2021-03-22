@@ -46,6 +46,24 @@ module.exports = function(db) {
     });
   }
   return {
+    createContainer(name) {
+      db.run(`INSERT INTO container (container_name) VALUES (?);`, 
+        [name]);
+      db.get(`SELECT * FROM container WHERE container_id in
+        (SELECT last_insert_rowid())`, (err, row) => {
+        if (!err) {
+          callback(row);
+        }
+      });
+    },
+    getContainers(callback) {
+      db.all("SELECT * FROM container", (err, row) => {
+        if (!err) {
+          callback(row);
+        }
+      });
+    },
+    // Loads data specified in rowData to the DB
     load_data(rowData, callback) {
       db.serialize(function() {
         db.run("DELETE FROM todo");

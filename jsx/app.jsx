@@ -8,6 +8,7 @@ const {ipcRenderer, remote} = require('electron');
 const { Menu, MenuItem } = remote;
 
 const { useSelector, useDispatch } = require('react-redux')
+import * as containerSlice from './redux/containerSlice.js'
 import * as todoSlice from './redux/todoSlice.js'
 import * as taskSlice from './redux/taskSlice.js'
 
@@ -31,6 +32,8 @@ function App(props) {
   const dispatch = useDispatch();
 
   const todo_list = useSelector(todoSlice.selectTodoList);
+  const containers = useSelector(containerSlice.selectContainers);
+  console.log(containers);
   
   let modalmenu = React.createRef();
 
@@ -86,19 +89,40 @@ function App(props) {
     );
   };
 
-  return (<div>
-    <button type="button" onClick={onClick_create_todo}>
-      Create To-Do
-    </button>
-    <button type="button" onClick={onClick_saveFile}>
-      Save File
-    </button>
-    <button type="button" onClick={onClick_loadFile}>
-      Load File
-    </button>
+  let onClick_createContainer = () => {
+    modalmenu.current.show_menu("create_container", (data) => {
+      if (data.name) {
+        ipcRenderer.send("create-container", {name: data.name});
+        // ipcRenderer.once("create-container", (event, data)=> {});
+      }
+    }, {});
+  };
+
+  return (
+  <div>
     <div>
-      {create_todos()}
+      <button type="button" onClick={onClick_createContainer}>
+        Create Container
+      </button>
+      <select size="10">
+        <option value="">Main</option>
+      </select>
     </div>
+    <div>
+      <button type="button" onClick={onClick_create_todo}>
+        Create To-Do
+      </button>
+      <button type="button" onClick={onClick_saveFile}>
+        Save File
+      </button>
+      <button type="button" onClick={onClick_loadFile}>
+        Load File
+      </button>
+      <div>
+        {create_todos()}
+      </div>
+    </div>
+    
     <ModalMenu ref={modalmenu}/>
   </div>)
 }

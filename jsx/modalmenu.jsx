@@ -18,7 +18,7 @@ class ModalMenu extends React.Component {
   }
   show_menu(menu_type, callback, data) {
     this.callback = callback;
-    if (menu_type == "create_task" || menu_type == "google_api") {
+    if (menu_type == "create_task" || menu_type == "create_container") {
       this.setState({
         menu_type: menu_type,
         data: data,
@@ -34,11 +34,12 @@ class ModalMenu extends React.Component {
   }
   create_menu() {
     const menu_type = this.state.menu_type;
-    if (menu_type == "create_task") {
+    if (menu_type == "create_task" || menu_type == "create_container") {
+      const text = menu_type == "create_task" ? "Task Name: " :  "Container Name: ";
       return (<div>
         <div>
-          <label htmlFor="task-name-input" className="focus">Task Name: </label>
-          <input type="text" id="task-name-input" name="name"></input>
+          <label htmlFor="name-input" className="focus">{text}</label>
+          <input type="text" id="name-input" name="name"></input>
         </div>
       </div>)
     } else if (menu_type == "settings_password") {

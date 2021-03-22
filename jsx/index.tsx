@@ -1,6 +1,7 @@
 // import { Provider } from 'react-redux'
 import { store  } from './redux/store.js'
 const { Provider } = require("react-redux")
+import * as containerSlice from './redux/containerSlice.js'
 import * as todoSlice from './redux/todoSlice.js'
 import * as taskSlice from './redux/taskSlice.js'
 const {ipcRenderer, remote} = require('electron');
@@ -31,6 +32,12 @@ function extract_data_to_task(data) {
     task_order: data.task_order,
     task_create_date: data.task_create_date,
   }
+}
+
+function loadContainers(containers) {
+  store.dispatch(
+    containerSlice.setContainers(
+      { containers: containers}));
 }
 
 function loadData(data) {
@@ -100,19 +107,25 @@ function loadData(data) {
 }
 
 let load_todo = () => {
-  ipcRenderer.send("get-todo");
-  ipcRenderer.once("get-todo", (event, data) => {
-    loadData(data);    
+  ipcRenderer.send("get-containers");
+  ipcRenderer.once("get-containers", (event, data) => {
+    console.log(data);
+    loadContainers(data);
+    ipcRenderer.send("get-todo");
+    ipcRenderer.once("get-todo", (event, data) => {
+      loadData(data);    
 
-    ReactDom.render(
-      (<Provider store={store}>
-        <App 
-          extract_data_to_todo={extract_data_to_todo}
-          extract_data_to_task={extract_data_to_task}
-        />
-      </Provider>), 
-      document.getElementById("main-container")
-    );
-  });
+      ReactDom.render(
+        (<Provider store={store}>
+          <App 
+            extract_data_to_todo={extract_data_to_todo}
+            extract_data_to_task={extract_data_to_task}
+          />
+        </Provider>), 
+        document.getElementById("main-container")
+      );
+    });
+  })
+  
 }
 load_todo();
