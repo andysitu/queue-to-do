@@ -111,10 +111,15 @@ module.exports = function(db) {
     check_db() {
       check_database();
     },
-    create_todo(name, callback) {
+    create_todo(name, container_id, callback) {
+      container_id = parseInt(container_id);
+      if (isNaN(container_id)) {
+        container_id = null;
+      }
       const date = new Date();
-      db.run(`INSERT INTO todo (todo_name, todo_create_date) VALUES (?, ?);`, 
-        [name, date.toISOString()]);
+      db.run(`INSERT INTO todo (todo_name, todo_create_date, fk_container_id) 
+                VALUES (?, ?, ?);`, 
+        [name, date.toISOString(), container_id]);
       db.get(`SELECT * FROM todo WHERE todo_id in
         (SELECT last_insert_rowid())`, (err, row) => {
         if (!err) {

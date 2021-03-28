@@ -48,8 +48,10 @@ function App(props) {
   useEffect(()=> {
   });
 
-  let onClick_create_todo = () => {
-    ipcRenderer.send("create-todo", {name: "New To-Do"});
+  let onClick_createTodo = () => {
+    ipcRenderer.send("create-todo", {
+      container_id: selectedContainer,
+      name: "New To-Do"});
     ipcRenderer.once("create-todo", (event, data) => {
       var todoData = props.extract_data_to_todo(data)
       // Add to task dictionary/obj also
@@ -123,7 +125,7 @@ function App(props) {
       </select>
     </div>
     <div>
-      <button type="button" onClick={onClick_create_todo}>
+      <button type="button" onClick={onClick_createTodo}>
         Create To-Do
       </button>
       <button type="button" onClick={onClick_saveFile}>

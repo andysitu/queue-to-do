@@ -39,7 +39,7 @@ function loadRouter(dbService) {
   
   ipcMain.on("create-todo", (event, arg) => {
     if (arg.name && arg.name.length > 0) {
-      dbService.create_todo(arg.name, (data) => {
+      dbService.create_todo(arg.name, arg.container_id, (data) => {
         event.reply("create-todo", data);
       });
     }
