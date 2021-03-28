@@ -12,7 +12,7 @@ module.exports.loadRouter = loadRouter;
 
 function loadRouter(dbService) {  
   ipcMain.on("get-todo", (event, arg) => {
-    dbService.get_todos((data)=> {
+    dbService.get_todos(arg.container_id, (data)=> {
       if (!data) {
         event.reply("get-todo", []);
       } else {
