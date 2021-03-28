@@ -111,9 +111,9 @@ let load_todo = () => {
   ipcRenderer.send("get-containers");
   ipcRenderer.once("get-containers", (event, data) => {
     loadContainers(data);
-    ipcRenderer.send("get-todo");
-    ipcRenderer.once("get-todo", (event, data) => {
-      loadData(data);    
+    ipcRenderer.send("get-todo", {container_id: null,});
+    ipcRenderer.once("get-todo", (event, todoData) => {
+      loadData(todoData);
 
       ReactDom.render(
         (<Provider store={store}>
