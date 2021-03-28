@@ -8,7 +8,7 @@ module.exports = function(db) {
       db.run(`
         CREATE TABLE IF NOT EXISTS container
         (
-          contaier_id INTEGER PRIMARY KEY AUTOINCREMENT,
+          container_id INTEGER PRIMARY KEY AUTOINCREMENT,
           container_name TEXT,
           container_create_date TEXT,
           container_order INTEGER
