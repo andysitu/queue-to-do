@@ -108,7 +108,7 @@ function App(props) {
         <option value="">Main</option>
         {containers.map(container => {
           return (
-          <option value={container.container_id}>
+          <option value={container.container_id} key={container.container_id}>
             {container.container_name}
           </option>);
         })}
