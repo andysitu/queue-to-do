@@ -140,13 +140,43 @@ module.exports = function(db) {
         }
       });
     },
-    get_todos(callback) {
-      db.all(`SELECT todo.*, task.* FROM todo
-        LEFT JOIN task on task.fk_todo_id = todo.todo_id`, (err, rows) => {
-        if (callback) {
-          callback(rows);
+    get_todos(container_id, callback) {
+      container_id = parseInt(container_id);
+      if (isNaN(container_id)) {
+        db.all(`SELECT todo.*, task.* FROM 
+          (SELECT * FROM todo where fk_container_id IS NULL) as todo
+          LEFT JOIN task on task.fk_todo_id = todo.todo_id`,
+          (err, rows) => {
+            if (callback) {
+              console.log(rows);
+              callback(rows);
+            }
+          }
+        );
+      } else {
+        db.all(`SELECT todo.*, task.* FROM 
+          (SELECT * FROM todo where fk_container_id = ?) as todo
+          LEFT JOIN task on task.fk_todo_id = todo.todo_id`,
+          [container_id],
+          (err, rows) => {
+            if (callback) {
+              console.log(rows);
+              callback(rows);
+            }
+          }
+        );
+      }
+      db.all(`SELECT todo.*, task.* FROM 
+        (SELECT * FROM todo where fk_container_id = ?) as todo
+        LEFT JOIN task on task.fk_todo_id = todo.todo_id`,
+        [container_id],
+        (err, rows) => {
+          if (callback) {
+            console.log(rows);
+            callback(rows);
+          }
         }
-      });
+      );
     },
     edit_todo(todo_id, property, value) {
       // Note: Can only use ? for parameter values
