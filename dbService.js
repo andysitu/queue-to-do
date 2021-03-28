@@ -2,6 +2,7 @@ module.exports = function(db) {
   function check_database() {
     console.log("check_database");
     db.serialize(function() {
+      // db.run("DROP TABLE if exists container");
       // db.run("DROP TABLE if exists to_do");
       // db.run("DROP TABLE if exists todo");
       // db.run("DROP TABLE if exists task");
