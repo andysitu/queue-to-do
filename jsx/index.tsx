@@ -21,6 +21,7 @@ function extract_data_to_todo(data) {
     todo_name: data.todo_name,
     todo_order: data.todo_order,
     todo_create_date: data.todo_create_date,
+    fk_container_id: data.fk_container_id,
     showMultipleTasks: showMultipleTasks,
   }
 }
@@ -109,7 +110,6 @@ function loadData(data) {
 let load_todo = () => {
   ipcRenderer.send("get-containers");
   ipcRenderer.once("get-containers", (event, data) => {
-    console.log(data);
     loadContainers(data);
     ipcRenderer.send("get-todo");
     ipcRenderer.once("get-todo", (event, data) => {
