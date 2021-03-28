@@ -102,7 +102,7 @@ function App(props) {
   };
 
   let onChangeContainer = (e) => {
-    console.log(e.target.value);
+    dispatch(containerSlice.setSelected({selected: e.target.value}));
   }
 
   return (
