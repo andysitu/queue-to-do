@@ -106,6 +106,12 @@ function App(props) {
       </button>
       <select size="10">
         <option value="">Main</option>
+        {containers.map(container => {
+          return (
+          <option value={container.container_id}>
+            {container.container_name}
+          </option>);
+        })}
       </select>
     </div>
     <div>
