@@ -94,7 +94,9 @@ function App(props) {
     modalmenu.current.show_menu("create_container", (data) => {
       if (data.name) {
         ipcRenderer.send("create-container", {name: data.name});
-        // ipcRenderer.once("create-container", (event, data)=> {});
+        ipcRenderer.once("create-container", (event, containerData)=> {
+          dispatch(containerSlice.addContainer({container: containerData}));
+        });
       }
     }, {});
   };

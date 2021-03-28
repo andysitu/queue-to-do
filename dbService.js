@@ -47,12 +47,12 @@ module.exports = function(db) {
     });
   }
   return {
-    createContainer(name) {
+    createContainer(name, callback) {
       db.run(`INSERT INTO container (container_name) VALUES (?);`, 
         [name]);
       db.get(`SELECT * FROM container WHERE container_id in
         (SELECT last_insert_rowid())`, (err, row) => {
-        if (!err) {
+        if (!err && callback) {
           callback(row);
         }
       });

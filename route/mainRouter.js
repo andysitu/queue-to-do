@@ -120,7 +120,7 @@ function loadRouter(dbService) {
 
   ipcMain.on("create-container", (event, arg) => {
     dbService.createContainer(arg.name, (container)=> {
-      
+      event.reply("create-container", container);
     });
   })
 }
