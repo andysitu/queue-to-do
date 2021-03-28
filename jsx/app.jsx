@@ -33,6 +33,7 @@ function App(props) {
 
   const todo_list = useSelector(todoSlice.selectTodoList);
   const containers = useSelector(containerSlice.selectContainers);
+  const selectedContainer = useSelector(containerSlice.selectSelected);
   console.log(containers);
   
   let modalmenu = React.createRef();
@@ -98,14 +99,19 @@ function App(props) {
     }, {});
   };
 
+  let onChangeContainer = (e) => {
+    console.log(e.target.value);
+  }
+
   return (
   <div>
     <div>
       <button type="button" onClick={onClick_createContainer}>
         Create Container
       </button>
-      <select size="10">
-        <option value="">Main</option>
+      <select size="10" value={selectedContainer}
+          onChange={onChangeContainer}>
+        <option value="main">Main</option>
         {containers.map(container => {
           return (
           <option value={container.container_id} key={container.container_id}>

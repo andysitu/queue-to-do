@@ -4,7 +4,7 @@ const {ipcRenderer} = require('electron');
 export const containerSlice = createSlice({
   name: "container",
   initialState: {
-    selected: "",
+    selected: "main",
     containers: []
   },
   reducers: {
