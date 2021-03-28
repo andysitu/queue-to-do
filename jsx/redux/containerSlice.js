@@ -13,6 +13,7 @@ export const containerSlice = createSlice({
     },
     addContainer: (state, action) => {
       state.containers.push(action.payload.container);
+      state.selected = action.payload.container.container_id;
     },
     setContainers: (state, action) => {
       console.log(action.payload)
