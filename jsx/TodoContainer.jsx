@@ -89,7 +89,7 @@ function TodoContainer(props) {
       <TaskRow key={task.task_id} task_index={task_index} 
         task_type={task_type}
         todo_index={todo_index} todo_id={todo_id} />);
-  }
+  };
 
   const createTasks = () => {
     if (todo.showMultipleTasks) {
@@ -120,12 +120,10 @@ function TodoContainer(props) {
         return;
       }
     }
-  }
+  };
 
   return (
-  <div
-    // onContextMenu={this.onContextMenu_todo}
-    >
+    <div>
       <div id="todo-task-container">
         <input type="text" id={"todo-name-" + todo.todo_id}
           value={todo.todo_name}
@@ -144,13 +142,12 @@ function TodoContainer(props) {
           <i className="bi bi-trash"></i>
         </button>
         {(incomplete_tasks.length > 1 || complete_tasks.length > 0) ?
-          (<button type="button" onClick={toggleShowTasks}>
+          <button type="button" onClick={toggleShowTasks}>
             { todo.showMultipleTasks ? 
               <i className="bi bi-chevron-up"></i> : 
               <i className="bi bi-chevron-down"></i>}
-          </button>) : null
+          </button> : null
         }
-        
       </div>
       <div className="tasks-container">
         {createTasks()}
